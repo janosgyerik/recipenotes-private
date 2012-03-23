@@ -17,6 +17,7 @@ public class WineNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 
 	WineNotesSQLiteOpenHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+		context.deleteDatabase(DATABASE_NAME);
 		String tmp_sql_create = null;
 		try {
 			InputStream instream = context.getAssets().open("sql_create.sql");
@@ -31,12 +32,14 @@ public class WineNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 			e.printStackTrace();
 		}
 		sql_create = tmp_sql_create;
-
 	}
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(sql_create);
+		db.execSQL("insert into main_wine (name) values ('Julienas');");
+		db.execSQL("insert into main_wine (name) values ('Jura');");
+		db.execSQL("insert into main_wine (name) values ('Bourgueil');");
 	}
 
 	@Override

@@ -3,5 +3,8 @@
 
     <string name="hello">Hello World, MyWineNotes!</string>
     <string name="app_name">MyWineNotes</string>
+    
+    <string name="year">Year</string>
+    <string name="wine_type">Type</string>
 
 </resources>

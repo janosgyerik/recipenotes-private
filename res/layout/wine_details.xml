@@ -49,12 +49,6 @@
         android:layout_height="wrap_content"
         android:hint="Grape" />
 
-    <MultiAutoCompleteTextView
-        android:id="@+id/aromas"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="Aromas" />
-
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
@@ -127,6 +121,24 @@
                 android:stepSize="1.0" />
         </TableRow>
     </TableLayout>
+
+    <MultiAutoCompleteTextView
+        android:id="@+id/aroma_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="Aromas" />
+
+    <MultiAutoCompleteTextView
+        android:id="@+id/taste_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="Tastes" />
+
+    <MultiAutoCompleteTextView
+        android:id="@+id/after_taste_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="After-tastes" />
 
     <!--
     <Button

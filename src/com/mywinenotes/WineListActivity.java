@@ -5,13 +5,18 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.provider.BaseColumns;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListAdapter;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 public class WineListActivity extends ListActivity {
+
+	// Debugging
+	private static final String TAG = "WineListActivity";
 
 	/** Called when the activity is first created. */
 	@Override
@@ -22,16 +27,23 @@ public class WineListActivity extends ListActivity {
 		SQLiteOpenHelper helper = new WineNotesSQLiteOpenHelper(this);
 		Cursor mCursor = helper.getWritableDatabase().query(
 				"main_wine", 
-				new String[]{"_id", "name"}, 
+				new String[]{ 
+						BaseColumns._ID, "name", "year", "wine_type", "region", "grape",
+						"aroma", "taste", "after_taste", "overall", "to_buy", 
+						}, 
 				null, null, null, null, null);
 		startManagingCursor(mCursor);
 
 		ListAdapter adapter = new SimpleCursorAdapter(
 				this, // Context.
-				android.R.layout.simple_list_item_1,
-				mCursor,                                              // Pass in the cursor to bind to.
-				new String[] {"_id",},           // Array of cursor columns to bind to.
-				new int[] {android.R.id.text1}
+				R.layout.wine_list_item,
+				mCursor,
+				new String[] { 
+						BaseColumns._ID, "name",
+						},
+				new int[] { 
+						R.id._ID, R.id.name, 
+						}
 				);  // Parallel array of which template objects to bind to those columns.
 
 		// Bind to our new adapter.
@@ -43,10 +55,10 @@ public class WineListActivity extends ListActivity {
 	class WineListItemClickListener implements OnItemClickListener {
 
 		@Override
-		public void onItemClick(AdapterView<?> arg0, View arg1, int position,
-				long arg3) {
+		public void onItemClick(AdapterView<?> parent, View view, int position,
+				long id) {
 			Intent intent = new Intent(WineListActivity.this, WineDetailsActivity.class);
-			intent.putExtra("pos", position);
+			intent.putExtra(BaseColumns._ID, ((TextView)view.findViewById(R.id._ID)).getText());
 			startActivity(intent);
 		}
 		

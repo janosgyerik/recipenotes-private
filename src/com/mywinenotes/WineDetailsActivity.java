@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.provider.BaseColumns;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -56,21 +57,16 @@ public class WineDetailsActivity extends Activity {
 		afterTasteListView.setAdapter(afterTasteListAdapter);
 		afterTasteListView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 		
-		int pk = getIntent().getExtras().getInt("pos");
+		String pk = getIntent().getExtras().getString(BaseColumns._ID);
 
 		SQLiteOpenHelper helper = new WineNotesSQLiteOpenHelper(this);
 		Cursor mCursor = helper.getWritableDatabase().query(
 				"main_wine", 
-				new String[]{"_id", "name"}, 
-				"_id = ?", new String[]{ String.valueOf(pk) }, null, null, null);
+				new String[]{ BaseColumns._ID, "name" }, 
+				BaseColumns._ID + " = ?", new String[]{ pk }, null, null, null);
 		startManagingCursor(mCursor);
-		Log.d(TAG, "pos = " + pk);
-		Log.d(TAG, "? = " + mCursor.getColumnCount());
-		Log.d(TAG, "? = " + mCursor.getColumnIndex("name"));
-		Log.d(TAG, "rows = " + mCursor.getCount());
 		
 		if (mCursor.moveToFirst()) {
-			Log.d(TAG, "first = ?");
 			EditText nameView = (EditText) findViewById(R.id.name);
 			nameView.setText(mCursor.getString(1));
 		}

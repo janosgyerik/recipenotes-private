@@ -209,6 +209,7 @@ public class WineDetailsActivity extends Activity {
 		"Burgundy",
 		"Champagne",
 		"C™tes du Rh™ne",
+		"Cotes du Rhone",
 		"Languedoc-Roussillon",
 		"Loire Valley",
 		"Provence",

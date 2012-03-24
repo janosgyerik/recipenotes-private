@@ -4,13 +4,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:scrollbars="none" >
-
-    <!--
-    name # text
-    year # spinner
-    grape # auto complete
-    -->
-
+    
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
@@ -44,13 +38,13 @@
                     android:prompt="@string/wine_type" />
             </LinearLayout>
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/region"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="Region" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/grape"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"

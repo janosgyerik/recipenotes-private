@@ -5,8 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.provider.BaseColumns;
-import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
@@ -22,23 +22,28 @@ public class WineDetailsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.wine_details);
 		
-		ArrayAdapter<String> yearAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, new String[]{
-				"2012", "2011", "2010", "2009", "2008", "2007", "2006", "2005",
-				"2004", "2003", "2002", "2001", "2000", "1999", "1998", "1997",
-				});
-		yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		ArrayAdapter<String> yearListAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, YEAR_CHOICES);
+		yearListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		Spinner yearView = (Spinner) findViewById(R.id.year);
-		yearView.setAdapter(yearAdapter);
+		yearView.setAdapter(yearListAdapter);
 
-		ArrayAdapter<String> wineTypeAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, new String[]{
-				"Red", "White", "Rose", "Other",
-				});
-		wineTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		ArrayAdapter<String> wineTypeListAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, WINE_TYPE_CHOICES);
+		wineTypeListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		Spinner wineTypeView = (Spinner) findViewById(R.id.wine_type);
-		wineTypeView.setAdapter(wineTypeAdapter);
+		wineTypeView.setAdapter(wineTypeListAdapter);
 		
+		ArrayAdapter<String> regionListAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_dropdown_item_1line, REGION_CHOICES);
+		AutoCompleteTextView regionView = (AutoCompleteTextView) findViewById(R.id.region);
+		regionView.setAdapter(regionListAdapter);
+
+		ArrayAdapter<String> grapeListAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_dropdown_item_1line, GRAPE_CHOICES);
+		AutoCompleteTextView grapeView = (AutoCompleteTextView) findViewById(R.id.grape);
+		grapeView.setAdapter(grapeListAdapter);
+
 		ArrayAdapter<String> aromaListAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_dropdown_item_1line, TASTE_CHOICES);
 		MultiAutoCompleteTextView aromaListView = (MultiAutoCompleteTextView) findViewById(R.id.aroma_list);
@@ -197,4 +202,54 @@ public class WineDetailsActivity extends Activity {
 		"Yeast",
 		"Yoghurt",
 	};
+	
+	private static final String[] REGION_CHOICES = new String[] {
+		"Alsace",
+		"Bordeaux",
+		"Burgundy",
+		"Champagne",
+		"C™tes du Rh™ne",
+		"Languedoc-Roussillon",
+		"Loire Valley",
+		"Provence",
+		"Corsica",
+		"South West",
+	};
+	
+	private static final String[] GRAPE_CHOICES = new String[] {
+		"Pinot Noir",
+		"Cabernet Sauvignon",
+		"Shiraz",
+		"Zinfandel",
+		"Cabernet Franc",
+		"Gamay",
+		"Merlot",
+		"Grenache",
+		"Tempranillo",
+		"Sangiovese",
+		"Nebbiolo",
+		"Chardonnay",
+		"Sauvignon Blanc",
+		"Riesling",
+		"Semillon",
+		"Gewurztraminer",
+		"Muscat",
+		"Viognier",
+		"Verdelho",
+		"Chenin Blanc",
+		"Pinot Gris",
+		"Colombard",
+	};
+	
+	private static final String[] YEAR_CHOICES = new String[] {
+		"2012", "2011", "2010", "2009", "2008", "2007", "2006", "2005",
+		"2004", "2003", "2002", "2001", "2000", "1999", "1998", "1997",
+	};
+
+	private static final String[] WINE_TYPE_CHOICES = new String[] {
+		"red", "white", "rose", "orange",
+		"gray", "yellow", "tawny", "other",
+	};
+	
+
 }

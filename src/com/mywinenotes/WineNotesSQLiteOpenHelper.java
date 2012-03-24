@@ -18,7 +18,7 @@ public class WineNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 	WineNotesSQLiteOpenHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		
-		context.deleteDatabase(DATABASE_NAME);
+		//context.deleteDatabase(DATABASE_NAME);
 		
 		String tmp_sql_create = null;
 		try {

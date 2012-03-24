@@ -1,12 +1,17 @@
 package com.mywinenotes;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.provider.BaseColumns;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
@@ -15,6 +20,15 @@ public class WineDetailsActivity extends Activity {
 
 	// Debugging
 	private static final String TAG = "WineDetailsActivity";
+	
+	private static final String TABLE_NAME = "main_wine";
+	
+	private SQLiteOpenHelper helper;
+	private String pk;
+
+	private EditText nameView;
+	private AutoCompleteTextView regionView;
+
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -36,7 +50,7 @@ public class WineDetailsActivity extends Activity {
 		
 		ArrayAdapter<String> regionListAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_dropdown_item_1line, REGION_CHOICES);
-		AutoCompleteTextView regionView = (AutoCompleteTextView) findViewById(R.id.region);
+		regionView = (AutoCompleteTextView) findViewById(R.id.region);
 		regionView.setAdapter(regionListAdapter);
 
 		ArrayAdapter<String> grapeListAdapter = new ArrayAdapter<String>(this,
@@ -62,9 +76,8 @@ public class WineDetailsActivity extends Activity {
 		afterTasteListView.setAdapter(afterTasteListAdapter);
 		afterTasteListView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 		
-		String pk = getIntent().getExtras().getString(BaseColumns._ID);
-
-		SQLiteOpenHelper helper = new WineNotesSQLiteOpenHelper(this);
+		pk = getIntent().getExtras().getString(BaseColumns._ID);
+		helper = new WineNotesSQLiteOpenHelper(this);
 		Cursor mCursor = helper.getWritableDatabase().query(
 				"main_wine", 
 				new String[]{ BaseColumns._ID, "name" }, 
@@ -72,10 +85,34 @@ public class WineDetailsActivity extends Activity {
 		startManagingCursor(mCursor);
 		
 		if (mCursor.moveToFirst()) {
-			EditText nameView = (EditText) findViewById(R.id.name);
+			nameView = (EditText) findViewById(R.id.name);
 			nameView.setText(mCursor.getString(1));
 		}
+		
+		Button save = (Button) findViewById(R.id.btn_save);
+		save.setOnClickListener(new SaveButtonOnClickListener());
 
+	}
+	
+	class SaveButtonOnClickListener implements OnClickListener {
+
+		@Override
+		public void onClick(View view) {
+			ContentValues values = new ContentValues();
+			values.put("name", nameView.getText().toString());
+			values.put("region", regionView.getText().toString());
+
+			if (pk == null) {
+				long ret = helper.getWritableDatabase().insert(TABLE_NAME, null, values);
+				Log.d(TAG, "insert ret = " + ret);
+			}
+			else {
+				int ret = helper.getWritableDatabase().update(TABLE_NAME, values, 
+						BaseColumns._ID + " = ?", new String[]{ pk });
+				Log.d(TAG, "update ret = " + ret);
+			}
+		}
+		
 	}
 
 	

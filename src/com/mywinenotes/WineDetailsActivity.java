@@ -1,13 +1,20 @@
 package com.mywinenotes;
 
 import android.app.Activity;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 
 public class WineDetailsActivity extends Activity {
 
+	// Debugging
+	private static final String TAG = "WineDetailsActivity";
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +55,26 @@ public class WineDetailsActivity extends Activity {
 		MultiAutoCompleteTextView afterTasteListView = (MultiAutoCompleteTextView) findViewById(R.id.after_taste_list);
 		afterTasteListView.setAdapter(afterTasteListAdapter);
 		afterTasteListView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+		
+		int pk = getIntent().getExtras().getInt("pos");
+
+		SQLiteOpenHelper helper = new WineNotesSQLiteOpenHelper(this);
+		Cursor mCursor = helper.getWritableDatabase().query(
+				"main_wine", 
+				new String[]{"_id", "name"}, 
+				"_id = ?", new String[]{ String.valueOf(pk) }, null, null, null);
+		startManagingCursor(mCursor);
+		Log.d(TAG, "pos = " + pk);
+		Log.d(TAG, "? = " + mCursor.getColumnCount());
+		Log.d(TAG, "? = " + mCursor.getColumnIndex("name"));
+		Log.d(TAG, "rows = " + mCursor.getCount());
+		
+		if (mCursor.moveToFirst()) {
+			Log.d(TAG, "first = ?");
+			EditText nameView = (EditText) findViewById(R.id.name);
+			nameView.setText(mCursor.getString(1));
+		}
+
 	}
 
 	

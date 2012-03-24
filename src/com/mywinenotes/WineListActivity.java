@@ -30,7 +30,7 @@ public class WineListActivity extends ListActivity {
 				this, // Context.
 				android.R.layout.simple_list_item_1,
 				mCursor,                                              // Pass in the cursor to bind to.
-				new String[] {"name",},           // Array of cursor columns to bind to.
+				new String[] {"_id",},           // Array of cursor columns to bind to.
 				new int[] {android.R.id.text1}
 				);  // Parallel array of which template objects to bind to those columns.
 

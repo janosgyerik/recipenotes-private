@@ -14,6 +14,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 
 public class WineDetailsActivity extends Activity {
@@ -27,7 +28,18 @@ public class WineDetailsActivity extends Activity {
 	private String pk;
 
 	private EditText nameView;
+	private Spinner yearView;
+	private Spinner wineTypeView;
+	private Spinner buyFlagView;
 	private AutoCompleteTextView regionView;
+	private AutoCompleteTextView grapeView;
+	private RatingBar aromaRatingView;
+	private RatingBar tasteRatingView;
+	private RatingBar afterTasteRatingView;
+	private RatingBar overallRatingView;
+	private MultiAutoCompleteTextView aromaListView;
+	private MultiAutoCompleteTextView tasteListView;
+	private MultiAutoCompleteTextView afterTasteListView;
 
 	
 	/** Called when the activity is first created. */
@@ -41,19 +53,19 @@ public class WineDetailsActivity extends Activity {
 		ArrayAdapter<String> yearListAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_spinner_item, YEAR_CHOICES);
 		yearListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		Spinner yearView = (Spinner) findViewById(R.id.year);
+		yearView = (Spinner) findViewById(R.id.year);
 		yearView.setAdapter(yearListAdapter);
 
 		ArrayAdapter<String> wineTypeListAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_spinner_item, WINE_TYPE_CHOICES);
 		wineTypeListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		Spinner wineTypeView = (Spinner) findViewById(R.id.wine_type);
+		wineTypeView = (Spinner) findViewById(R.id.wine_type);
 		wineTypeView.setAdapter(wineTypeListAdapter);
 		
 		ArrayAdapter<String> buyFlagListAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_spinner_item, BUY_FLAG_CHOICES);
 		buyFlagListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		Spinner buyFlagView = (Spinner) findViewById(R.id.buy_flag);
+		buyFlagView = (Spinner) findViewById(R.id.buy_flag);
 		buyFlagView.setAdapter(buyFlagListAdapter);
 		
 		ArrayAdapter<String> regionListAdapter = new ArrayAdapter<String>(this,
@@ -63,24 +75,29 @@ public class WineDetailsActivity extends Activity {
 
 		ArrayAdapter<String> grapeListAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_dropdown_item_1line, GRAPE_CHOICES);
-		AutoCompleteTextView grapeView = (AutoCompleteTextView) findViewById(R.id.grape);
+		grapeView = (AutoCompleteTextView) findViewById(R.id.grape);
 		grapeView.setAdapter(grapeListAdapter);
+		
+		aromaRatingView = (RatingBar)findViewById(R.id.rating_aroma);
+		tasteRatingView = (RatingBar)findViewById(R.id.rating_taste);
+		afterTasteRatingView = (RatingBar)findViewById(R.id.rating_after_taste);
+		overallRatingView = (RatingBar)findViewById(R.id.rating_overall);
 
 		ArrayAdapter<String> aromaListAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_dropdown_item_1line, TASTE_CHOICES);
-		MultiAutoCompleteTextView aromaListView = (MultiAutoCompleteTextView) findViewById(R.id.aroma_list);
+		aromaListView = (MultiAutoCompleteTextView) findViewById(R.id.aroma_list);
 		aromaListView.setAdapter(aromaListAdapter);
 		aromaListView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 		
 		ArrayAdapter<String> tasteListAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_dropdown_item_1line, TASTE_CHOICES);
-		MultiAutoCompleteTextView tasteListView = (MultiAutoCompleteTextView) findViewById(R.id.taste_list);
+		tasteListView = (MultiAutoCompleteTextView) findViewById(R.id.taste_list);
 		tasteListView.setAdapter(tasteListAdapter);
 		tasteListView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 		
 		ArrayAdapter<String> afterTasteListAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_dropdown_item_1line, TASTE_CHOICES);
-		MultiAutoCompleteTextView afterTasteListView = (MultiAutoCompleteTextView) findViewById(R.id.after_taste_list);
+		afterTasteListView = (MultiAutoCompleteTextView) findViewById(R.id.after_taste_list);
 		afterTasteListView.setAdapter(afterTasteListAdapter);
 		afterTasteListView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 		

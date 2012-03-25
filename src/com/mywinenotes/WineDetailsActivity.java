@@ -107,17 +107,59 @@ public class WineDetailsActivity extends Activity {
 		if (pk != null) {
 			Cursor mCursor = helper.getWritableDatabase().query(
 					"main_wine", 
-					new String[]{ BaseColumns._ID, "name" }, 
+					new String[]{ 
+							BaseColumns._ID, "name", "year", "wine_type", "buy_flag", 
+							"region", "grape",
+							"aroma", "taste", "after_taste", "overall",
+							"aroma_list", "taste_list", "after_taste_list",
+							}, 
 					BaseColumns._ID + " = ?", new String[]{ pk }, null, null, null);
 			startManagingCursor(mCursor);
 
 			if (mCursor.moveToFirst()) {
+				String buyFlag = mCursor.getString(4);
+				if (buyFlag.equals("0")) {
+					buyFlag = "Buy";
+				}
+				else if (buyFlag.equals("1")) {
+					buyFlag = "Maybe";
+				}
+				else if (buyFlag.equals("2")) {
+					buyFlag = "-";
+				}
+				else if (buyFlag.equals("3")) {
+					buyFlag = "Never";
+				}
+
 				nameView.setText(mCursor.getString(1));
+				setSpinnerValue(yearView, mCursor.getString(2), YEAR_CHOICES);
+				setSpinnerValue(wineTypeView, mCursor.getString(3), WINE_TYPE_CHOICES);
+				setSpinnerValue(buyFlagView, buyFlag, BUY_FLAG_CHOICES);
+				regionView.setText(mCursor.getString(5));
+				grapeView.setText(mCursor.getString(6));
+				aromaRatingView.setRating(mCursor.getInt(7));
+				tasteRatingView.setRating(mCursor.getInt(8));
+				afterTasteRatingView.setRating(mCursor.getInt(9));
+				overallRatingView.setRating(mCursor.getInt(10));
+				aromaListView.setText(mCursor.getString(11));
+				tasteListView.setText(mCursor.getString(12));
+				afterTasteListView.setText(mCursor.getString(13));
 			}
 		}
 		
 		Button save = (Button) findViewById(R.id.btn_save);
 		save.setOnClickListener(new SaveButtonOnClickListener());
+	}
+	
+	void setSpinnerValue(Spinner spinner, String value, String[] choices) {
+		int position = 0;
+		for (String choice : choices) {
+			if (choice.equals(value)) {
+				spinner.setSelection(position);
+				return;
+			}
+			++position;
+		}
 	}
 	
 	class SaveButtonOnClickListener implements OnClickListener {

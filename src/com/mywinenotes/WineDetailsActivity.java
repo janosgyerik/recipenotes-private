@@ -118,6 +118,9 @@ public class WineDetailsActivity extends Activity {
 
 			if (mCursor.moveToFirst()) {
 				String buyFlag = mCursor.getString(4);
+				if (buyFlag == null) {
+					buyFlag = "1";
+				}
 				if (buyFlag.equals("0")) {
 					buyFlag = "Buy";
 				}
@@ -167,9 +170,9 @@ public class WineDetailsActivity extends Activity {
 		@Override
 		public void onClick(View view) {
 			ContentValues values = new ContentValues();
-			String name = nameView.getText().toString();
+			String name = capitalize(nameView.getText().toString());
 			String year = yearView.getSelectedItem().toString();
-			String wineType = wineTypeView.getSelectedItem().toString();
+			String wineType = capitalize(wineTypeView.getSelectedItem().toString());
 			String buyFlag;
 			switch (buyFlagView.getSelectedItemPosition()) {
 			case 0:
@@ -184,8 +187,8 @@ public class WineDetailsActivity extends Activity {
 			default:
 				buyFlag = "3"; // never
 			}
-			String region = regionView.getText().toString();
-			String grape = grapeView.getText().toString();
+			String region = capitalize(regionView.getText().toString());
+			String grape = capitalize(grapeView.getText().toString());
 			float aromaRating = aromaRatingView.getRating();
 			float tasteRating = tasteRatingView.getRating();
 			float afterTasteRating = afterTasteRatingView.getRating();
@@ -232,6 +235,11 @@ public class WineDetailsActivity extends Activity {
 			}
 			finish();
 		}
+	}
+	
+	static String capitalize(String name) {
+		if (name == null || name.length() < 1) return name;
+		return Character.toUpperCase(name.charAt(0)) + name.substring(1);
 	}
 	
 	

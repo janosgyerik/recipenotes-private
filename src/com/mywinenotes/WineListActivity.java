@@ -27,6 +27,7 @@ public class WineListActivity extends ListActivity {
 		setContentView(R.layout.wine_list);
 
 		SQLiteOpenHelper helper = new WineNotesSQLiteOpenHelper(this);
+		//helper.getWritableDatabase().execSQL("DELETE from main_wine where name = ''");
 		Cursor mCursor = helper.getWritableDatabase().query(
 				"main_wine", 
 				new String[]{ 

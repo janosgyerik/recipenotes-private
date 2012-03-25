@@ -54,17 +54,20 @@
                 android:id="@+id/region"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:hint="Region" />
+                android:hint="Region"
+                android:singleLine="true" />
 
             <AutoCompleteTextView
                 android:id="@+id/grape"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:hint="Grape" />
+                android:hint="Grape"
+                android:singleLine="true" />
 
             <TableLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:stretchColumns="0" >
 
                 <TableRow
                     android:layout_width="wrap_content"

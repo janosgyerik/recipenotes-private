@@ -230,6 +230,7 @@ public class WineDetailsActivity extends Activity {
 					Toast.makeText(getApplicationContext(), "Error updating wine", Toast.LENGTH_SHORT).show();
 				}
 			}
+			finish();
 		}
 	}
 	

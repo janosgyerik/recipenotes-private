@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class WineDetailsActivity extends Activity {
 
@@ -23,7 +24,7 @@ public class WineDetailsActivity extends Activity {
 	private static final String TAG = "WineDetailsActivity";
 	
 	private static final String TABLE_NAME = "main_wine";
-	
+
 	private SQLiteOpenHelper helper;
 	private String pk;
 
@@ -117,7 +118,6 @@ public class WineDetailsActivity extends Activity {
 		
 		Button save = (Button) findViewById(R.id.btn_save);
 		save.setOnClickListener(new SaveButtonOnClickListener());
-
 	}
 	
 	class SaveButtonOnClickListener implements OnClickListener {
@@ -131,16 +131,28 @@ public class WineDetailsActivity extends Activity {
 			if (pk == null) {
 				long ret = helper.getWritableDatabase().insert(TABLE_NAME, null, values);
 				Log.d(TAG, "insert ret = " + ret);
+				if (ret >= 0) {
+					pk = String.valueOf(ret);
+					Toast.makeText(getApplicationContext(), "Successfully added new wine", Toast.LENGTH_SHORT).show();
+				}
+				else {
+					Toast.makeText(getApplicationContext(), "Error adding new wine", Toast.LENGTH_SHORT).show();
+				}
 			}
 			else {
 				int ret = helper.getWritableDatabase().update(TABLE_NAME, values, 
 						BaseColumns._ID + " = ?", new String[]{ pk });
 				Log.d(TAG, "update ret = " + ret);
+				if (ret == 1) {
+					Toast.makeText(getApplicationContext(), "Successfully updated wine", Toast.LENGTH_SHORT).show();
+				}
+				else {
+					Toast.makeText(getApplicationContext(), "Error updating wine", Toast.LENGTH_SHORT).show();
+				}
 			}
 		}
-		
 	}
-
+	
 	
 	private static final String[] TASTE_CHOICES = new String[] {
 		"Acacia",

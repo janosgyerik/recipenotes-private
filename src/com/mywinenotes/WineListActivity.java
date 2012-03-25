@@ -42,10 +42,10 @@ public class WineListActivity extends ListActivity {
 				R.layout.wine_list_item,
 				mCursor,
 				new String[] { 
-						BaseColumns._ID, "name",
+						BaseColumns._ID, "name", "buy_flag", "overall",
 						},
 				new int[] { 
-						R.id._ID, R.id.name, 
+						R.id._ID, R.id.name, R.id.buy_flag, R.id.rating_overall,
 						}
 				);  // Parallel array of which template objects to bind to those columns.
 		setListAdapter(adapter);

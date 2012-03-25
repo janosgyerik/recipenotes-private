@@ -33,7 +33,7 @@ public class WineDetailsActivity extends Activity {
 	private Spinner wineTypeView;
 	private Spinner buyFlagView;
 	private AutoCompleteTextView regionView;
-	private AutoCompleteTextView grapeView;
+	private MultiAutoCompleteTextView grapeView;
 	private RatingBar aromaRatingView;
 	private RatingBar tasteRatingView;
 	private RatingBar afterTasteRatingView;
@@ -76,8 +76,9 @@ public class WineDetailsActivity extends Activity {
 
 		ArrayAdapter<String> grapeListAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_dropdown_item_1line, GRAPE_CHOICES);
-		grapeView = (AutoCompleteTextView) findViewById(R.id.grape);
+		grapeView = (MultiAutoCompleteTextView) findViewById(R.id.grape);
 		grapeView.setAdapter(grapeListAdapter);
+		grapeView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 		
 		aromaRatingView = (RatingBar)findViewById(R.id.rating_aroma);
 		tasteRatingView = (RatingBar)findViewById(R.id.rating_taste);

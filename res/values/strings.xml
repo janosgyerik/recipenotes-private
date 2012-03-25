@@ -6,5 +6,6 @@
     
     <string name="year">Year</string>
     <string name="wine_type">Type</string>
+    <string name="buy_flag">Buy?</string>
 
 </resources>

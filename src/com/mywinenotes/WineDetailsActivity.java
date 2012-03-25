@@ -50,6 +50,12 @@ public class WineDetailsActivity extends Activity {
 		Spinner wineTypeView = (Spinner) findViewById(R.id.wine_type);
 		wineTypeView.setAdapter(wineTypeListAdapter);
 		
+		ArrayAdapter<String> buyFlagListAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, BUY_FLAG_CHOICES);
+		buyFlagListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		Spinner buyFlagView = (Spinner) findViewById(R.id.buy_flag);
+		buyFlagView.setAdapter(buyFlagListAdapter);
+		
 		ArrayAdapter<String> regionListAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_dropdown_item_1line, REGION_CHOICES);
 		regionView = (AutoCompleteTextView) findViewById(R.id.region);
@@ -307,6 +313,10 @@ public class WineDetailsActivity extends Activity {
 	private static final String[] WINE_TYPE_CHOICES = new String[] {
 		"red", "white", "rose", "orange",
 		"gray", "yellow", "tawny", "other",
+	};
+	
+	private static final String[] BUY_FLAG_CHOICES = new String[] {
+		"-", "Buy", "No", "Maybe",
 	};
 	
 

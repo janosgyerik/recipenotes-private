@@ -31,7 +31,7 @@ public class WineListActivity extends ListActivity {
 				"main_wine", 
 				new String[]{ 
 						BaseColumns._ID, "name", "year", "wine_type", "region", "grape",
-						"aroma", "taste", "after_taste", "overall", "to_buy", 
+						"aroma", "taste", "after_taste", "overall", "buy_flag", 
 						}, 
 				null, null, null, null, null);
 		startManagingCursor(mCursor);

@@ -11,7 +11,7 @@ CREATE TABLE "main_wine" (
     "taste" integer NULL,
     "after_taste" integer NULL,
     "overall" integer NULL,
-    "to_buy" varchar(1) NULL
+    "buy_flag" varchar(1) NULL
 )
 ;
 CREATE TABLE "main_tag" (

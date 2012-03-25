@@ -24,7 +24,7 @@
                 android:id="@+id/name"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:hint="Name"
+                android:hint="Name of the wine"
                 android:singleLine="true" />
 
             <LinearLayout
@@ -62,7 +62,7 @@
                 android:id="@+id/grape"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:hint="Grape"
+                android:hint="Grape / Cépage"
                 android:singleLine="true" />
 
             <TableLayout
@@ -143,19 +143,19 @@
                 android:id="@+id/aroma_list"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:hint="Aromas" />
+                android:hint="Aroma impressions" />
 
             <MultiAutoCompleteTextView
                 android:id="@+id/taste_list"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:hint="Tastes" />
+                android:hint="Taste impressions" />
 
             <MultiAutoCompleteTextView
                 android:id="@+id/after_taste_list"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:hint="After-tastes" />
+                android:hint="After-taste impressions" />
 
             <Button
                 android:id="@+id/btn_save"

@@ -125,8 +125,46 @@ public class WineDetailsActivity extends Activity {
 		@Override
 		public void onClick(View view) {
 			ContentValues values = new ContentValues();
-			values.put("name", nameView.getText().toString());
-			values.put("region", regionView.getText().toString());
+			String name = nameView.getText().toString();
+			String year = yearView.getSelectedItem().toString();
+			String wineType = wineTypeView.getSelectedItem().toString();
+			String buyFlag;
+			switch (buyFlagView.getSelectedItemPosition()) {
+			case 0:
+				buyFlag = "2"; // not this time
+				break;
+			case 1:
+				buyFlag = "0"; // buy
+				break;
+			case 2:
+				buyFlag = "1"; // maybe
+				break;
+			default:
+				buyFlag = "3"; // never
+			}
+			String region = regionView.getText().toString();
+			String grape = grapeView.getText().toString();
+			float aromaRating = aromaRatingView.getRating();
+			float tasteRating = tasteRatingView.getRating();
+			float afterTasteRating = afterTasteRatingView.getRating();
+			float overallRating = overallRatingView.getRating();
+			String aromaList = aromaListView.getText().toString();
+			String tasteList = tasteListView.getText().toString();
+			String afterTasteList = afterTasteListView.getText().toString();
+			
+			values.put("name", name);
+			values.put("year", year);
+			values.put("wine_type", wineType);
+			values.put("buy_flag", buyFlag);
+			values.put("region", region);
+			values.put("grape", grape);
+			values.put("aroma", aromaRating);
+			values.put("taste", tasteRating);
+			values.put("after_taste", afterTasteRating);
+			values.put("overall", overallRating);
+			//values.put("aroma_list", aromaList);
+			//values.put("taste_list", tasteList);
+			//values.put("after_taste_list", afterTasteList);
 
 			if (pk == null) {
 				long ret = helper.getWritableDatabase().insert(TABLE_NAME, null, values);
@@ -345,7 +383,7 @@ public class WineDetailsActivity extends Activity {
 	};
 	
 	private static final String[] BUY_FLAG_CHOICES = new String[] {
-		"-", "Buy", "No", "Maybe",
+		"-", "Buy", "Maybe", "Never",
 	};
 	
 

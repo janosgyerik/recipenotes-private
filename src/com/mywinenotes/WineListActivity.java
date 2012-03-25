@@ -7,8 +7,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -45,11 +47,11 @@ public class WineListActivity extends ListActivity {
 						R.id._ID, R.id.name, 
 						}
 				);  // Parallel array of which template objects to bind to those columns.
-
-		// Bind to our new adapter.
 		setListAdapter(adapter);
 		
 		getListView().setOnItemClickListener(new WineListItemClickListener());
+
+		((Button)findViewById(R.id.btn_add_wine)).setOnClickListener(new AddWineOnClickListener());
 	}
 	
 	class WineListItemClickListener implements OnItemClickListener {
@@ -59,6 +61,17 @@ public class WineListActivity extends ListActivity {
 				long id) {
 			Intent intent = new Intent(WineListActivity.this, WineDetailsActivity.class);
 			intent.putExtra(BaseColumns._ID, ((TextView)view.findViewById(R.id._ID)).getText());
+			startActivity(intent);
+		}
+		
+	}
+	
+	class AddWineOnClickListener implements OnClickListener {
+
+		@Override
+		public void onClick(View v) {
+			Intent intent = new Intent(WineListActivity.this, WineDetailsActivity.class);
+			intent.putExtra("dummy", "dummy");
 			startActivity(intent);
 		}
 		

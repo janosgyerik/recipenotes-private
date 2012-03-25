@@ -36,6 +36,8 @@ public class WineDetailsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.wine_details);
 		
+		nameView = (EditText) findViewById(R.id.name);
+		
 		ArrayAdapter<String> yearListAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_spinner_item, YEAR_CHOICES);
 		yearListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -76,17 +78,18 @@ public class WineDetailsActivity extends Activity {
 		afterTasteListView.setAdapter(afterTasteListAdapter);
 		afterTasteListView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 		
-		pk = getIntent().getExtras().getString(BaseColumns._ID);
 		helper = new WineNotesSQLiteOpenHelper(this);
-		Cursor mCursor = helper.getWritableDatabase().query(
-				"main_wine", 
-				new String[]{ BaseColumns._ID, "name" }, 
-				BaseColumns._ID + " = ?", new String[]{ pk }, null, null, null);
-		startManagingCursor(mCursor);
-		
-		if (mCursor.moveToFirst()) {
-			nameView = (EditText) findViewById(R.id.name);
-			nameView.setText(mCursor.getString(1));
+		pk = getIntent().getExtras().getString(BaseColumns._ID);
+		if (pk != null) {
+			Cursor mCursor = helper.getWritableDatabase().query(
+					"main_wine", 
+					new String[]{ BaseColumns._ID, "name" }, 
+					BaseColumns._ID + " = ?", new String[]{ pk }, null, null, null);
+			startManagingCursor(mCursor);
+
+			if (mCursor.moveToFirst()) {
+				nameView.setText(mCursor.getString(1));
+			}
 		}
 		
 		Button save = (Button) findViewById(R.id.btn_save);

@@ -34,7 +34,7 @@ public class WineListActivity extends ListActivity {
 						BaseColumns._ID, "name", "year", "wine_type", "region", "grape",
 						"aroma", "taste", "after_taste", "overall", "buy_flag", 
 						}, 
-				null, null, null, null, null);
+				null, null, null, null, "buy_flag, overall desc, name");
 		startManagingCursor(mCursor);
 
 		ListAdapter adapter = new SimpleCursorAdapter(

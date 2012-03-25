@@ -162,9 +162,9 @@ public class WineDetailsActivity extends Activity {
 			values.put("taste", tasteRating);
 			values.put("after_taste", afterTasteRating);
 			values.put("overall", overallRating);
-			//values.put("aroma_list", aromaList);
-			//values.put("taste_list", tasteList);
-			//values.put("after_taste_list", afterTasteList);
+			values.put("aroma_list", aromaList);
+			values.put("taste_list", tasteList);
+			values.put("after_taste_list", afterTasteList);
 
 			if (pk == null) {
 				long ret = helper.getWritableDatabase().insert(TABLE_NAME, null, values);

@@ -11,7 +11,10 @@ CREATE TABLE "main_wine" (
     "taste" integer NULL,
     "after_taste" integer NULL,
     "overall" integer NULL,
-    "buy_flag" varchar(1) NULL
+    "buy_flag" varchar(1) NULL,
+    "aroma_list" text NULL,
+    "taste_list" text NULL,
+    "after_taste_list" text NULL
 )
 ;
 CREATE TABLE "main_tag" (

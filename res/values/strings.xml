@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World, MyWineNotes!</string>
-    <string name="app_name">MyWineNotes</string>
+    <string name="hello">Hello World, RecipeNotes!</string>
+    <string name="app_name">RecipeNotes</string>
     
     <string name="year">Year</string>
-    <string name="wine_type">Type</string>
+    <string name="recipe_type">Type</string>
     <string name="buy_flag">Buy?</string>
 
 </resources>

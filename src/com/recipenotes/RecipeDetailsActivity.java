@@ -1,4 +1,4 @@
-package com.mywinenotes;
+package com.recipenotes;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -18,19 +18,19 @@ import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class WineDetailsActivity extends Activity {
+public class RecipeDetailsActivity extends Activity {
 
 	// Debugging
-	private static final String TAG = "WineDetailsActivity";
+	private static final String TAG = "RecipeDetailsActivity";
 	
-	private static final String TABLE_NAME = "main_wine";
+	private static final String TABLE_NAME = "main_recipe";
 
 	private SQLiteOpenHelper helper;
 	private String pk;
 
 	private EditText nameView;
 	private Spinner yearView;
-	private Spinner wineTypeView;
+	private Spinner recipeTypeView;
 	private Spinner buyFlagView;
 	private AutoCompleteTextView regionView;
 	private MultiAutoCompleteTextView grapeView;
@@ -47,7 +47,7 @@ public class WineDetailsActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.wine_details);
+		setContentView(R.layout.recipe_details);
 		
 		nameView = (EditText) findViewById(R.id.name);
 		
@@ -57,11 +57,11 @@ public class WineDetailsActivity extends Activity {
 		yearView = (Spinner) findViewById(R.id.year);
 		yearView.setAdapter(yearListAdapter);
 
-		ArrayAdapter<String> wineTypeListAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, WINE_TYPE_CHOICES);
-		wineTypeListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		wineTypeView = (Spinner) findViewById(R.id.wine_type);
-		wineTypeView.setAdapter(wineTypeListAdapter);
+		ArrayAdapter<String> recipeTypeListAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, RECIPE_TYPE_CHOICES);
+		recipeTypeListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		recipeTypeView = (Spinner) findViewById(R.id.recipe_type);
+		recipeTypeView.setAdapter(recipeTypeListAdapter);
 		
 		ArrayAdapter<String> buyFlagListAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_spinner_item, BUY_FLAG_CHOICES);
@@ -103,13 +103,13 @@ public class WineDetailsActivity extends Activity {
 		afterTasteListView.setAdapter(afterTasteListAdapter);
 		afterTasteListView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 		
-		helper = new WineNotesSQLiteOpenHelper(this);
+		helper = new RecipeNotesSQLiteOpenHelper(this);
 		pk = getIntent().getExtras().getString(BaseColumns._ID);
 		if (pk != null) {
 			Cursor mCursor = helper.getWritableDatabase().query(
-					"main_wine", 
+					"main_recipe", 
 					new String[]{ 
-							BaseColumns._ID, "name", "year", "wine_type", "buy_flag", 
+							BaseColumns._ID, "name", "year", "recipe_type", "buy_flag", 
 							"region", "grape",
 							"aroma", "taste", "after_taste", "overall",
 							"aroma_list", "taste_list", "after_taste_list",
@@ -137,7 +137,7 @@ public class WineDetailsActivity extends Activity {
 
 				nameView.setText(mCursor.getString(1));
 				setSpinnerValue(yearView, mCursor.getString(2), YEAR_CHOICES);
-				setSpinnerValue(wineTypeView, mCursor.getString(3), WINE_TYPE_CHOICES);
+				setSpinnerValue(recipeTypeView, mCursor.getString(3), RECIPE_TYPE_CHOICES);
 				setSpinnerValue(buyFlagView, buyFlag, BUY_FLAG_CHOICES);
 				regionView.setText(mCursor.getString(5));
 				grapeView.setText(mCursor.getString(6));
@@ -173,7 +173,7 @@ public class WineDetailsActivity extends Activity {
 			ContentValues values = new ContentValues();
 			String name = capitalize(nameView.getText().toString());
 			String year = yearView.getSelectedItem().toString();
-			String wineType = capitalize(wineTypeView.getSelectedItem().toString());
+			String recipeType = capitalize(recipeTypeView.getSelectedItem().toString());
 			String buyFlag;
 			switch (buyFlagView.getSelectedItemPosition()) {
 			case 0:
@@ -200,7 +200,7 @@ public class WineDetailsActivity extends Activity {
 			
 			values.put("name", name);
 			values.put("year", year);
-			values.put("wine_type", wineType);
+			values.put("recipe_type", recipeType);
 			values.put("buy_flag", buyFlag);
 			values.put("region", region);
 			values.put("grape", grape);
@@ -217,10 +217,10 @@ public class WineDetailsActivity extends Activity {
 				Log.d(TAG, "insert ret = " + ret);
 				if (ret >= 0) {
 					pk = String.valueOf(ret);
-					Toast.makeText(getApplicationContext(), "Successfully added new wine", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "Successfully added new recipe", Toast.LENGTH_SHORT).show();
 				}
 				else {
-					Toast.makeText(getApplicationContext(), "Error adding new wine", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "Error adding new recipe", Toast.LENGTH_SHORT).show();
 				}
 			}
 			else {
@@ -228,10 +228,10 @@ public class WineDetailsActivity extends Activity {
 						BaseColumns._ID + " = ?", new String[]{ pk });
 				Log.d(TAG, "update ret = " + ret);
 				if (ret == 1) {
-					Toast.makeText(getApplicationContext(), "Successfully updated wine", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "Successfully updated recipe", Toast.LENGTH_SHORT).show();
 				}
 				else {
-					Toast.makeText(getApplicationContext(), "Error updating wine", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "Error updating recipe", Toast.LENGTH_SHORT).show();
 				}
 			}
 			finish();
@@ -464,7 +464,7 @@ public class WineDetailsActivity extends Activity {
 		"2004", "2003", "2002", "2001", "2000", "1999", "1998", "1997",
 	};
 
-	private static final String[] WINE_TYPE_CHOICES = new String[] {
+	private static final String[] RECIPE_TYPE_CHOICES = new String[] {
 		"red", "white", "rose", "orange",
 		"gray", "yellow", "tawny", "other",
 	};

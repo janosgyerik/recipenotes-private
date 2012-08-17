@@ -1,4 +1,4 @@
-package com.mywinenotes;
+package com.recipenotes;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -15,23 +15,23 @@ import android.widget.ListAdapter;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
-public class WineListActivity extends ListActivity {
+public class RecipeListActivity extends ListActivity {
 
 	// Debugging
-	private static final String TAG = "WineListActivity";
+	private static final String TAG = "RecipeListActivity";
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.wine_list);
+		setContentView(R.layout.recipe_list);
 
-		SQLiteOpenHelper helper = new WineNotesSQLiteOpenHelper(this);
-		//helper.getWritableDatabase().execSQL("DELETE from main_wine where name = ''");
+		SQLiteOpenHelper helper = new RecipeNotesSQLiteOpenHelper(this);
+		//helper.getWritableDatabase().execSQL("DELETE from main_recipe where name = ''");
 		Cursor mCursor = helper.getWritableDatabase().query(
-				"main_wine", 
+				"main_recipe", 
 				new String[]{ 
-						BaseColumns._ID, "name", "year", "wine_type", "region", "grape",
+						BaseColumns._ID, "name", "year", "recipe_type", "region", "grape",
 						"aroma", "taste", "after_taste", "overall", "buy_flag", 
 						}, 
 				null, null, null, null, "buy_flag, overall desc, name");
@@ -39,7 +39,7 @@ public class WineListActivity extends ListActivity {
 
 		ListAdapter adapter = new SimpleCursorAdapter(
 				this, // Context.
-				R.layout.wine_list_item,
+				R.layout.recipe_list_item,
 				mCursor,
 				new String[] { 
 						BaseColumns._ID, "name", "buy_flag", "overall",
@@ -50,28 +50,28 @@ public class WineListActivity extends ListActivity {
 				);  // Parallel array of which template objects to bind to those columns.
 		setListAdapter(adapter);
 		
-		getListView().setOnItemClickListener(new WineListItemClickListener());
+		getListView().setOnItemClickListener(new RecipeListItemClickListener());
 
-		((Button)findViewById(R.id.btn_add_wine)).setOnClickListener(new AddWineOnClickListener());
+		((Button)findViewById(R.id.btn_add_recipe)).setOnClickListener(new AddRecipeOnClickListener());
 	}
 	
-	class WineListItemClickListener implements OnItemClickListener {
+	class RecipeListItemClickListener implements OnItemClickListener {
 
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
-			Intent intent = new Intent(WineListActivity.this, WineDetailsActivity.class);
+			Intent intent = new Intent(RecipeListActivity.this, RecipeDetailsActivity.class);
 			intent.putExtra(BaseColumns._ID, ((TextView)view.findViewById(R.id._ID)).getText());
 			startActivity(intent);
 		}
 		
 	}
 	
-	class AddWineOnClickListener implements OnClickListener {
+	class AddRecipeOnClickListener implements OnClickListener {
 
 		@Override
 		public void onClick(View v) {
-			Intent intent = new Intent(WineListActivity.this, WineDetailsActivity.class);
+			Intent intent = new Intent(RecipeListActivity.this, RecipeDetailsActivity.class);
 			intent.putExtra("dummy", "dummy");
 			startActivity(intent);
 		}

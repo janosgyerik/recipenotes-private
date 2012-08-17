@@ -1,4 +1,4 @@
-package com.mywinenotes;
+package com.recipenotes;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,13 +9,13 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class WineNotesSQLiteOpenHelper extends SQLiteOpenHelper {
+public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 
 	private static final String DATABASE_NAME = "sqlite3.db";
 	private static final int DATABASE_VERSION = 1;
 	private final String sql_create;
 
-	WineNotesSQLiteOpenHelper(Context context) {
+	RecipeNotesSQLiteOpenHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		
 		//context.deleteDatabase(DATABASE_NAME);
@@ -39,9 +39,9 @@ public class WineNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(sql_create);
-		db.execSQL("insert into main_wine (name) values ('Julienas');");
-		db.execSQL("insert into main_wine (name) values ('Jura');");
-		db.execSQL("insert into main_wine (name) values ('Bourgueil');");
+		db.execSQL("insert into main_recipe (name) values ('Julienas');");
+		db.execSQL("insert into main_recipe (name) values ('Jura');");
+		db.execSQL("insert into main_recipe (name) values ('Bourgueil');");
 	}
 
 	@Override

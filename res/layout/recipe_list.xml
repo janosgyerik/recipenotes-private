@@ -18,9 +18,9 @@
         android:text="No data" />
 
     <Button
-        android:id="@+id/btn_add_wine"
+        android:id="@+id/btn_add_recipe"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Add wine" />
+        android:text="Add recipe" />
 
 </LinearLayout>

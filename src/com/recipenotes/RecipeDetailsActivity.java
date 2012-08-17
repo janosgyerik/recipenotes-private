@@ -51,57 +51,57 @@ public class RecipeDetailsActivity extends Activity {
 		
 		nameView = (EditText) findViewById(R.id.name);
 		
-		ArrayAdapter<String> yearListAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, YEAR_CHOICES);
-		yearListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		yearView = (Spinner) findViewById(R.id.year);
-		yearView.setAdapter(yearListAdapter);
-
-		ArrayAdapter<String> recipeTypeListAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, RECIPE_TYPE_CHOICES);
-		recipeTypeListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		recipeTypeView = (Spinner) findViewById(R.id.recipe_type);
-		recipeTypeView.setAdapter(recipeTypeListAdapter);
-		
-		ArrayAdapter<String> buyFlagListAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, BUY_FLAG_CHOICES);
-		buyFlagListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		buyFlagView = (Spinner) findViewById(R.id.buy_flag);
-		buyFlagView.setAdapter(buyFlagListAdapter);
-		
-		ArrayAdapter<String> regionListAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_dropdown_item_1line, REGION_CHOICES);
-		regionView = (AutoCompleteTextView) findViewById(R.id.region);
-		regionView.setAdapter(regionListAdapter);
-
-		ArrayAdapter<String> grapeListAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_dropdown_item_1line, GRAPE_CHOICES);
-		grapeView = (MultiAutoCompleteTextView) findViewById(R.id.grape);
-		grapeView.setAdapter(grapeListAdapter);
-		grapeView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-		
-		aromaRatingView = (RatingBar)findViewById(R.id.rating_aroma);
-		tasteRatingView = (RatingBar)findViewById(R.id.rating_taste);
-		afterTasteRatingView = (RatingBar)findViewById(R.id.rating_after_taste);
-		overallRatingView = (RatingBar)findViewById(R.id.rating_overall);
-
-		ArrayAdapter<String> aromaListAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_dropdown_item_1line, TASTE_CHOICES);
-		aromaListView = (MultiAutoCompleteTextView) findViewById(R.id.aroma_list);
-		aromaListView.setAdapter(aromaListAdapter);
-		aromaListView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-		
-		ArrayAdapter<String> tasteListAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_dropdown_item_1line, TASTE_CHOICES);
-		tasteListView = (MultiAutoCompleteTextView) findViewById(R.id.taste_list);
-		tasteListView.setAdapter(tasteListAdapter);
-		tasteListView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-		
-		ArrayAdapter<String> afterTasteListAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_dropdown_item_1line, TASTE_CHOICES);
-		afterTasteListView = (MultiAutoCompleteTextView) findViewById(R.id.after_taste_list);
-		afterTasteListView.setAdapter(afterTasteListAdapter);
-		afterTasteListView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+//		ArrayAdapter<String> yearListAdapter = new ArrayAdapter<String>(this,
+//				android.R.layout.simple_spinner_item, YEAR_CHOICES);
+//		yearListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//		yearView = (Spinner) findViewById(R.id.year);
+//		yearView.setAdapter(yearListAdapter);
+//
+//		ArrayAdapter<String> recipeTypeListAdapter = new ArrayAdapter<String>(this,
+//				android.R.layout.simple_spinner_item, RECIPE_TYPE_CHOICES);
+//		recipeTypeListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//		recipeTypeView = (Spinner) findViewById(R.id.recipe_type);
+//		recipeTypeView.setAdapter(recipeTypeListAdapter);
+//		
+//		ArrayAdapter<String> buyFlagListAdapter = new ArrayAdapter<String>(this,
+//				android.R.layout.simple_spinner_item, BUY_FLAG_CHOICES);
+//		buyFlagListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//		buyFlagView = (Spinner) findViewById(R.id.buy_flag);
+//		buyFlagView.setAdapter(buyFlagListAdapter);
+//		
+//		ArrayAdapter<String> regionListAdapter = new ArrayAdapter<String>(this,
+//				android.R.layout.simple_dropdown_item_1line, REGION_CHOICES);
+//		regionView = (AutoCompleteTextView) findViewById(R.id.region);
+//		regionView.setAdapter(regionListAdapter);
+//
+//		ArrayAdapter<String> grapeListAdapter = new ArrayAdapter<String>(this,
+//				android.R.layout.simple_dropdown_item_1line, GRAPE_CHOICES);
+//		grapeView = (MultiAutoCompleteTextView) findViewById(R.id.grape);
+//		grapeView.setAdapter(grapeListAdapter);
+//		grapeView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+//		
+//		aromaRatingView = (RatingBar)findViewById(R.id.rating_aroma);
+//		tasteRatingView = (RatingBar)findViewById(R.id.rating_taste);
+//		afterTasteRatingView = (RatingBar)findViewById(R.id.rating_after_taste);
+//		overallRatingView = (RatingBar)findViewById(R.id.rating_overall);
+//
+//		ArrayAdapter<String> aromaListAdapter = new ArrayAdapter<String>(this,
+//				android.R.layout.simple_dropdown_item_1line, TASTE_CHOICES);
+//		aromaListView = (MultiAutoCompleteTextView) findViewById(R.id.aroma_list);
+//		aromaListView.setAdapter(aromaListAdapter);
+//		aromaListView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+//		
+//		ArrayAdapter<String> tasteListAdapter = new ArrayAdapter<String>(this,
+//				android.R.layout.simple_dropdown_item_1line, TASTE_CHOICES);
+//		tasteListView = (MultiAutoCompleteTextView) findViewById(R.id.taste_list);
+//		tasteListView.setAdapter(tasteListAdapter);
+//		tasteListView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+//		
+//		ArrayAdapter<String> afterTasteListAdapter = new ArrayAdapter<String>(this,
+//				android.R.layout.simple_dropdown_item_1line, TASTE_CHOICES);
+//		afterTasteListView = (MultiAutoCompleteTextView) findViewById(R.id.after_taste_list);
+//		afterTasteListView.setAdapter(afterTasteListAdapter);
+//		afterTasteListView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 		
 		helper = new RecipeNotesSQLiteOpenHelper(this);
 		pk = getIntent().getExtras().getString(BaseColumns._ID);

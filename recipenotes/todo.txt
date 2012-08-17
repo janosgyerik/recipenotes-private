@@ -1,12 +1,19 @@
 working prototype
 -----------------
+- add/delete ingredients
+    - add on +
+    - remove on -, test well:
+        - remove first
+        - remove last
+    - use ingredients list from db
+    - stretch the name to use width
+    - replace +- with nice images/glyphs
 - add recipe page
     - add/delete ingredients
-        - ui
-        - save to database
-        - visible on list page
     - add/delete tags
     - add/delete photos
+    - save to database
+    - visible on list page
 
 
 next

@@ -31,10 +31,9 @@ public class RecipeListActivity extends ListActivity {
 		Cursor mCursor = helper.getWritableDatabase().query(
 				"main_recipe", 
 				new String[]{ 
-						BaseColumns._ID, "name", "year", "recipe_type", "region", "grape",
-						"aroma", "taste", "after_taste", "overall", "buy_flag", 
+						BaseColumns._ID, "name", "summary", 
 						}, 
-				null, null, null, null, "buy_flag, overall desc, name");
+				null, null, null, null, "name");
 		startManagingCursor(mCursor);
 
 		ListAdapter adapter = new SimpleCursorAdapter(
@@ -42,10 +41,10 @@ public class RecipeListActivity extends ListActivity {
 				R.layout.recipe_list_item,
 				mCursor,
 				new String[] { 
-						BaseColumns._ID, "name", "buy_flag", "overall",
+						BaseColumns._ID, "name",
 						},
 				new int[] { 
-						R.id._ID, R.id.name, R.id.buy_flag, R.id.rating_overall,
+						R.id._ID, R.id.name,
 						}
 				);  // Parallel array of which template objects to bind to those columns.
 		setListAdapter(adapter);

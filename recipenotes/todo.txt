@@ -1,7 +1,22 @@
+working prototype
+-----------------
+- populate database
+    - common ingredients
+    - common tags: main, salad, dessert, dip, appetizer, light, heavy, meat, fish, vegetarian
+- add recipe page
+    - add/delete ingredients
+        - ui
+        - save to database
+        - visible on list page
+    - add/delete tags
+    - add/delete photos
+
+
 next
-====
-- create database design in django
+----
 - backup database menu
 - restore database menu
 - download database script
 - fix the database handling part, there are leak exceptions, see android docs!
+
+

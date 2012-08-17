@@ -18,7 +18,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 	RecipeNotesSQLiteOpenHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		
-		//context.deleteDatabase(DATABASE_NAME);
+		context.deleteDatabase(DATABASE_NAME);
 		
 		String tmp_sql_create = null;
 		try {
@@ -39,9 +39,9 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(sql_create);
-		db.execSQL("insert into main_recipe (name) values ('Julienas');");
-		db.execSQL("insert into main_recipe (name) values ('Jura');");
-		db.execSQL("insert into main_recipe (name) values ('Bourgueil');");
+		db.execSQL("insert into main_recipe (name) values ('Steak');");
+		db.execSQL("insert into main_recipe (name) values ('Pasta with asparagus');");
+		db.execSQL("insert into main_recipe (name) values ('Cake');");
 	}
 
 	@Override

@@ -1,8 +1,5 @@
 working prototype
 -----------------
-- populate database
-    - common ingredients
-    - common tags: main, salad, dessert, dip, appetizer, light, heavy, meat, fish, vegetarian
 - add recipe page
     - add/delete ingredients
         - ui

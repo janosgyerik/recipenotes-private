@@ -1,0 +1,7 @@
+next
+====
+- create database design in django
+- backup database menu
+- restore database menu
+- download database script
+- fix the database handling part, there are leak exceptions, see android docs!

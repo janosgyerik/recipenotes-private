@@ -1,0 +1,50 @@
+recipes
+-------
+name
+summary
+date
+
+
+recipe ingredients
+------------------
+recipe
+ingredient
+amount
+unit
+display order
+
+
+recipe tags
+-----------
+recipe
+tag
+display order
+
+
+recipe steps
+------------
+recipe
+step
+display order
+
+
+ingredients
+-----------
+name
+
+
+favorites
+---------
+recipe
+display order
+
+
+units
+-----
+short name: tbsp tsp piece
+long name
+
+
+tags
+----
+name: main, salad, dessert, appetizer, light, heavy

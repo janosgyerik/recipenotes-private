@@ -20,6 +20,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.RatingBar;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -62,8 +63,25 @@ public class RecipeDetailsActivity extends Activity {
 
 		nameView = (EditText) findViewById(R.id.name);
 		
-		ingredientView = (AutoCompleteTextView) findViewById(R.id.ingredient);
+		SQLiteOpenHelper helper = new RecipeNotesSQLiteOpenHelper(this);
+		Cursor mCursor = helper.getWritableDatabase().query(
+				INGREDIENTS_TABLE_NAME, 
+				new String[]{ 
+						BaseColumns._ID, "name", 
+						}, 
+				null, null, null, null, "name");
+		startManagingCursor(mCursor);
+		ArrayList<String> ingredientsAutoCompleteList = new ArrayList<String>();
+		int i = mCursor.getColumnIndex("name");
+		while (mCursor.moveToNext()) {
+			ingredientsAutoCompleteList.add(mCursor.getString(i));
+		}
 
+		ArrayAdapter<String> ingredientsAutoCompleteAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_dropdown_item_1line, ingredientsAutoCompleteList);
+		ingredientView = (AutoCompleteTextView) findViewById(R.id.ingredient);
+		ingredientView.setAdapter(ingredientsAutoCompleteAdapter);
+		
 		//TODO: load from database
 		ArrayList<String> ingredientsList = new ArrayList<String>();
 		ingredientsListAdapter = new ArrayAdapter<String>(this,
@@ -78,6 +96,7 @@ public class RecipeDetailsActivity extends Activity {
 
 		helper = new RecipeNotesSQLiteOpenHelper(this);
 		pk = getIntent().getExtras().getString(BaseColumns._ID);
+		/*
 		if (pk != null) {
 			Cursor mCursor = helper.getWritableDatabase().query(
 					"main_recipe", 
@@ -120,6 +139,7 @@ public class RecipeDetailsActivity extends Activity {
 				afterTasteListView.setText(mCursor.getString(13));
 			}
 		}
+		*/
 
 		Button save = (Button) findViewById(R.id.btn_save);
 		save.setOnClickListener(new SaveButtonOnClickListener());

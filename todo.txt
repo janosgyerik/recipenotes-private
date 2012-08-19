@@ -5,7 +5,6 @@ working prototype
 - load recipe with ingredients
 - ingredients editing
     - delete on long press
-    - use ingredients list from db
 - add/delete photos
 - add/delete tags
 

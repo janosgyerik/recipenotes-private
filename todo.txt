@@ -1,15 +1,14 @@
 working prototype
 -----------------
-- update recipe with ingredients
 - ingredients editing
     - delete on long press
 - add/delete photos
-- add/delete tags
 
 
 prototype 2
 -----------
 - replace 'Add' with nice image
+- add/delete tags
 
 
 prototype 3

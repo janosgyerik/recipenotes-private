@@ -52,7 +52,7 @@ public class RecipeDetailsActivity extends Activity {
 
 		ArrayList<String> ingredientsAutoCompleteList = new ArrayList<String>();
 		{
-			Cursor ingredientsCursor = helper.getWritableDatabase().query(
+			Cursor ingredientsCursor = helper.getReadableDatabase().query(
 					INGREDIENTS_TABLE_NAME, 
 					new String[]{ BaseColumns._ID, "name", }, 
 					null, null, null, null, "name");
@@ -155,34 +155,9 @@ public class RecipeDetailsActivity extends Activity {
 				long ret = helper.getWritableDatabase().insert(RECIPES_TABLE_NAME, null, values);
 				Log.d(TAG, "insert recipe ret = " + ret);
 				if (ret >= 0) {
-					String recipeId = String.valueOf(ret);
+					recipeId = String.valueOf(ret);
+					saveIngredients();
 					Toast.makeText(getApplicationContext(), "Successfully added new recipe", Toast.LENGTH_SHORT).show();
-					for (int i = 0; i < ingredientsListAdapter.getCount(); ++i) {
-						String ingredient = ingredientsListAdapter.getItem(i);
-						Cursor ingredientIdCursor =
-								helper.getReadableDatabase().query(INGREDIENTS_TABLE_NAME,
-										new String[]{ BaseColumns._ID, },
-										"name = ?",
-										new String[]{ ingredient, },
-										null, null, null, "1");
-						startManagingCursor(ingredientIdCursor);
-						
-						String ingredientId;
-						if (ingredientIdCursor.moveToNext()) {
-							ingredientId = ingredientIdCursor.getString(0);
-							Log.d(TAG, "got ingredientId = " + ingredientId);
-						}
-						else {
-							ret = helper.getWritableDatabase().insert(RECIPES_TABLE_NAME, null, values);
-							Log.d(TAG, "insert ingredient ret = " + ret);
-							ingredientId = String.valueOf(ret);
-						}
-						values = new ContentValues();
-						values.put("recipe_id", recipeId);
-						values.put("ingredient_id", ingredientId);
-						ret = helper.getWritableDatabase().insert(RECIPE_INGREDIENTS_TABLE_NAME, null, values);
-						Log.d(TAG, "insert recipe ingredient ret = " + ret);
-					}
 				}
 				else {
 					Toast.makeText(getApplicationContext(), "Error adding new recipe", Toast.LENGTH_SHORT).show();
@@ -193,6 +168,8 @@ public class RecipeDetailsActivity extends Activity {
 						BaseColumns._ID + " = ?", new String[]{ recipeId });
 				Log.d(TAG, "update ret = " + ret);
 				if (ret == 1) {
+					helper.getWritableDatabase().delete(RECIPE_INGREDIENTS_TABLE_NAME, "recipe_id = ?", new String[]{ recipeId });
+					saveIngredients();
 					Toast.makeText(getApplicationContext(), "Successfully updated recipe", Toast.LENGTH_SHORT).show();
 				}
 				else {
@@ -238,6 +215,37 @@ public class RecipeDetailsActivity extends Activity {
 				setListViewHeightBasedOnChildren(ingredientsListView);
 				Toast.makeText(getApplicationContext(), "Added " + ingredient, Toast.LENGTH_SHORT).show();
 			}
+		}
+	}
+	
+	private void saveIngredients() {
+		for (int i = 0; i < ingredientsListAdapter.getCount(); ++i) {
+			String ingredient = ingredientsListAdapter.getItem(i);
+			Cursor ingredientIdCursor =
+					helper.getReadableDatabase().query(INGREDIENTS_TABLE_NAME,
+							new String[]{ BaseColumns._ID, },
+							"name = ?",
+							new String[]{ ingredient, },
+							null, null, null, "1");
+			startManagingCursor(ingredientIdCursor);
+			
+			String ingredientId;
+			if (ingredientIdCursor.moveToNext()) {
+				ingredientId = ingredientIdCursor.getString(0);
+				Log.d(TAG, "got ingredientId = " + ingredientId);
+			}
+			else {
+				ContentValues values = new ContentValues();
+				values.put("name", ingredient);
+				long ret = helper.getWritableDatabase().insert(INGREDIENTS_TABLE_NAME, null, values);
+				Log.d(TAG, "insert ingredient ret = " + ret);
+				ingredientId = String.valueOf(ret);
+			}
+			ContentValues values = new ContentValues();
+			values.put("recipe_id", recipeId);
+			values.put("ingredient_id", ingredientId);
+			long ret = helper.getWritableDatabase().insert(RECIPE_INGREDIENTS_TABLE_NAME, null, values);
+			Log.d(TAG, "insert recipe ingredient ret = " + ret);
 		}
 	}
 }

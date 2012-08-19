@@ -1,7 +1,5 @@
 working prototype
 -----------------
-- ingredients editing
-    - delete on long press
 - add/delete photos
 
 

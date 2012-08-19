@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemLongClickListener;
 
 public class RecipeDetailsActivity extends Activity {
 
@@ -75,6 +77,7 @@ public class RecipeDetailsActivity extends Activity {
 				android.R.layout.simple_list_item_1, ingredientsList);
 		ingredientsListView = (ListView) findViewById(R.id.ingredients);
 		ingredientsListView.setAdapter(ingredientsListAdapter);
+		ingredientsListView.setOnItemLongClickListener(new IngredientListItemLongClickListener());
 
 		Button addIngredientButton = (Button) findViewById(R.id.btn_add_ingredient);
 		addIngredientButton.setOnClickListener(new AddIngredientOnClickListener());
@@ -246,6 +249,16 @@ public class RecipeDetailsActivity extends Activity {
 			values.put("ingredient_id", ingredientId);
 			long ret = helper.getWritableDatabase().insert(RECIPE_INGREDIENTS_TABLE_NAME, null, values);
 			Log.d(TAG, "insert recipe ingredient ret = " + ret);
+		}
+	}
+	
+	class IngredientListItemLongClickListener implements OnItemLongClickListener {
+		@Override
+		public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+				int arg2, long arg3) {
+			ingredientsListAdapter.remove(ingredientsListAdapter.getItem(arg2));
+			setListViewHeightBasedOnChildren(ingredientsListView);
+			return true;
 		}
 	}
 }

@@ -1,6 +1,5 @@
 working prototype
 -----------------
-- load recipe with ingredients
 - update recipe with ingredients
 - ingredients editing
     - delete on long press
@@ -16,6 +15,11 @@ prototype 2
 prototype 3
 -----------
 - make it possible to reorder lists
+- more efficient handling of recipe editing
+    - make use of the _id of ingredients in the autocomplete list
+    - when saving, use the _id of ingredients from the autocomplete list
+    - ingredients that were entered manually, try to find in autocomplete list
+    - only lookup/insert ingredients if necessary
 
 
 next

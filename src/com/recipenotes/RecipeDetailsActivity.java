@@ -1,27 +1,42 @@
 package com.recipenotes;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.BaseColumns;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemLongClickListener;
 
 public class RecipeDetailsActivity extends Activity {
 
@@ -32,6 +47,8 @@ public class RecipeDetailsActivity extends Activity {
 	private static final String INGREDIENTS_TABLE_NAME = "main_ingredient";
 	private static final String RECIPE_INGREDIENTS_TABLE_NAME = "main_recipeingredient";
 
+	private static final int PICTURE_TAKEN = 1;
+
 	private String recipeId;
 	private SQLiteOpenHelper helper;
 
@@ -40,13 +57,29 @@ public class RecipeDetailsActivity extends Activity {
 	private AutoCompleteTextView ingredientView;
 
 	private ArrayAdapter<String> ingredientsListAdapter;
-	private ListView ingredientsListView; 
+	private ListView ingredientsListView;
+
+	private String mCurrentPhotoPath; 
+
+	private static String PICTURES_DIR = "RecipeNotes";
+
+	private static File storageDir = new File (
+			String.format("%s/%s",
+					Environment.getExternalStorageDirectory(),
+					PICTURES_DIR
+					));
+	static {
+		if (!storageDir.isDirectory()) {
+			storageDir.mkdirs();
+		}
+	}
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.recipe_details);
+		Log.d(TAG, "ENV: " + storageDir);
 
 		helper = new RecipeNotesSQLiteOpenHelper(this);
 
@@ -81,6 +114,9 @@ public class RecipeDetailsActivity extends Activity {
 
 		Button addIngredientButton = (Button) findViewById(R.id.btn_add_ingredient);
 		addIngredientButton.setOnClickListener(new AddIngredientOnClickListener());
+
+		Button addPhotoButton = (Button) findViewById(R.id.btn_add_photo);
+		addPhotoButton.setOnClickListener(new AddPhotoOnClickListener());
 
 		recipeId = getIntent().getExtras().getString(BaseColumns._ID);
 		if (recipeId != null) {
@@ -220,7 +256,7 @@ public class RecipeDetailsActivity extends Activity {
 			}
 		}
 	}
-	
+
 	private void saveIngredients() {
 		for (int i = 0; i < ingredientsListAdapter.getCount(); ++i) {
 			String ingredient = ingredientsListAdapter.getItem(i);
@@ -231,7 +267,7 @@ public class RecipeDetailsActivity extends Activity {
 							new String[]{ ingredient, },
 							null, null, null, "1");
 			startManagingCursor(ingredientIdCursor);
-			
+
 			String ingredientId;
 			if (ingredientIdCursor.moveToNext()) {
 				ingredientId = ingredientIdCursor.getString(0);
@@ -251,7 +287,7 @@ public class RecipeDetailsActivity extends Activity {
 			Log.d(TAG, "insert recipe ingredient ret = " + ret);
 		}
 	}
-	
+
 	class IngredientListItemLongClickListener implements OnItemLongClickListener {
 		@Override
 		public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
@@ -261,4 +297,70 @@ public class RecipeDetailsActivity extends Activity {
 			return true;
 		}
 	}
+
+	private void dispatchTakePictureIntent() {
+		/*
+		File f;
+		try {
+			f = createImageFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return;
+		}
+		*/
+		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		//takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+		startActivityForResult(takePictureIntent, PICTURE_TAKEN);
+	}
+
+	public static boolean isIntentAvailable(Context context, String action) {
+		final PackageManager packageManager = context.getPackageManager();
+		final Intent intent = new Intent(action);
+		List<ResolveInfo> list =
+				packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+		return list.size() > 0;
+	}
+
+	private void handleSmallCameraPhoto(Intent intent) {
+		Bundle extras = intent.getExtras();
+		Bitmap bitmap = (Bitmap) extras.get("data");
+		ImageView photo = new ImageView(this);
+		photo.setImageBitmap(bitmap);
+		LinearLayout layout = (LinearLayout) findViewById(R.id.photos);
+		layout.addView(photo);
+	}
+
+	private File createImageFile() throws IOException {
+		// Create an image file name
+		String timeStamp = 
+				new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+		String JPEG_FILE_PREFIX = "photo_";
+		String imageFileName = JPEG_FILE_PREFIX + timeStamp + "_";
+		String JPEG_FILE_SUFFIX = ".jpg";
+		File image = File.createTempFile(
+				imageFileName, 
+				JPEG_FILE_SUFFIX 
+				);
+		mCurrentPhotoPath = image.getAbsolutePath();
+		return image;
+	}
+
+	class AddPhotoOnClickListener implements OnClickListener {
+		@Override
+		public void onClick(View v) {
+			dispatchTakePictureIntent();
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+		case PICTURE_TAKEN:
+			handleSmallCameraPhoto(data);
+			break;
+		}
+	}
+
+	
 }

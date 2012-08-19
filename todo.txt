@@ -1,6 +1,11 @@
 working prototype
 -----------------
 - add/delete photos
+    - save photo file
+    - save photo filename in database
+    - load photos
+    - delete photos
+    - show first photo in listview
 
 
 prototype 2

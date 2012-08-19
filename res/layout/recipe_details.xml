@@ -54,6 +54,19 @@
                 android:layout_height="fill_parent" />
 
             <Button
+                android:id="@+id/btn_add_photo"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Add a photo" />
+            
+            <LinearLayout
+                android:id="@+id/photos"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                />
+            
+            <Button
                 android:id="@+id/btn_save"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"

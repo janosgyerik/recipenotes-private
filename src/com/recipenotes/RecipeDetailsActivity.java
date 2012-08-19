@@ -1,7 +1,6 @@
 package com.recipenotes;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -50,10 +49,10 @@ public class RecipeDetailsActivity extends Activity {
 	private MultiAutoCompleteTextView tasteListView;
 	private MultiAutoCompleteTextView afterTasteListView;
 
+	private AutoCompleteTextView ingredientView;
+	
 	private ArrayAdapter<String> ingredientsListAdapter;
-	private String[] ingredients;
-	private ArrayList<String> ingredientsList;
-	private ListView ingredientsListView;
+	private ListView ingredientsListView; 
 
 	/** Called when the activity is first created. */
 	@Override
@@ -62,62 +61,20 @@ public class RecipeDetailsActivity extends Activity {
 		setContentView(R.layout.recipe_details);
 
 		nameView = (EditText) findViewById(R.id.name);
+		
+		ingredientView = (AutoCompleteTextView) findViewById(R.id.ingredient);
 
-		ingredients = new String[] {"Avocado", "Tomato"};
-		ingredientsList = new ArrayList<String>();
-		ingredientsList.addAll(Arrays.asList(ingredients));
+		//TODO: load from database
+		ArrayList<String> ingredientsList = new ArrayList<String>();
 		ingredientsListAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, ingredientsList);
 		ingredientsListView = (ListView) findViewById(R.id.ingredients);
 		ingredientsListView.setAdapter(ingredientsListAdapter);
-		ingredientsListAdapter.add("Lettuce");
+		ingredientsListAdapter.add("Avocado");
 		setListViewHeightBasedOnChildren(ingredientsListView);
-		//
-		//		ArrayAdapter<String> recipeTypeListAdapter = new ArrayAdapter<String>(this,
-		//				android.R.layout.simple_spinner_item, RECIPE_TYPE_CHOICES);
-		//		recipeTypeListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		//		recipeTypeView = (Spinner) findViewById(R.id.recipe_type);
-		//		recipeTypeView.setAdapter(recipeTypeListAdapter);
-		//		
-		//		ArrayAdapter<String> buyFlagListAdapter = new ArrayAdapter<String>(this,
-		//				android.R.layout.simple_spinner_item, BUY_FLAG_CHOICES);
-		//		buyFlagListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		//		buyFlagView = (Spinner) findViewById(R.id.buy_flag);
-		//		buyFlagView.setAdapter(buyFlagListAdapter);
-		//		
-		//		ArrayAdapter<String> regionListAdapter = new ArrayAdapter<String>(this,
-		//				android.R.layout.simple_dropdown_item_1line, REGION_CHOICES);
-		//		regionView = (AutoCompleteTextView) findViewById(R.id.region);
-		//		regionView.setAdapter(regionListAdapter);
-		//
-		//		ArrayAdapter<String> grapeListAdapter = new ArrayAdapter<String>(this,
-		//				android.R.layout.simple_dropdown_item_1line, GRAPE_CHOICES);
-		//		grapeView = (MultiAutoCompleteTextView) findViewById(R.id.grape);
-		//		grapeView.setAdapter(grapeListAdapter);
-		//		grapeView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-		//		
-		//		aromaRatingView = (RatingBar)findViewById(R.id.rating_aroma);
-		//		tasteRatingView = (RatingBar)findViewById(R.id.rating_taste);
-		//		afterTasteRatingView = (RatingBar)findViewById(R.id.rating_after_taste);
-		//		overallRatingView = (RatingBar)findViewById(R.id.rating_overall);
-		//
-		//		ArrayAdapter<String> aromaListAdapter = new ArrayAdapter<String>(this,
-		//				android.R.layout.simple_dropdown_item_1line, TASTE_CHOICES);
-		//		aromaListView = (MultiAutoCompleteTextView) findViewById(R.id.aroma_list);
-		//		aromaListView.setAdapter(aromaListAdapter);
-		//		aromaListView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-		//		
-		//		ArrayAdapter<String> tasteListAdapter = new ArrayAdapter<String>(this,
-		//				android.R.layout.simple_dropdown_item_1line, TASTE_CHOICES);
-		//		tasteListView = (MultiAutoCompleteTextView) findViewById(R.id.taste_list);
-		//		tasteListView.setAdapter(tasteListAdapter);
-		//		tasteListView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-		//		
-		//		ArrayAdapter<String> afterTasteListAdapter = new ArrayAdapter<String>(this,
-		//				android.R.layout.simple_dropdown_item_1line, TASTE_CHOICES);
-		//		afterTasteListView = (MultiAutoCompleteTextView) findViewById(R.id.after_taste_list);
-		//		afterTasteListView.setAdapter(afterTasteListAdapter);
-		//		afterTasteListView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+
+		Button addIngredientButton = (Button) findViewById(R.id.btn_add_ingredient);
+		addIngredientButton.setOnClickListener(new AddIngredientOnClickListener());
 
 		helper = new RecipeNotesSQLiteOpenHelper(this);
 		pk = getIntent().getExtras().getString(BaseColumns._ID);
@@ -252,7 +209,8 @@ public class RecipeDetailsActivity extends Activity {
 	}
 
 	static String capitalize(String name) {
-		if (name == null || name.length() < 1) return name;
+		if (name == null || name.trim().length() < 1) return name;
+		name = name.trim();
 		return Character.toUpperCase(name.charAt(0)) + name.substring(1);
 	}
 
@@ -273,5 +231,18 @@ public class RecipeDetailsActivity extends Activity {
 		ViewGroup.LayoutParams params = listView.getLayoutParams();
 		params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
 		listView.setLayoutParams(params);
+	}
+
+	class AddIngredientOnClickListener implements OnClickListener {
+		@Override
+		public void onClick(View v) {
+			String ingredient = capitalize(ingredientView.getText().toString());
+			if (ingredient.length() > 0) {
+				ingredientsListAdapter.add(ingredient);
+				ingredientView.setText("");
+				setListViewHeightBasedOnChildren(ingredientsListView);
+				Toast.makeText(getApplicationContext(), "Added " + ingredient, Toast.LENGTH_SHORT).show();
+			}
+		}
 	}
 }

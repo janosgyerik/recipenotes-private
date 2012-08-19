@@ -1,18 +1,23 @@
 working prototype
 -----------------
-- add/delete ingredients
-    - add on +
-    - remove on -, test well:
-        - remove first
-        - remove last
+- save recipe with ingredients
+- show recipe with ingredients
+- load recipe with ingredients
+- ingredients editing
+    - delete on long press
     - use ingredients list from db
-    - replace +- with nice images/glyphs
-- add recipe page
-    - add/delete ingredients
-    - add/delete tags
-    - add/delete photos
-    - save to database
-    - visible on list page
+- add/delete photos
+- add/delete tags
+
+
+prototype 2
+-----------
+- replace 'Add' with nice image
+
+
+prototype 3
+-----------
+- make it possible to reorder lists
 
 
 next

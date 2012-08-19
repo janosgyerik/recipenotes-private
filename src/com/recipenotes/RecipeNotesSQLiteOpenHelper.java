@@ -20,7 +20,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 	RecipeNotesSQLiteOpenHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		
-		context.deleteDatabase(DATABASE_NAME);
+		//context.deleteDatabase(DATABASE_NAME);
 		
 		sqlCreateStatements = new LinkedList<String>();
 		try {
@@ -46,9 +46,9 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 			db.execSQL(sql);
 		}
 		// dummy recipes
-		db.execSQL("insert into main_recipe (name) values ('Steak');");
-		db.execSQL("insert into main_recipe (name) values ('Pasta with asparagus');");
-		db.execSQL("insert into main_recipe (name) values ('Cake');");
+		db.execSQL("insert into main_recipe (name, display_name) values ('Steak', 'Steak');");
+		db.execSQL("insert into main_recipe (name, display_name) values ('Pasta', 'Pasta with asparagus');");
+		db.execSQL("insert into main_recipe (name, display_name) values ('Cake', 'Cake with Lemon marmalade');");
 		
 		// initial ingredients collection
 		db.execSQL("insert into main_ingredient (name) values ('Avocado');");

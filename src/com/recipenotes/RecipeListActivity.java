@@ -31,7 +31,7 @@ public class RecipeListActivity extends ListActivity {
 		Cursor mCursor = helper.getWritableDatabase().query(
 				"main_recipe", 
 				new String[]{ 
-						BaseColumns._ID, "name", "summary", 
+						BaseColumns._ID, "name", "summary", "display_name",
 						}, 
 				null, null, null, null, "name");
 		startManagingCursor(mCursor);
@@ -41,7 +41,7 @@ public class RecipeListActivity extends ListActivity {
 				R.layout.recipe_list_item,
 				mCursor,
 				new String[] { 
-						BaseColumns._ID, "name",
+						BaseColumns._ID, "display_name",
 						},
 				new int[] { 
 						R.id._ID, R.id.name,

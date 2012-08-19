@@ -135,9 +135,28 @@ public class RecipeDetailsActivity extends Activity {
 		@Override
 		public void onClick(View view) {
 			ContentValues values = new ContentValues();
+			
 			String name = capitalize(nameView.getText().toString());
-
 			values.put("name", name);
+			
+			// display_name
+			String displayName;
+			if (name.length() > 0) {
+				displayName = name + " with ";
+			}
+			else {
+				displayName = "";
+			}
+			for (int i = 0; i < ingredientsListAdapter.getCount(); ++i) {
+				displayName += ingredientsListAdapter.getItem(i);
+				if (i < ingredientsListAdapter.getCount() - 1) {
+					displayName += ", ";
+				}
+			}
+			values.put("display_name", displayName);
+			
+			// display_image
+			//TODO
 
 			if (pk == null) {
 				long ret = helper.getWritableDatabase().insert(RECIPES_TABLE_NAME, null, values);

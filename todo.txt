@@ -1,6 +1,5 @@
 working prototype
 -----------------
-- show recipe with ingredients
 - load recipe with ingredients
 - update recipe with ingredients
 - ingredients editing

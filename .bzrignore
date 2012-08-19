@@ -1,2 +1,3 @@
 gen
 bin
+./recipenotes/sqlite3.db

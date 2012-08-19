@@ -18,9 +18,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.MultiAutoCompleteTextView;
-import android.widget.RatingBar;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -33,25 +30,13 @@ public class RecipeDetailsActivity extends Activity {
 	private static final String INGREDIENTS_TABLE_NAME = "main_ingredient";
 	private static final String RECIPE_INGREDIENTS_TABLE_NAME = "main_recipeingredient";
 
-	private SQLiteOpenHelper helper;
 	private String pk;
+	private SQLiteOpenHelper helper;
 
 	private EditText nameView;
-	private Spinner yearView;
-	private Spinner recipeTypeView;
-	private Spinner buyFlagView;
-	private AutoCompleteTextView regionView;
-	private MultiAutoCompleteTextView grapeView;
-	private RatingBar aromaRatingView;
-	private RatingBar tasteRatingView;
-	private RatingBar afterTasteRatingView;
-	private RatingBar overallRatingView;
-	private MultiAutoCompleteTextView aromaListView;
-	private MultiAutoCompleteTextView tasteListView;
-	private MultiAutoCompleteTextView afterTasteListView;
 
 	private AutoCompleteTextView ingredientView;
-	
+
 	private ArrayAdapter<String> ingredientsListAdapter;
 	private ListView ingredientsListView; 
 
@@ -61,27 +46,29 @@ public class RecipeDetailsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.recipe_details);
 
+		helper = new RecipeNotesSQLiteOpenHelper(this);
+
 		nameView = (EditText) findViewById(R.id.name);
-		
-		SQLiteOpenHelper helper = new RecipeNotesSQLiteOpenHelper(this);
-		Cursor mCursor = helper.getWritableDatabase().query(
+
+		Cursor cursor = helper.getWritableDatabase().query(
 				INGREDIENTS_TABLE_NAME, 
 				new String[]{ 
 						BaseColumns._ID, "name", 
-						}, 
+				}, 
 				null, null, null, null, "name");
-		startManagingCursor(mCursor);
+		startManagingCursor(cursor);
+
 		ArrayList<String> ingredientsAutoCompleteList = new ArrayList<String>();
-		int i = mCursor.getColumnIndex("name");
-		while (mCursor.moveToNext()) {
-			ingredientsAutoCompleteList.add(mCursor.getString(i));
+		int i = cursor.getColumnIndex("name");
+		while (cursor.moveToNext()) {
+			ingredientsAutoCompleteList.add(cursor.getString(i));
 		}
 
 		ArrayAdapter<String> ingredientsAutoCompleteAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_dropdown_item_1line, ingredientsAutoCompleteList);
 		ingredientView = (AutoCompleteTextView) findViewById(R.id.ingredient);
 		ingredientView.setAdapter(ingredientsAutoCompleteAdapter);
-		
+
 		//TODO: load from database
 		ArrayList<String> ingredientsList = new ArrayList<String>();
 		ingredientsListAdapter = new ArrayAdapter<String>(this,
@@ -94,9 +81,7 @@ public class RecipeDetailsActivity extends Activity {
 		Button addIngredientButton = (Button) findViewById(R.id.btn_add_ingredient);
 		addIngredientButton.setOnClickListener(new AddIngredientOnClickListener());
 
-		helper = new RecipeNotesSQLiteOpenHelper(this);
 		pk = getIntent().getExtras().getString(BaseColumns._ID);
-		/*
 		if (pk != null) {
 			Cursor mCursor = helper.getWritableDatabase().query(
 					"main_recipe", 
@@ -128,21 +113,11 @@ public class RecipeDetailsActivity extends Activity {
 				}
 
 				nameView.setText(mCursor.getString(1));
-				regionView.setText(mCursor.getString(5));
-				grapeView.setText(mCursor.getString(6));
-				aromaRatingView.setRating(mCursor.getInt(7));
-				tasteRatingView.setRating(mCursor.getInt(8));
-				afterTasteRatingView.setRating(mCursor.getInt(9));
-				overallRatingView.setRating(mCursor.getInt(10));
-				aromaListView.setText(mCursor.getString(11));
-				tasteListView.setText(mCursor.getString(12));
-				afterTasteListView.setText(mCursor.getString(13));
 			}
 		}
-		*/
 
 		Button save = (Button) findViewById(R.id.btn_save);
-		save.setOnClickListener(new SaveButtonOnClickListener());
+		save.setOnClickListener(new SaveRecipeOnClickListener());
 	}
 
 	void setSpinnerValue(Spinner spinner, String value, String[] choices) {
@@ -156,58 +131,44 @@ public class RecipeDetailsActivity extends Activity {
 		}
 	}
 
-	class SaveButtonOnClickListener implements OnClickListener {
-
+	class SaveRecipeOnClickListener implements OnClickListener {
 		@Override
 		public void onClick(View view) {
 			ContentValues values = new ContentValues();
 			String name = capitalize(nameView.getText().toString());
-			String year = yearView.getSelectedItem().toString();
-			String recipeType = capitalize(recipeTypeView.getSelectedItem().toString());
-			String buyFlag;
-			switch (buyFlagView.getSelectedItemPosition()) {
-			case 0:
-				buyFlag = "2"; // not this time
-				break;
-			case 1:
-				buyFlag = "0"; // buy
-				break;
-			case 2:
-				buyFlag = "1"; // maybe
-				break;
-			default:
-				buyFlag = "3"; // never
-			}
-			String region = capitalize(regionView.getText().toString());
-			String grape = capitalize(grapeView.getText().toString());
-			float aromaRating = aromaRatingView.getRating();
-			float tasteRating = tasteRatingView.getRating();
-			float afterTasteRating = afterTasteRatingView.getRating();
-			float overallRating = overallRatingView.getRating();
-			String aromaList = aromaListView.getText().toString();
-			String tasteList = tasteListView.getText().toString();
-			String afterTasteList = afterTasteListView.getText().toString();
 
 			values.put("name", name);
-			values.put("year", year);
-			values.put("recipe_type", recipeType);
-			values.put("buy_flag", buyFlag);
-			values.put("region", region);
-			values.put("grape", grape);
-			values.put("aroma", aromaRating);
-			values.put("taste", tasteRating);
-			values.put("after_taste", afterTasteRating);
-			values.put("overall", overallRating);
-			values.put("aroma_list", aromaList);
-			values.put("taste_list", tasteList);
-			values.put("after_taste_list", afterTasteList);
 
 			if (pk == null) {
 				long ret = helper.getWritableDatabase().insert(RECIPES_TABLE_NAME, null, values);
-				Log.d(TAG, "insert ret = " + ret);
+				Log.d(TAG, "insert recipe ret = " + ret);
 				if (ret >= 0) {
-					pk = String.valueOf(ret);
+					String recipeId = String.valueOf(ret);
 					Toast.makeText(getApplicationContext(), "Successfully added new recipe", Toast.LENGTH_SHORT).show();
+					for (int i = 0; i < ingredientsListAdapter.getCount(); ++i) {
+						String ingredient = ingredientsListAdapter.getItem(i);
+						Cursor ingredientIdCursor =
+								helper.getReadableDatabase().query(INGREDIENTS_TABLE_NAME,
+										new String[]{ BaseColumns._ID, },
+										"name = ?",
+										new String[]{ ingredient, },
+										null, null, null, "1");
+						String ingredientId;
+						if (ingredientIdCursor.moveToNext()) {
+							ingredientId = ingredientIdCursor.getString(0);
+							Log.d(TAG, "got ingredientId = " + ingredientId);
+						}
+						else {
+							ret = helper.getWritableDatabase().insert(RECIPES_TABLE_NAME, null, values);
+							Log.d(TAG, "insert ingredient ret = " + ret);
+							ingredientId = String.valueOf(ret);
+						}
+						values = new ContentValues();
+						values.put("recipe_id", recipeId);
+						values.put("ingredient_id", ingredientId);
+						ret = helper.getWritableDatabase().insert(RECIPE_INGREDIENTS_TABLE_NAME, null, values);
+						Log.d(TAG, "insert recipe ingredient ret = " + ret);
+					}
 				}
 				else {
 					Toast.makeText(getApplicationContext(), "Error adding new recipe", Toast.LENGTH_SHORT).show();

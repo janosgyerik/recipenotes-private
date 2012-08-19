@@ -1,8 +1,8 @@
 working prototype
 -----------------
-- save recipe with ingredients
 - show recipe with ingredients
 - load recipe with ingredients
+- update recipe with ingredients
 - ingredients editing
     - delete on long press
 - add/delete photos

@@ -20,7 +20,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 	RecipeNotesSQLiteOpenHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		
-		context.deleteDatabase(DATABASE_NAME);
+		//context.deleteDatabase(DATABASE_NAME);
 		
 		sqlCreateStatements = new LinkedList<String>();
 		try {

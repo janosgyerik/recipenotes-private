@@ -1,5 +1,8 @@
 package com.recipenotes;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -9,10 +12,13 @@ import android.provider.BaseColumns;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
@@ -22,8 +28,10 @@ public class RecipeDetailsActivity extends Activity {
 
 	// Debugging
 	private static final String TAG = "RecipeDetailsActivity";
-	
-	private static final String TABLE_NAME = "main_recipe";
+
+	private static final String RECIPES_TABLE_NAME = "main_recipe";
+	private static final String INGREDIENTS_TABLE_NAME = "main_ingredient";
+	private static final String RECIPE_INGREDIENTS_TABLE_NAME = "main_recipeingredient";
 
 	private SQLiteOpenHelper helper;
 	private String pk;
@@ -42,67 +50,75 @@ public class RecipeDetailsActivity extends Activity {
 	private MultiAutoCompleteTextView tasteListView;
 	private MultiAutoCompleteTextView afterTasteListView;
 
-	
+	private ArrayAdapter<String> ingredientsListAdapter;
+	private String[] ingredients;
+	private ArrayList<String> ingredientsList;
+	private ListView ingredientsListView;
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.recipe_details);
-		
+
 		nameView = (EditText) findViewById(R.id.name);
-		
-//		ArrayAdapter<String> yearListAdapter = new ArrayAdapter<String>(this,
-//				android.R.layout.simple_spinner_item, YEAR_CHOICES);
-//		yearListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//		yearView = (Spinner) findViewById(R.id.year);
-//		yearView.setAdapter(yearListAdapter);
-//
-//		ArrayAdapter<String> recipeTypeListAdapter = new ArrayAdapter<String>(this,
-//				android.R.layout.simple_spinner_item, RECIPE_TYPE_CHOICES);
-//		recipeTypeListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//		recipeTypeView = (Spinner) findViewById(R.id.recipe_type);
-//		recipeTypeView.setAdapter(recipeTypeListAdapter);
-//		
-//		ArrayAdapter<String> buyFlagListAdapter = new ArrayAdapter<String>(this,
-//				android.R.layout.simple_spinner_item, BUY_FLAG_CHOICES);
-//		buyFlagListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//		buyFlagView = (Spinner) findViewById(R.id.buy_flag);
-//		buyFlagView.setAdapter(buyFlagListAdapter);
-//		
-//		ArrayAdapter<String> regionListAdapter = new ArrayAdapter<String>(this,
-//				android.R.layout.simple_dropdown_item_1line, REGION_CHOICES);
-//		regionView = (AutoCompleteTextView) findViewById(R.id.region);
-//		regionView.setAdapter(regionListAdapter);
-//
-//		ArrayAdapter<String> grapeListAdapter = new ArrayAdapter<String>(this,
-//				android.R.layout.simple_dropdown_item_1line, GRAPE_CHOICES);
-//		grapeView = (MultiAutoCompleteTextView) findViewById(R.id.grape);
-//		grapeView.setAdapter(grapeListAdapter);
-//		grapeView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-//		
-//		aromaRatingView = (RatingBar)findViewById(R.id.rating_aroma);
-//		tasteRatingView = (RatingBar)findViewById(R.id.rating_taste);
-//		afterTasteRatingView = (RatingBar)findViewById(R.id.rating_after_taste);
-//		overallRatingView = (RatingBar)findViewById(R.id.rating_overall);
-//
-//		ArrayAdapter<String> aromaListAdapter = new ArrayAdapter<String>(this,
-//				android.R.layout.simple_dropdown_item_1line, TASTE_CHOICES);
-//		aromaListView = (MultiAutoCompleteTextView) findViewById(R.id.aroma_list);
-//		aromaListView.setAdapter(aromaListAdapter);
-//		aromaListView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-//		
-//		ArrayAdapter<String> tasteListAdapter = new ArrayAdapter<String>(this,
-//				android.R.layout.simple_dropdown_item_1line, TASTE_CHOICES);
-//		tasteListView = (MultiAutoCompleteTextView) findViewById(R.id.taste_list);
-//		tasteListView.setAdapter(tasteListAdapter);
-//		tasteListView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-//		
-//		ArrayAdapter<String> afterTasteListAdapter = new ArrayAdapter<String>(this,
-//				android.R.layout.simple_dropdown_item_1line, TASTE_CHOICES);
-//		afterTasteListView = (MultiAutoCompleteTextView) findViewById(R.id.after_taste_list);
-//		afterTasteListView.setAdapter(afterTasteListAdapter);
-//		afterTasteListView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-		
+
+		ingredients = new String[] {"Avocado", "Tomato"};
+		ingredientsList = new ArrayList<String>();
+		ingredientsList.addAll(Arrays.asList(ingredients));
+		ingredientsListAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_1, ingredientsList);
+		ingredientsListView = (ListView) findViewById(R.id.ingredients);
+		ingredientsListView.setAdapter(ingredientsListAdapter);
+		ingredientsListAdapter.add("Lettuce");
+		setListViewHeightBasedOnChildren(ingredientsListView);
+		//
+		//		ArrayAdapter<String> recipeTypeListAdapter = new ArrayAdapter<String>(this,
+		//				android.R.layout.simple_spinner_item, RECIPE_TYPE_CHOICES);
+		//		recipeTypeListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		//		recipeTypeView = (Spinner) findViewById(R.id.recipe_type);
+		//		recipeTypeView.setAdapter(recipeTypeListAdapter);
+		//		
+		//		ArrayAdapter<String> buyFlagListAdapter = new ArrayAdapter<String>(this,
+		//				android.R.layout.simple_spinner_item, BUY_FLAG_CHOICES);
+		//		buyFlagListAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		//		buyFlagView = (Spinner) findViewById(R.id.buy_flag);
+		//		buyFlagView.setAdapter(buyFlagListAdapter);
+		//		
+		//		ArrayAdapter<String> regionListAdapter = new ArrayAdapter<String>(this,
+		//				android.R.layout.simple_dropdown_item_1line, REGION_CHOICES);
+		//		regionView = (AutoCompleteTextView) findViewById(R.id.region);
+		//		regionView.setAdapter(regionListAdapter);
+		//
+		//		ArrayAdapter<String> grapeListAdapter = new ArrayAdapter<String>(this,
+		//				android.R.layout.simple_dropdown_item_1line, GRAPE_CHOICES);
+		//		grapeView = (MultiAutoCompleteTextView) findViewById(R.id.grape);
+		//		grapeView.setAdapter(grapeListAdapter);
+		//		grapeView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+		//		
+		//		aromaRatingView = (RatingBar)findViewById(R.id.rating_aroma);
+		//		tasteRatingView = (RatingBar)findViewById(R.id.rating_taste);
+		//		afterTasteRatingView = (RatingBar)findViewById(R.id.rating_after_taste);
+		//		overallRatingView = (RatingBar)findViewById(R.id.rating_overall);
+		//
+		//		ArrayAdapter<String> aromaListAdapter = new ArrayAdapter<String>(this,
+		//				android.R.layout.simple_dropdown_item_1line, TASTE_CHOICES);
+		//		aromaListView = (MultiAutoCompleteTextView) findViewById(R.id.aroma_list);
+		//		aromaListView.setAdapter(aromaListAdapter);
+		//		aromaListView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+		//		
+		//		ArrayAdapter<String> tasteListAdapter = new ArrayAdapter<String>(this,
+		//				android.R.layout.simple_dropdown_item_1line, TASTE_CHOICES);
+		//		tasteListView = (MultiAutoCompleteTextView) findViewById(R.id.taste_list);
+		//		tasteListView.setAdapter(tasteListAdapter);
+		//		tasteListView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+		//		
+		//		ArrayAdapter<String> afterTasteListAdapter = new ArrayAdapter<String>(this,
+		//				android.R.layout.simple_dropdown_item_1line, TASTE_CHOICES);
+		//		afterTasteListView = (MultiAutoCompleteTextView) findViewById(R.id.after_taste_list);
+		//		afterTasteListView.setAdapter(afterTasteListAdapter);
+		//		afterTasteListView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+
 		helper = new RecipeNotesSQLiteOpenHelper(this);
 		pk = getIntent().getExtras().getString(BaseColumns._ID);
 		if (pk != null) {
@@ -113,7 +129,7 @@ public class RecipeDetailsActivity extends Activity {
 							"region", "grape",
 							"aroma", "taste", "after_taste", "overall",
 							"aroma_list", "taste_list", "after_taste_list",
-							}, 
+					}, 
 					BaseColumns._ID + " = ?", new String[]{ pk }, null, null, null);
 			startManagingCursor(mCursor);
 
@@ -136,9 +152,6 @@ public class RecipeDetailsActivity extends Activity {
 				}
 
 				nameView.setText(mCursor.getString(1));
-				setSpinnerValue(yearView, mCursor.getString(2), YEAR_CHOICES);
-				setSpinnerValue(recipeTypeView, mCursor.getString(3), RECIPE_TYPE_CHOICES);
-				setSpinnerValue(buyFlagView, buyFlag, BUY_FLAG_CHOICES);
 				regionView.setText(mCursor.getString(5));
 				grapeView.setText(mCursor.getString(6));
 				aromaRatingView.setRating(mCursor.getInt(7));
@@ -150,11 +163,11 @@ public class RecipeDetailsActivity extends Activity {
 				afterTasteListView.setText(mCursor.getString(13));
 			}
 		}
-		
+
 		Button save = (Button) findViewById(R.id.btn_save);
 		save.setOnClickListener(new SaveButtonOnClickListener());
 	}
-	
+
 	void setSpinnerValue(Spinner spinner, String value, String[] choices) {
 		int position = 0;
 		for (String choice : choices) {
@@ -165,7 +178,7 @@ public class RecipeDetailsActivity extends Activity {
 			++position;
 		}
 	}
-	
+
 	class SaveButtonOnClickListener implements OnClickListener {
 
 		@Override
@@ -197,7 +210,7 @@ public class RecipeDetailsActivity extends Activity {
 			String aromaList = aromaListView.getText().toString();
 			String tasteList = tasteListView.getText().toString();
 			String afterTasteList = afterTasteListView.getText().toString();
-			
+
 			values.put("name", name);
 			values.put("year", year);
 			values.put("recipe_type", recipeType);
@@ -213,7 +226,7 @@ public class RecipeDetailsActivity extends Activity {
 			values.put("after_taste_list", afterTasteList);
 
 			if (pk == null) {
-				long ret = helper.getWritableDatabase().insert(TABLE_NAME, null, values);
+				long ret = helper.getWritableDatabase().insert(RECIPES_TABLE_NAME, null, values);
 				Log.d(TAG, "insert ret = " + ret);
 				if (ret >= 0) {
 					pk = String.valueOf(ret);
@@ -224,7 +237,7 @@ public class RecipeDetailsActivity extends Activity {
 				}
 			}
 			else {
-				int ret = helper.getWritableDatabase().update(TABLE_NAME, values, 
+				int ret = helper.getWritableDatabase().update(RECIPES_TABLE_NAME, values, 
 						BaseColumns._ID + " = ?", new String[]{ pk });
 				Log.d(TAG, "update ret = " + ret);
 				if (ret == 1) {
@@ -237,241 +250,28 @@ public class RecipeDetailsActivity extends Activity {
 			finish();
 		}
 	}
-	
+
 	static String capitalize(String name) {
 		if (name == null || name.length() < 1) return name;
 		return Character.toUpperCase(name.charAt(0)) + name.substring(1);
 	}
-	
-	
-	private static final String[] TASTE_CHOICES = new String[] {
-		"Acacia",
-		"Acidic",
-		"Acetic acid",
-		"Aged",
-		"Alcohol",
-		"Almond",
-		"Animal",
-		"Apple",
-		"Aromatic",
-		"Fruity",
-		"Berry",
-		"Blackberry",
-		"Blackcurrant",
-		"Bland",
-		"Bread",
-		"Brett",
-		"Butter",
-		"Cedar",
-		"Character",
-		"Cheese",
-		"Cherry",
-		"Chocolate",
-		"Cinnamon",
-		"Citrus",
-		"Clove",
-		"Coconut",
-		"Coffee",
-		"Complex",
-		"Corked",
-		"Cut grass",
-		"Developed",
-		"Dill",
-		"Dried Herbs",
-		"Dry apricot",
-		"Earthy",
-		"Ethyl acetate",
-		"Ethyl-phenol",
-		"Eucalyptus",
-		"Flint",
-		"Floral",
-		"Fresh Herbs",
-		"Grapefruit",
-		"Green apple",
-		"Green pepper",
-		"Guava",
-		"Hawthorn",
-		"Hay",
-		"Hazelnut",
-		"Heat",
-		"Heavy",
-		"Herbaceous",
-		"Honey",
-		"Intense",
-		"Interesting",
-		"Jasmine",
-		"Kerosene",
-		"Late harvest/Botrytis",
-		"Lavender",
-		"Leather",
-		"Leaves",
-		"Lemon",
-		"Light",
-		"Lime",
-		"Linden",
-		"Lychee",
-		"Madeira",
-		"Malolactic fermentation",
-		"Mandarine",
-		"Mature",
-		"Medium",
-		"Melon",
-		"Mild",
-		"Minerals",
-		"Mint",
-		"Mushrooms",
-		"Musk",
-		"Nail polish remover",
-		"Nice",
-		"Nutmeg",
-		"Nuts",
-		"Oak aging",
-		"Oak",
-		"Old",
-		"Old band-aid",
-		"Onion",
-		"Orange blossom",
-		"Orange peel",
-		"Oxygen",
-		"Passion fruit",
-		"Peach",
-		"Pear",
-		"Pepper",
-		"Pine",
-		"Pineapple",
-		"Pleasant",
-		"Plum",
-		"Powerful",
-		"Prune",
-		"Pungent",
-		"Red berries",
-		"Rich",
-		"Rose",
-		"Rotten egg",
-		"Round",
-		"Rubber",
-		"Sandalwood",
-		"Sherry",
-		"Smoked",
-		"Soft",
-		"Sour",
-		"Spicy",
-		"Stinging",
-		"Strawberry",
-		"Strong",
-		"Sulfides",
-		"Sweet corn",
-		"Sweet",
-		"Tar",
-		"Thyme",
-		"Toast",
-		"Tobacco",
-		"Tomato",
-		"Tree fruits",
-		"Tree moss",
-		"Trichloroanisole",
-		"Tropical fruits",
-		"Truffle",
-		"Undergrowth",
-		"Uninteresting",
-		"Vanilla",
-		"Vegetables",
-		"Vinegar",
-		"Violet",
-		"Volatile acidity",
-		"White fruits",
-		"Wholesome",
-		"Wood",
-		"WOW!",
-		"Yeast",
-		"Yoghurt",
-		"Young",
-	};
-	
-	private static final String[] REGION_CHOICES = new String[] {
-		"Alsace",
-		"Beaujolais",
-		"Bordelais",
-		"Bordeaux",
-		"Bourgogne",
-		"Burgundy",
-		"Champagne",
-		"Charentes",
-		"C™tes du Rh™ne",
-		"Cotes du Rhone",
-		"Corse",
-		"Corsica",
-		"Jura",
-		"Languedoc Roussillon",
-		"Loire Valley",
-		"Provence",
-		"Rh™ne",
-		"Rhone",
-		"Savoie",
-		"Savoy",
-		"Sud Ouest",
-		"South West",
-		"Bergerac",
-		"Dordogne",
-		"Garonne",
-		"Cahors",
-		"Gascogne",
-		"Gascony",
-		"BŽarn",
-		"Bearn",
-		"Juranon",
-		"Jurancon",
-		"Basque Country",
-		"IroulŽguy",
-		"Irouleguy",
-		"Val de Loire",
-		"VallŽe du Rh™ne",
-		"Australia",
-		"California",
-		"Germany",
-		"New Zealand",
-	};
-	
-	private static final String[] GRAPE_CHOICES = new String[] {
-		"Cabernet Franc",
-		"Cabernet Sauvignon",
-		"Chardonnay",
-		"Chenin Blanc",
-		"Colombard",
-		"Gamay",
-		"Gewurztraminer",
-		"Grenache",
-		"Marsanne",
-		"Merlot",
-		"Muscat",
-		"Nebbiolo",
-		"Pinot Gris",
-		"Pinot Noir",
-		"Riesling",
-		"Sangiovese",
-		"Sauvignon Blanc",
-		"Semillon",
-		"Syrah",
-		"Shiraz",
-		"Tempranillo",
-		"Verdelho",
-		"Viognier",
-		"Zinfandel",
-	};
-	
-	private static final String[] YEAR_CHOICES = new String[] {
-		"2012", "2011", "2010", "2009", "2008", "2007", "2006", "2005",
-		"2004", "2003", "2002", "2001", "2000", "1999", "1998", "1997",
-	};
 
-	private static final String[] RECIPE_TYPE_CHOICES = new String[] {
-		"red", "white", "rose", "orange",
-		"gray", "yellow", "tawny", "other",
-	};
-	
-	private static final String[] BUY_FLAG_CHOICES = new String[] {
-		"-", "Buy", "Maybe", "Never",
-	};
-	
+	public static void setListViewHeightBasedOnChildren(ListView listView) {
+		ListAdapter listAdapter = listView.getAdapter(); 
+		if (listAdapter == null) {
+			// pre-condition
+			return;
+		}
 
+		int totalHeight = 0;
+		for (int i = 0; i < listAdapter.getCount(); i++) {
+			View listItem = listAdapter.getView(i, null, listView);
+			listItem.measure(0, 0);
+			totalHeight += listItem.getMeasuredHeight();
+		}
+
+		ViewGroup.LayoutParams params = listView.getLayoutParams();
+		params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+		listView.setLayoutParams(params);
+	}
 }

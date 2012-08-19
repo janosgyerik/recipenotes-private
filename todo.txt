@@ -6,7 +6,6 @@ working prototype
         - remove first
         - remove last
     - use ingredients list from db
-    - stretch the name to use width
     - replace +- with nice images/glyphs
 - add recipe page
     - add/delete ingredients

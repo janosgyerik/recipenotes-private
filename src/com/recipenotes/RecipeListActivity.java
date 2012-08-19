@@ -63,7 +63,6 @@ public class RecipeListActivity extends ListActivity {
 	}
 	
 	class RecipeListItemClickListener implements OnItemClickListener {
-
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
@@ -71,7 +70,6 @@ public class RecipeListActivity extends ListActivity {
 			intent.putExtra(BaseColumns._ID, ((TextView)view.findViewById(R.id._ID)).getText());
 			startActivity(intent);
 		}
-		
 	}
 	
 	class AddRecipeOnClickListener implements OnClickListener {
@@ -87,11 +85,12 @@ public class RecipeListActivity extends ListActivity {
 		@Override
 		public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 				int arg2, long arg3) {
+			/*
 			String selectedItemId = String.valueOf(arg3);
-			Log.d(TAG, "selectedItemId = " + selectedItemId);
 			helper.getWritableDatabase().delete("main_recipe", "_id = ?", new String[]{ selectedItemId });
 			helper.getWritableDatabase().delete("main_recipeingredient", "recipe_id = ?", new String[]{ selectedItemId });
 			cursor.requery();
+			*/
 			return true;
 		}
 	}

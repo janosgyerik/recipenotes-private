@@ -6,6 +6,7 @@ working prototype
     - load photos
     - delete photos
     - show first photo in listview
+- are you sure popup when deleting recipes
 
 
 prototype 2

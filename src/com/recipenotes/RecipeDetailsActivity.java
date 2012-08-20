@@ -3,6 +3,7 @@ package com.recipenotes;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -174,6 +175,8 @@ public class RecipeDetailsActivity extends Activity {
 
 			String name = capitalize(nameView.getText().toString());
 			values.put("name", name);
+			long updatedDt = new Date().getTime();
+			values.put("updated_dt", updatedDt);
 
 			// display_name
 			String displayName;
@@ -195,6 +198,7 @@ public class RecipeDetailsActivity extends Activity {
 			//TODO
 
 			if (recipeId == null) {
+				values.put("created_dt", updatedDt);
 				long ret = helper.getWritableDatabase().insert(RECIPES_TABLE_NAME, null, values);
 				Log.d(TAG, "insert recipe ret = " + ret);
 				if (ret >= 0) {

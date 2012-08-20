@@ -42,7 +42,7 @@ public class RecipeListActivity extends ListActivity {
 				new String[]{ 
 						BaseColumns._ID, "name", "summary", "display_name",
 						}, 
-				null, null, null, null, "name");
+				null, null, null, null, "updated_dt desc, name");
 		startManagingCursor(cursor);
 
 		ListAdapter adapter = new SimpleCursorAdapter(

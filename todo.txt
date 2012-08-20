@@ -1,7 +1,6 @@
 working prototype
 -----------------
 - white theme
-- save created_dt and updated_dt, order by updated_dt desc
 
 
 prototype 2

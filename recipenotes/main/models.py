@@ -70,4 +70,15 @@ class RecipeStep(models.Model):
         unique_together = (('recipe', 'step',))
 
 
+class RecipePhoto(models.Model):
+    recipe = models.ForeignKey(Recipe)
+    filename = models.CharField(max_length=50)
+    display_order = models.IntegerField()
+    created_dt = models.DateTimeField(default=datetime.now)
+    updated_dt = models.DateTimeField(default=datetime.now)
+
+    class Meta:
+        unique_together = (('recipe', 'filename',))
+
+
 # eof

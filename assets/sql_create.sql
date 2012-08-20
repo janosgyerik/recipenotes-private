@@ -66,3 +66,13 @@ CREATE TABLE "main_recipestep" (
     UNIQUE ("recipe_id", "step")
 )
 ;
+CREATE TABLE "main_recipephoto" (
+    "_id" integer NULL PRIMARY KEY AUTOINCREMENT,
+    "recipe_id" integer NULL REFERENCES "main_recipe" ("_id"),
+    "filename" varchar(50) NULL,
+    "display_order" integer NULL,
+    "created_dt" datetime NULL,
+    "updated_dt" datetime NULL,
+    UNIQUE ("recipe_id", "filename")
+)
+;

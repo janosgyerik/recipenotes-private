@@ -4,7 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import android.content.Context;
@@ -15,35 +16,43 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 
 	private static final String DATABASE_NAME = "sqlite3.db";
 	private static final int DATABASE_VERSION = 1;
-	private final List<String> sqlCreateStatements;
+	
+	private List<String> sqlCreateStatements;
 
 	RecipeNotesSQLiteOpenHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		
 		//context.deleteDatabase(DATABASE_NAME);
 		
-		sqlCreateStatements = new LinkedList<String>();
 		try {
-			InputStream instream = context.getAssets().open("sql_create.sql");
-			BufferedReader reader = new BufferedReader(new InputStreamReader(instream));
-			String line;
-			StringBuilder builder = new StringBuilder();
-			while ((line = reader.readLine()) != null) {
-				builder.append(line);
-				if (line.trim().equals(";")) {
-					sqlCreateStatements.add(builder.toString());
-					builder = new StringBuilder();
-				}
-			}
+			sqlCreateStatements = readSqlStatements(context, "sql_create.sql");
 		} catch (IOException e) {
+			sqlCreateStatements = Collections.emptyList();
 			e.printStackTrace();
 		}
+	}
+	
+	static List<String> readSqlStatements(Context context, String assetName) throws IOException {
+		List<String> statements = new ArrayList<String>();
+		InputStream stream = context.getAssets().open(assetName);
+		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+		String line;
+		StringBuilder builder = new StringBuilder();
+		while ((line = reader.readLine()) != null) {
+			builder.append(line);
+			if (line.trim().equals(";")) {
+				statements.add(builder.toString());
+				builder = new StringBuilder();
+			}
+		}
+		return statements;
 	}
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		for (String sql : sqlCreateStatements) {
 			db.execSQL(sql);
+			// TODO check success
 		}
 		// dummy recipes
 		db.execSQL("insert into main_recipe (name, display_name) values ('Steak', 'Steak');");

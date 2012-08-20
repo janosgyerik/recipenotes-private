@@ -6,11 +6,13 @@ working prototype
     - load photos
     - delete photos
     - show first photo in listview
-- are you sure popup when deleting recipes
+- white theme
+- save created_dt and updated_dt, order by updated_dt desc
 
 
 prototype 2
 -----------
+- are you sure popup when deleting recipes
 - replace 'Add' with nice image
 - add/delete tags
 

@@ -1,17 +1,14 @@
 working prototype
 -----------------
-- add/delete photos
-    - save photo file
-    - save photo filename in database
-    - load photos
-    - delete photos
-    - show first photo in listview
 - white theme
 - save created_dt and updated_dt, order by updated_dt desc
 
 
 prototype 2
 -----------
+- show first photo in listview
+- delete photos
+- add new ingredients at the top
 - are you sure popup when deleting recipes
 - replace 'Add' with nice image
 - add/delete tags

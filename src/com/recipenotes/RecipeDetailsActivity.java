@@ -2,9 +2,7 @@ package com.recipenotes;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -16,6 +14,7 @@ import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -35,7 +34,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 public class RecipeDetailsActivity extends Activity {
@@ -46,8 +44,10 @@ public class RecipeDetailsActivity extends Activity {
 	private static final String RECIPES_TABLE_NAME = "main_recipe";
 	private static final String INGREDIENTS_TABLE_NAME = "main_ingredient";
 	private static final String RECIPE_INGREDIENTS_TABLE_NAME = "main_recipeingredient";
+	private static final String RECIPE_PHOTOS_TABLE_NAME = "main_recipephoto";
 
 	private static final int PICTURE_TAKEN = 1;
+
 
 	private String recipeId;
 	private SQLiteOpenHelper helper;
@@ -59,7 +59,7 @@ public class RecipeDetailsActivity extends Activity {
 	private ArrayAdapter<String> ingredientsListAdapter;
 	private ListView ingredientsListView;
 
-	private String mCurrentPhotoPath; 
+	private List<String> photoFilenames; 
 
 	private static String PICTURES_DIR = "RecipeNotes";
 
@@ -104,7 +104,6 @@ public class RecipeDetailsActivity extends Activity {
 		ingredientView = (AutoCompleteTextView) findViewById(R.id.ingredient);
 		ingredientView.setAdapter(ingredientsAutoCompleteAdapter);
 
-		//TODO: load from database
 		ArrayList<String> ingredientsList = new ArrayList<String>();
 		ingredientsListAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, ingredientsList);
@@ -112,12 +111,15 @@ public class RecipeDetailsActivity extends Activity {
 		ingredientsListView.setAdapter(ingredientsListAdapter);
 		ingredientsListView.setOnItemLongClickListener(new IngredientListItemLongClickListener());
 
+		photoFilenames = new ArrayList<String>();
+
 		Button addIngredientButton = (Button) findViewById(R.id.btn_add_ingredient);
 		addIngredientButton.setOnClickListener(new AddIngredientOnClickListener());
 
 		Button addPhotoButton = (Button) findViewById(R.id.btn_add_photo);
 		addPhotoButton.setOnClickListener(new AddPhotoOnClickListener());
 
+		// load recipe data
 		recipeId = getIntent().getExtras().getString(BaseColumns._ID);
 		if (recipeId != null) {
 			Cursor recipeCursor = helper.getReadableDatabase().query(
@@ -142,6 +144,19 @@ public class RecipeDetailsActivity extends Activity {
 					ingredientsListAdapter.add(ingredient);
 				}
 				setListViewHeightBasedOnChildren(ingredientsListView);
+				
+				Cursor photosCursor = helper.getReadableDatabase().rawQuery(
+						String.format(
+								"SELECT filename FROM %s WHERE recipe_id = ?",
+								RECIPE_PHOTOS_TABLE_NAME
+								),
+								new String[]{ recipeId }
+						);
+				startManagingCursor(photosCursor);
+				while (photosCursor.moveToNext()) {
+					String filename = photosCursor.getString(0);
+					addPhoto(new File(getPhotoPath(filename)));
+				}
 			}
 			else {
 				// TODO should exit with error
@@ -150,17 +165,6 @@ public class RecipeDetailsActivity extends Activity {
 
 		Button save = (Button) findViewById(R.id.btn_save);
 		save.setOnClickListener(new SaveRecipeOnClickListener());
-	}
-
-	void setSpinnerValue(Spinner spinner, String value, String[] choices) {
-		int position = 0;
-		for (String choice : choices) {
-			if (choice.equals(value)) {
-				spinner.setSelection(position);
-				return;
-			}
-			++position;
-		}
 	}
 
 	class SaveRecipeOnClickListener implements OnClickListener {
@@ -196,6 +200,7 @@ public class RecipeDetailsActivity extends Activity {
 				if (ret >= 0) {
 					recipeId = String.valueOf(ret);
 					saveIngredients();
+					savePhotos();
 					Toast.makeText(getApplicationContext(), "Successfully added new recipe", Toast.LENGTH_SHORT).show();
 				}
 				else {
@@ -209,6 +214,8 @@ public class RecipeDetailsActivity extends Activity {
 				if (ret == 1) {
 					helper.getWritableDatabase().delete(RECIPE_INGREDIENTS_TABLE_NAME, "recipe_id = ?", new String[]{ recipeId });
 					saveIngredients();
+					helper.getWritableDatabase().delete(RECIPE_PHOTOS_TABLE_NAME, "recipe_id = ?", new String[]{ recipeId });
+					savePhotos();
 					Toast.makeText(getApplicationContext(), "Successfully updated recipe", Toast.LENGTH_SHORT).show();
 				}
 				else {
@@ -288,6 +295,16 @@ public class RecipeDetailsActivity extends Activity {
 		}
 	}
 
+	private void savePhotos() {
+		for (String filename : photoFilenames) {
+			ContentValues values = new ContentValues();
+			values.put("recipe_id", recipeId);
+			values.put("filename", filename);
+			long ret = helper.getWritableDatabase().insert(RECIPE_PHOTOS_TABLE_NAME, null, values);
+			Log.d(TAG, "insert recipe photo ret = " + ret);
+		}
+	}
+
 	class IngredientListItemLongClickListener implements OnItemLongClickListener {
 		@Override
 		public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
@@ -298,19 +315,23 @@ public class RecipeDetailsActivity extends Activity {
 		}
 	}
 
+	private File photoFile;
+	
+	private String getPhotoPath(String filename) {
+		return String.format("%s/%s", storageDir, filename);
+	}
+
 	private void dispatchTakePictureIntent() {
-		/*
-		File f;
 		try {
-			f = createImageFile();
+			photoFile = File.createTempFile(String.format(
+					"recipe_%s_%d_", recipeId, photoFilenames.size()+1),
+					".jpg", storageDir);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return;
+			photoFile = null; // TODO better way to handle it?
 		}
-		*/
 		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		//takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+		takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
 		startActivityForResult(takePictureIntent, PICTURE_TAKEN);
 	}
 
@@ -323,27 +344,19 @@ public class RecipeDetailsActivity extends Activity {
 	}
 
 	private void handleSmallCameraPhoto(Intent intent) {
-		Bundle extras = intent.getExtras();
-		Bitmap bitmap = (Bitmap) extras.get("data");
-		ImageView photo = new ImageView(this);
-		photo.setImageBitmap(bitmap);
-		LinearLayout layout = (LinearLayout) findViewById(R.id.photos);
-		layout.addView(photo);
+		if (photoFile != null) {
+			addPhoto(photoFile);
+		}
 	}
 
-	private File createImageFile() throws IOException {
-		// Create an image file name
-		String timeStamp = 
-				new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-		String JPEG_FILE_PREFIX = "photo_";
-		String imageFileName = JPEG_FILE_PREFIX + timeStamp + "_";
-		String JPEG_FILE_SUFFIX = ".jpg";
-		File image = File.createTempFile(
-				imageFileName, 
-				JPEG_FILE_SUFFIX 
-				);
-		mCurrentPhotoPath = image.getAbsolutePath();
-		return image;
+	private void addPhoto(File file) {
+		String path = file.getAbsolutePath();
+		Bitmap bitmap = BitmapFactory.decodeFile(path);
+		ImageView photoView = new ImageView(this);
+		photoView.setImageBitmap(bitmap);
+		LinearLayout layout = (LinearLayout) findViewById(R.id.photos);
+		layout.addView(photoView);
+		photoFilenames.add(file.getName());
 	}
 
 	class AddPhotoOnClickListener implements OnClickListener {
@@ -355,12 +368,13 @@ public class RecipeDetailsActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
-		case PICTURE_TAKEN:
-			handleSmallCameraPhoto(data);
-			break;
+		if (resultCode == RESULT_OK) {
+			switch (requestCode) {
+			case PICTURE_TAKEN:
+				handleSmallCameraPhoto(data);
+				break;
+			}
 		}
 	}
 
-	
 }

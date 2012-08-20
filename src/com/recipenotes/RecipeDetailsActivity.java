@@ -134,7 +134,7 @@ public class RecipeDetailsActivity extends Activity {
 
 				Cursor ingredientsCursor = helper.getReadableDatabase().rawQuery(
 						String.format(
-								"SELECT i.name FROM %s ri JOIN %s i ON ri.ingredient_id = i.%s WHERE ri.recipe_id = ?",
+								"SELECT i.name FROM %s ri JOIN %s i ON ri.ingredient_id = i.%s WHERE ri.recipe_id = ? ORDER BY i.name",
 								RECIPE_INGREDIENTS_TABLE_NAME, INGREDIENTS_TABLE_NAME, BaseColumns._ID
 								),
 								new String[]{ recipeId }

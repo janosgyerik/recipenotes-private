@@ -1,8 +1,3 @@
-working prototype
------------------
-- white theme
-
-
 prototype 2
 -----------
 - show first photo in listview

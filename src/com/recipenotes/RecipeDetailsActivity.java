@@ -7,8 +7,10 @@ import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -24,6 +26,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
@@ -60,7 +63,8 @@ public class RecipeDetailsActivity extends Activity {
 	private ArrayAdapter<String> ingredientsListAdapter;
 	private ListView ingredientsListView;
 
-	private List<String> photoFilenames; 
+	private List<String> photoFilenames;
+	private List<String> photosToDelete = new ArrayList<String>();
 
 	private static String PICTURES_DIR = "RecipeNotes";
 
@@ -307,6 +311,12 @@ public class RecipeDetailsActivity extends Activity {
 			long ret = helper.getWritableDatabase().insert(RECIPE_PHOTOS_TABLE_NAME, null, values);
 			Log.d(TAG, "insert recipe photo ret = " + ret);
 		}
+		for (String path : photosToDelete) {
+			File photoFile = new File(path);
+			if (photoFile.isFile()) {
+				photoFile.delete();
+			}
+		}
 	}
 
 	class IngredientListItemLongClickListener implements OnItemLongClickListener {
@@ -359,6 +369,8 @@ public class RecipeDetailsActivity extends Activity {
 		ImageView photoView = new ImageView(this);
 		photoView.setImageBitmap(bitmap);
 		photoView.setPadding(10, 10, 10, 10);
+		photoView.setTag(file.getName());
+		photoView.setOnLongClickListener(new PhotoLongClickListener(file));
 		
 		// dirty hack for motorola
 		int targetHeight = getWindowManager().getDefaultDisplay().getWidth() * bitmap.getHeight() / bitmap.getWidth();
@@ -388,6 +400,45 @@ public class RecipeDetailsActivity extends Activity {
 				break;
 			}
 		}
+	}
+	
+	class PhotoLongClickListener implements OnLongClickListener {
+		
+		private final String path;
+		private final String filename;
+
+		public PhotoLongClickListener(File file) {
+			this.path = file.getAbsolutePath();
+			this.filename = file.getName();
+		}
+		
+		private void deletePhoto() {
+			photoFilenames.remove(filename);
+			LinearLayout layout = (LinearLayout) findViewById(R.id.photos);
+			layout.removeView(layout.findViewWithTag(filename));
+			photosToDelete.add(path);
+		}
+
+		@Override
+		public boolean onLongClick(View arg0) {
+			new AlertDialog.Builder(RecipeDetailsActivity.this)
+			.setMessage(R.string.confirm_are_you_sure)
+			.setCancelable(true)
+			.setTitle(R.string.title_delete_photo)
+			.setPositiveButton(R.string.btn_yes, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					deletePhoto();
+				}
+			})
+			.setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					dialog.cancel();
+				}
+			})
+			.show();
+			return true;
+		}
+		
 	}
 
 }

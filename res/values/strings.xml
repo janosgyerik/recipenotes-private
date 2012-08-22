@@ -7,5 +7,11 @@
     <string name="year">Year</string>
     <string name="recipe_type">Type</string>
     <string name="buy_flag">Buy?</string>
+    
+    <string name="title_delete_photo">Delete photo</string>
+    <string name="confirm_are_you_sure">Are you sure?</string>
+    
+    <string name="btn_yes">Yes</string>
+    <string name="btn_cancel">Cancel</string>
 
 </resources>

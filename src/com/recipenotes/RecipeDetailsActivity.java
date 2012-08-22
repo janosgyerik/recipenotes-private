@@ -264,7 +264,7 @@ public class RecipeDetailsActivity extends Activity {
 			if (ingredients.length() > 0) {
 				for (String ingredient : ingredients.split(",")) {
 					ingredient = capitalize(ingredient);
-					ingredientsListAdapter.add(ingredient);
+					ingredientsListAdapter.insert(ingredient, 0);
 				}
 				ingredientView.setText("");
 				setListViewHeightBasedOnChildren(ingredientsListView);

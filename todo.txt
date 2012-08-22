@@ -1,8 +1,7 @@
 prototype 2
 -----------
 - add/delete tags
-- are you sure popup when deleting recipes
-- delete photos when delete recipe
+- fix light theme for dialog boxes
 
 
 prototype 3

@@ -1,11 +1,17 @@
 package com.recipenotes;
 
+import java.io.File;
+
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.BaseColumns;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -83,15 +89,51 @@ public class RecipeListActivity extends ListActivity {
 	}
 	
 	class RecipeListItemLongClickListener implements OnItemLongClickListener {
+		private void deleteRecipe(long recipeId) {
+			String selectedItemId = String.valueOf(recipeId);
+			helper.getWritableDatabase().delete("main_recipe", "_id = ?", new String[]{ selectedItemId });
+			helper.getWritableDatabase().delete("main_recipeingredient", "recipe_id = ?", new String[]{ selectedItemId });
+			helper.getWritableDatabase().delete("main_recipephoto", "recipe_id = ?", new String[]{ selectedItemId });
+			cursor.requery();
+			String PICTURES_DIR = "RecipeNotes";
+
+			File storageDir = new File (
+					String.format("%s/%s",
+							Environment.getExternalStorageDirectory(),
+							PICTURES_DIR
+							));
+			if (storageDir.isDirectory()) {
+				String[] filenames = storageDir.list();
+				if (filenames != null) {
+					for (String filename : filenames) {
+						if (filename.startsWith(String.format("recipe_%s_", selectedItemId))) {
+							Log.d(TAG, "deleting " + filename);
+							new File(storageDir, filename).delete();
+						}
+					}
+				}
+			}
+		}
+		
 		@Override
 		public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 				int arg2, long arg3) {
-			/*
-			String selectedItemId = String.valueOf(arg3);
-			helper.getWritableDatabase().delete("main_recipe", "_id = ?", new String[]{ selectedItemId });
-			helper.getWritableDatabase().delete("main_recipeingredient", "recipe_id = ?", new String[]{ selectedItemId });
-			cursor.requery();
-			*/
+			final long recipeId = arg3;
+			new AlertDialog.Builder(RecipeListActivity.this)
+			.setMessage(R.string.confirm_are_you_sure)
+			.setCancelable(true)
+			.setTitle(R.string.title_delete_recipe)
+			.setPositiveButton(R.string.btn_yes, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					deleteRecipe(recipeId);
+				}
+			})
+			.setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					dialog.cancel();
+				}
+			})
+			.show();
 			return true;
 		}
 	}

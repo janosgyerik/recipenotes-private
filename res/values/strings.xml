@@ -8,6 +8,7 @@
     <string name="recipe_type">Type</string>
     <string name="buy_flag">Buy?</string>
     
+    <string name="title_delete_recipe">Delete recipe</string>
     <string name="title_delete_photo">Delete photo</string>
     <string name="confirm_are_you_sure">Are you sure?</string>
     

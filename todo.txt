@@ -1,9 +1,6 @@
 prototype 2
 -----------
 - add/delete tags
-- make autocomplete ingredient friendlier
-    - allow many
-    - split the text by '\s*,\s*'
 - make add picture work with new recipes
 - show first photo in listview
 - delete photos

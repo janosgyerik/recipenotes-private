@@ -39,7 +39,7 @@
                     android:layout_alignParentRight="true"
                     android:text="Add" />
 
-                <AutoCompleteTextView
+                <MultiAutoCompleteTextView
                     android:id="@+id/ingredient"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"

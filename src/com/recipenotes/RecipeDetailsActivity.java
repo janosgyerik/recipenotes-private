@@ -29,13 +29,13 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.Toast;
 
 public class RecipeDetailsActivity extends Activity {
@@ -56,7 +56,7 @@ public class RecipeDetailsActivity extends Activity {
 
 	private EditText nameView;
 
-	private AutoCompleteTextView ingredientView;
+	private MultiAutoCompleteTextView ingredientView;
 
 	private ArrayAdapter<String> ingredientsListAdapter;
 	private ListView ingredientsListView;
@@ -103,8 +103,9 @@ public class RecipeDetailsActivity extends Activity {
 
 		ArrayAdapter<String> ingredientsAutoCompleteAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_dropdown_item_1line, ingredientsAutoCompleteList);
-		ingredientView = (AutoCompleteTextView) findViewById(R.id.ingredient);
+		ingredientView = (MultiAutoCompleteTextView) findViewById(R.id.ingredient);
 		ingredientView.setAdapter(ingredientsAutoCompleteAdapter);
+		ingredientView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
 
 		ArrayList<String> ingredientsList = new ArrayList<String>();
 		ingredientsListAdapter = new ArrayAdapter<String>(this,
@@ -259,12 +260,15 @@ public class RecipeDetailsActivity extends Activity {
 	class AddIngredientOnClickListener implements OnClickListener {
 		@Override
 		public void onClick(View v) {
-			String ingredient = capitalize(ingredientView.getText().toString());
-			if (ingredient.length() > 0) {
-				ingredientsListAdapter.add(ingredient);
+			String ingredients = ingredientView.getText().toString().trim();
+			if (ingredients.length() > 0) {
+				for (String ingredient : ingredients.split(",")) {
+					ingredient = capitalize(ingredient);
+					ingredientsListAdapter.add(ingredient);
+				}
 				ingredientView.setText("");
 				setListViewHeightBasedOnChildren(ingredientsListView);
-				Toast.makeText(getApplicationContext(), "Added " + ingredient, Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "Added " + ingredients, Toast.LENGTH_SHORT).show();
 			}
 		}
 	}

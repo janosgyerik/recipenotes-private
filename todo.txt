@@ -1,15 +1,22 @@
 prototype 2
 -----------
+- add/delete tags
+- make autocomplete ingredient friendlier
+    - allow many
+    - split the text by '\s*,\s*'
+- make add picture work with new recipes
 - show first photo in listview
 - delete photos
 - add new ingredients at the top
 - are you sure popup when deleting recipes
+- delete photos when delete images
 - replace 'Add' with nice image
-- add/delete tags
 
 
 prototype 3
 -----------
+- prevent adding duplicate ingredients
+- clean up unsaved photo files
 - make it possible to reorder lists
 - more efficient handling of recipe editing
     - make use of the _id of ingredients in the autocomplete list

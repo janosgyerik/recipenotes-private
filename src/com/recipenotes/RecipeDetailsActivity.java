@@ -25,6 +25,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
@@ -358,6 +359,15 @@ public class RecipeDetailsActivity extends Activity {
 		Bitmap bitmap = BitmapFactory.decodeFile(path);
 		ImageView photoView = new ImageView(this);
 		photoView.setImageBitmap(bitmap);
+		photoView.setPadding(10, 10, 10, 10);
+		
+		// dirty hack for motorola
+		int targetHeight = getWindowManager().getDefaultDisplay().getWidth() * bitmap.getHeight() / bitmap.getWidth();
+		Log.d(TAG, "targetHeight = " + targetHeight);
+		LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		photoView.setLayoutParams(params);
+		photoView.getLayoutParams().height = targetHeight;
+		
 		LinearLayout layout = (LinearLayout) findViewById(R.id.photos);
 		layout.addView(photoView);
 		photoFilenames.add(file.getName());

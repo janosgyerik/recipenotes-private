@@ -1,15 +1,11 @@
 package com.recipenotes;
 
-import java.io.File;
-
 import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.BaseColumns;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -45,15 +41,18 @@ public class RecipeListActivity extends ListActivity {
 				null, null, null, null, "updated_dt desc, name");
 		startManagingCursor(cursor);
 
+		View header = (View)getLayoutInflater().inflate(R.layout.recipelist_header_row, null);
+		getListView().addHeaderView(header);
+		
 		ListAdapter adapter = new SimpleCursorAdapter(
 				this, // Context.
 				R.layout.recipe_list_item,
 				cursor,
 				new String[] { 
-						BaseColumns._ID, "display_name",
+						BaseColumns._ID, "name", "display_name",
 						},
 				new int[] { 
-						R.id._ID, R.id.name,
+						R.id._ID, R.id.name, R.id.ingredients,
 						}
 				);  // Parallel array of which template objects to bind to those columns.
 		setListAdapter(adapter);

@@ -85,7 +85,7 @@ public class RecipeDetailsActivity extends Activity {
 		helper = new RecipeNotesSQLiteOpenHelper(this);
 
 		nameView = (EditText) findViewById(R.id.name);
-
+		
 		ArrayList<String> ingredientsAutoCompleteList = new ArrayList<String>();
 		{
 			Cursor ingredientsCursor = helper.getReadableDatabase().query(
@@ -108,7 +108,7 @@ public class RecipeDetailsActivity extends Activity {
 
 		ArrayList<String> ingredientsList = new ArrayList<String>();
 		ingredientsListAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, ingredientsList);
+				R.layout.ingredientslist_item, ingredientsList);
 		ingredientsListView = (ListView) findViewById(R.id.ingredients);
 		ingredientsListView.setAdapter(ingredientsListAdapter);
 		ingredientsListView.setOnItemLongClickListener(new IngredientListItemLongClickListener());
@@ -176,18 +176,13 @@ public class RecipeDetailsActivity extends Activity {
 			ContentValues values = new ContentValues();
 
 			String name = capitalize(nameView.getText().toString());
+			if (name.length() == 0) name = "(not yet named)";
 			values.put("name", name);
 			long updatedDt = new Date().getTime();
 			values.put("updated_dt", updatedDt);
 
 			// display_name
-			String displayName;
-			if (name.length() > 0) {
-				displayName = name + " with ";
-			}
-			else {
-				displayName = "";
-			}
+			String displayName = "";
 			for (int i = 0; i < ingredientsListAdapter.getCount(); ++i) {
 				displayName += ingredientsListAdapter.getItem(i);
 				if (i < ingredientsListAdapter.getCount() - 1) {

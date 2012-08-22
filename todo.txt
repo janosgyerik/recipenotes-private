@@ -4,7 +4,7 @@ prototype 2
 - show first photo in listview
 - delete photos
 - are you sure popup when deleting recipes
-- delete photos when delete images
+- delete photos when delete recipe
 - replace 'Add' with nice image
 
 

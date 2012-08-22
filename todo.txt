@@ -1,7 +1,6 @@
 prototype 2
 -----------
 - add/delete tags
-- make add picture work with new recipes
 - show first photo in listview
 - delete photos
 - are you sure popup when deleting recipes
@@ -11,6 +10,7 @@ prototype 2
 
 prototype 3
 -----------
+- make add picture work with new recipes
 - prevent adding duplicate ingredients
 - clean up unsaved photo files
 - make it possible to reorder lists

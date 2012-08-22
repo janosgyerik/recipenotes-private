@@ -50,7 +50,6 @@ public class RecipeDetailsActivity extends Activity {
 
 	private static final int PICTURE_TAKEN = 1;
 
-
 	private String recipeId;
 	private SQLiteOpenHelper helper;
 
@@ -119,9 +118,6 @@ public class RecipeDetailsActivity extends Activity {
 		Button addIngredientButton = (Button) findViewById(R.id.btn_add_ingredient);
 		addIngredientButton.setOnClickListener(new AddIngredientOnClickListener());
 
-		Button addPhotoButton = (Button) findViewById(R.id.btn_add_photo);
-		addPhotoButton.setOnClickListener(new AddPhotoOnClickListener());
-
 		// load recipe data
 		recipeId = getIntent().getExtras().getString(BaseColumns._ID);
 		if (recipeId != null) {
@@ -160,6 +156,10 @@ public class RecipeDetailsActivity extends Activity {
 					String filename = photosCursor.getString(0);
 					addPhoto(new File(getPhotoPath(filename)));
 				}
+				
+				Button addPhotoButton = (Button) findViewById(R.id.btn_add_photo);
+				addPhotoButton.setOnClickListener(new AddPhotoOnClickListener());
+				addPhotoButton.setVisibility(View.VISIBLE);
 			}
 			else {
 				// TODO should exit with error

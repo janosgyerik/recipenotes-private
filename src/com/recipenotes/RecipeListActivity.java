@@ -47,8 +47,8 @@ public class RecipeListActivity extends ListActivity {
 				null, null, null, null, "updated_dt desc, name");
 		startManagingCursor(cursor);
 
-		View header = (View)getLayoutInflater().inflate(R.layout.recipelist_header_row, null);
-		getListView().addHeaderView(header);
+//		View header = (View)getLayoutInflater().inflate(R.layout.recipelist_header_row, null);
+//		getListView().addHeaderView(header);
 		
 		ListAdapter adapter = new SimpleCursorAdapter(
 				this, // Context.

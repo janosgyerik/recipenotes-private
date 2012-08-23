@@ -2,10 +2,28 @@ prototype 2
 -----------
 - add/delete tags
 - fix light theme for dialog boxes
+- keep save recipe button at the bottom
+- do not hardcode 'not-yet-named'
 
 
-prototype 3
------------
+release
+-------
+- fix the database handling part, there are leak exceptions, see android docs!
+- backup database menu
+- restore database menu
+- download database script
+- favorites table
+    - any other tables missing?
+- remove tmp number from photo files
+- do not crash if photo was deleted
+- handle if camera is not accessible
+- handle if no sdcard (= no external storage)
+    - it's ok to require sdcard, just do not crash
+- how to download own app without paying?
+
+
+version 3
+---------
 - show first photo in listview
 - add tabs
 - add search function
@@ -19,13 +37,5 @@ prototype 3
     - when saving, use the _id of ingredients from the autocomplete list
     - ingredients that were entered manually, try to find in autocomplete list
     - only lookup/insert ingredients if necessary
-
-
-next
-----
-- backup database menu
-- restore database menu
-- download database script
-- fix the database handling part, there are leak exceptions, see android docs!
 
 

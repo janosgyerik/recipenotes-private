@@ -180,7 +180,6 @@ public class RecipeDetailsActivity extends Activity {
 			ContentValues values = new ContentValues();
 
 			String name = capitalize(nameView.getText().toString());
-			if (name.length() == 0) name = "(not yet named)";
 			values.put("name", name);
 			long updatedDt = new Date().getTime();
 			values.put("updated_dt", updatedDt);

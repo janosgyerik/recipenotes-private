@@ -2,7 +2,6 @@ prototype 2
 -----------
 - add/delete tags
 - fix light theme for dialog boxes
-- do not hardcode 'not-yet-named'
 
 
 release

@@ -39,12 +39,19 @@ public class RecipeListActivity extends ListActivity {
 		helper = new RecipeNotesSQLiteOpenHelper(this);
 		//helper.getWritableDatabase().execSQL("DELETE from main_recipe where name = ''");
 		
+		/*
 		cursor = helper.getReadableDatabase().query(
 				"main_recipe", 
 				new String[]{ 
 						BaseColumns._ID, "name", "summary", "display_name",
 						}, 
 				null, null, null, null, "updated_dt desc, name");
+		*/
+		cursor = helper.getReadableDatabase().rawQuery(
+				"select _id, ifnull(nullif(name, ''), '(not yet named)') name, summary, display_name"
+				+ " from main_recipe"
+				+ " order by updated_dt desc, name",
+				null);
 		startManagingCursor(cursor);
 
 //		View header = (View)getLayoutInflater().inflate(R.layout.recipelist_header_row, null);

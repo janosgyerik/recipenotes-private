@@ -2,7 +2,6 @@ prototype 2
 -----------
 - add/delete tags
 - fix light theme for dialog boxes
-- keep save recipe button at the bottom
 - do not hardcode 'not-yet-named'
 
 

@@ -1,3 +1,4 @@
 gen
 bin
 ./recipenotes/sqlite3.db
+.DS_Store

@@ -15,16 +15,23 @@ release
     - any other tables missing?
 - fix light theme for dialog boxes
     - if not possible, then use custom dark theme
+- automatic daily backup
 - backup database menu
+    - create a (timestamped) file that can be downloaded
 - restore database menu
+    - show list of previous backups to choose from
 - download database script
 - remove tmp number from photo files
 - do not crash if photo was deleted
+- cleanup
 - how to download own app without paying?
+    - cannot. not at all.
+    - setup mobile update site
 
 
 version 3
 ---------
+- delete misspelled ingredients
 - handle if camera is not accessible
 - handle if no sdcard (= no external storage)
     - it's ok to require sdcard, just do not crash

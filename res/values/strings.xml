@@ -3,16 +3,16 @@
 
     <string name="hello">Hello World, RecipeNotes!</string>
     <string name="app_name">RecipeNotes</string>
-    
     <string name="year">Year</string>
     <string name="recipe_type">Type</string>
     <string name="buy_flag">Buy?</string>
-    
     <string name="title_delete_recipe">Delete recipe</string>
     <string name="title_delete_photo">Delete photo</string>
     <string name="confirm_are_you_sure">Are you sure?</string>
-    
     <string name="btn_yes">Yes</string>
     <string name="btn_cancel">Cancel</string>
+    <string name="menu_backup">Backup</string>
+    <string name="menu_restore">Restore</string>
+    <string name="menu_quit">Quit</string>
 
 </resources>

@@ -177,6 +177,8 @@ public class RecipeDetailsActivity extends Activity {
 	class SaveRecipeOnClickListener implements OnClickListener {
 		@Override
 		public void onClick(View view) {
+			addIngredients();
+			
 			ContentValues values = new ContentValues();
 
 			String name = capitalize(nameView.getText().toString());
@@ -254,20 +256,24 @@ public class RecipeDetailsActivity extends Activity {
 		params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
 		listView.setLayoutParams(params);
 	}
+	
+	private void addIngredients() {
+		String ingredients = ingredientView.getText().toString().trim();
+		if (ingredients.length() > 0) {
+			for (String ingredient : ingredients.split(",")) {
+				ingredient = capitalize(ingredient);
+				ingredientsListAdapter.insert(ingredient, 0);
+			}
+			ingredientView.setText("");
+			setListViewHeightBasedOnChildren(ingredientsListView);
+			Toast.makeText(getApplicationContext(), "Added " + ingredients, Toast.LENGTH_SHORT).show();
+		}
+	}
 
 	class AddIngredientOnClickListener implements OnClickListener {
 		@Override
 		public void onClick(View v) {
-			String ingredients = ingredientView.getText().toString().trim();
-			if (ingredients.length() > 0) {
-				for (String ingredient : ingredients.split(",")) {
-					ingredient = capitalize(ingredient);
-					ingredientsListAdapter.insert(ingredient, 0);
-				}
-				ingredientView.setText("");
-				setListViewHeightBasedOnChildren(ingredientsListView);
-				Toast.makeText(getApplicationContext(), "Added " + ingredients, Toast.LENGTH_SHORT).show();
-			}
+			addIngredients();
 		}
 	}
 

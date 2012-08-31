@@ -1,27 +1,33 @@
 prototype 2
 -----------
 - add/delete tags
-- fix light theme for dialog boxes
+- fix the database handling part, there are leak exceptions and crashes, esp on motorola, see android docs!
+- save changes immediately, no need for save button
+    - add/delete ingredients
+    - add/delete photos
+    - change name
+    - delete recipe menu
 
 
 release
 -------
-- fix the database handling part, there are leak exceptions, see android docs!
+- favorites table
+    - any other tables missing?
+- fix light theme for dialog boxes
+    - if not possible, then use custom dark theme
 - backup database menu
 - restore database menu
 - download database script
-- favorites table
-    - any other tables missing?
 - remove tmp number from photo files
 - do not crash if photo was deleted
-- handle if camera is not accessible
-- handle if no sdcard (= no external storage)
-    - it's ok to require sdcard, just do not crash
 - how to download own app without paying?
 
 
 version 3
 ---------
+- handle if camera is not accessible
+- handle if no sdcard (= no external storage)
+    - it's ok to require sdcard, just do not crash
 - show first photo in listview
 - add tabs
 - add search function

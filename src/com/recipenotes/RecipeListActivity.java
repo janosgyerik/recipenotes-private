@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -197,18 +199,21 @@ public class RecipeListActivity extends ListActivity {
 			if (sd.canWrite()) {
 				String packageName = "com.recipenotes";
 				String dbname = "sqlite3.db";
-				String currentDBPath = "//data//"+ packageName +"//databases//"+dbname;
-				String backupDBPath = "RecipeNotes/sqlite3.db";
+				String backupName = String.format("sqlite3-%s.db", new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date()));
+				String currentDBPath = String.format("/data/%s/databases/%s", packageName, dbname);
+				File backupDir = new File(sd, "RecipeNotes/backups");
+				if (! backupDir.isDirectory()) {
+					backupDir.mkdirs();
+				}
 				File currentDB = new File(data, currentDBPath);
-				File backupDB = new File(sd, backupDBPath);
+				File backupFile = new File(backupDir, backupName);
 
 				FileChannel src = new FileInputStream(currentDB).getChannel();
-				FileChannel dst = new FileOutputStream(backupDB).getChannel();
+				FileChannel dst = new FileOutputStream(backupFile).getChannel();
 				dst.transferFrom(src, 0, src.size());
 				src.close();
 				dst.close();
-				Toast.makeText(getBaseContext(), backupDB.toString(), Toast.LENGTH_LONG).show();
-
+				Toast.makeText(getBaseContext(), R.string.msg_backup_created, Toast.LENGTH_LONG).show();
 			}
 		} catch (Exception e) {
 			Toast.makeText(getBaseContext(), e.toString(), Toast.LENGTH_LONG).show();

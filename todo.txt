@@ -16,9 +16,6 @@ release
 - automatic daily backup
 - reorganize files on /sdcard
     .../photos
-    .../backups
-- backup database menu
-    - create a (timestamped) file that can be downloaded
 - restore database menu
     - show list of previous backups to choose from
 - remove tmp number from photo files

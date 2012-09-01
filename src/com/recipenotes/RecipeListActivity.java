@@ -1,6 +1,9 @@
 package com.recipenotes;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.nio.channels.FileChannel;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -24,12 +27,13 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class RecipeListActivity extends ListActivity {
 
 	// Debugging
 	private static final String TAG = "RecipeListActivity";
-	
+
 	private SQLiteOpenHelper helper;
 	private Cursor cursor;
 
@@ -41,7 +45,7 @@ public class RecipeListActivity extends ListActivity {
 
 		helper = new RecipeNotesSQLiteOpenHelper(this);
 		//helper.getWritableDatabase().execSQL("DELETE from main_recipe where name = ''");
-		
+
 		/*
 		cursor = helper.getReadableDatabase().query(
 				"main_recipe", 
@@ -49,36 +53,36 @@ public class RecipeListActivity extends ListActivity {
 						BaseColumns._ID, "name", "summary", "display_name",
 						}, 
 				null, null, null, null, "updated_dt desc, name");
-		*/
+		 */
 		cursor = helper.getReadableDatabase().rawQuery(
 				"select _id, ifnull(nullif(name, ''), '(not yet named)') name, summary, display_name"
-				+ " from main_recipe"
-				+ " order by updated_dt desc, name",
-				null);
+						+ " from main_recipe"
+						+ " order by updated_dt desc, name",
+						null);
 		startManagingCursor(cursor);
 
-//		View header = (View)getLayoutInflater().inflate(R.layout.recipelist_header_row, null);
-//		getListView().addHeaderView(header);
-		
+		//		View header = (View)getLayoutInflater().inflate(R.layout.recipelist_header_row, null);
+		//		getListView().addHeaderView(header);
+
 		ListAdapter adapter = new SimpleCursorAdapter(
 				this, // Context.
 				R.layout.recipe_list_item,
 				cursor,
 				new String[] { 
 						BaseColumns._ID, "name", "display_name",
-						},
+				},
 				new int[] { 
 						R.id._ID, R.id.name, R.id.ingredients,
-						}
+				}
 				);  // Parallel array of which template objects to bind to those columns.
 		setListAdapter(adapter);
-		
+
 		getListView().setOnItemClickListener(new RecipeListItemClickListener());
 		getListView().setOnItemLongClickListener(new RecipeListItemLongClickListener());
 
 		((Button)findViewById(R.id.btn_add_recipe)).setOnClickListener(new AddRecipeOnClickListener());
 	}
-	
+
 	class RecipeListItemClickListener implements OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -88,7 +92,7 @@ public class RecipeListActivity extends ListActivity {
 			startActivity(intent);
 		}
 	}
-	
+
 	class AddRecipeOnClickListener implements OnClickListener {
 		@Override
 		public void onClick(View v) {
@@ -97,7 +101,7 @@ public class RecipeListActivity extends ListActivity {
 			startActivity(intent);
 		}
 	}
-	
+
 	class RecipeListItemLongClickListener implements OnItemLongClickListener {
 		private void deleteRecipe(long recipeId) {
 			String selectedItemId = String.valueOf(recipeId);
@@ -124,7 +128,7 @@ public class RecipeListActivity extends ListActivity {
 				}
 			}
 		}
-		
+
 		@Override
 		public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 				int arg2, long arg3) {
@@ -147,7 +151,7 @@ public class RecipeListActivity extends ListActivity {
 			return true;
 		}
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -160,10 +164,11 @@ public class RecipeListActivity extends ListActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_backup:
-//			startActivity(new Intent(this, FileUploaderActivity.class));
+			backupDatabaseFile();
+			//			startActivity(new Intent(this, FileUploaderActivity.class));
 			return true;
 		case R.id.menu_restore:
-//			startActivity(new Intent(this, SettingsActivity.class));
+			//			startActivity(new Intent(this, SettingsActivity.class));
 			return true;    
 		case R.id.menu_quit:
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -182,5 +187,32 @@ public class RecipeListActivity extends ListActivity {
 			return true;
 		}
 		return false;
+	}
+
+	private void backupDatabaseFile() {
+		try {
+			File sd = Environment.getExternalStorageDirectory();
+			File data = Environment.getDataDirectory();
+
+			if (sd.canWrite()) {
+				String packageName = "com.recipenotes";
+				String dbname = "sqlite3.db";
+				String currentDBPath = "//data//"+ packageName +"//databases//"+dbname;
+				String backupDBPath = "RecipeNotes/sqlite3.db";
+				File currentDB = new File(data, currentDBPath);
+				File backupDB = new File(sd, backupDBPath);
+
+				FileChannel src = new FileInputStream(currentDB).getChannel();
+				FileChannel dst = new FileOutputStream(backupDB).getChannel();
+				dst.transferFrom(src, 0, src.size());
+				src.close();
+				dst.close();
+				Toast.makeText(getBaseContext(), backupDB.toString(), Toast.LENGTH_LONG).show();
+
+			}
+		} catch (Exception e) {
+			Toast.makeText(getBaseContext(), e.toString(), Toast.LENGTH_LONG).show();
+			Log.e(TAG, "Exception in backupDatabaseFile", e);
+		}
 	}
 }

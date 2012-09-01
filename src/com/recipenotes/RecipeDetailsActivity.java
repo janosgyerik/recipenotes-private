@@ -66,13 +66,10 @@ public class RecipeDetailsActivity extends Activity {
 	private List<String> photoFilenames;
 	private List<String> photosToDelete = new ArrayList<String>();
 
-	private static String PICTURES_DIR = "RecipeNotes";
+	private static String PICTURES_DIR = "RecipeNotes/photos";
 
-	private static File storageDir = new File (
-			String.format("%s/%s",
-					Environment.getExternalStorageDirectory(),
-					PICTURES_DIR
-					));
+	private static File storageDir = new File(Environment.getExternalStorageDirectory(), PICTURES_DIR);
+	
 	static {
 		if (!storageDir.isDirectory()) {
 			storageDir.mkdirs();

@@ -14,8 +14,6 @@ release
 - fix light theme for dialog boxes
     - if not possible, then use custom dark theme
 - automatic daily backup
-- reorganize files on /sdcard
-    .../photos
 - restore database menu
     - show list of previous backups to choose from
 - remove tmp number from photo files

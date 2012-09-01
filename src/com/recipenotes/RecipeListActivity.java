@@ -12,6 +12,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.BaseColumns;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -143,5 +146,41 @@ public class RecipeListActivity extends ListActivity {
 			.show();
 			return true;
 		}
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main, menu);
+
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_backup:
+//			startActivity(new Intent(this, FileUploaderActivity.class));
+			return true;
+		case R.id.menu_restore:
+//			startActivity(new Intent(this, SettingsActivity.class));
+			return true;    
+		case R.id.menu_quit:
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage(R.string.msg_quit)
+			.setCancelable(true)
+			.setPositiveButton(R.string.btn_yes, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					finish();
+				}
+			})
+			.setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					dialog.cancel();
+				}
+			}).show();
+			return true;
+		}
+		return false;
 	}
 }

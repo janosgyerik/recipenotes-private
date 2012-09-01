@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World, RecipeNotes!</string>
-    <string name="app_name">RecipeNotes</string>
-    <string name="year">Year</string>
-    <string name="recipe_type">Type</string>
-    <string name="buy_flag">Buy?</string>
+    <string name="app_name">Recipe Notes</string>
     <string name="title_delete_recipe">Delete recipe</string>
     <string name="title_delete_photo">Delete photo</string>
     <string name="confirm_are_you_sure">Are you sure?</string>

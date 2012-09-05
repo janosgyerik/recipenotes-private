@@ -1,23 +1,30 @@
-prototype 2
------------
-- add/delete tags
+release
+-------
 - fix the database handling part, there are leak exceptions and crashes, esp on motorola, see android docs!
 - save changes immediately, no need for save button
     - add/delete ingredients
     - add/delete photos
     - change name
     - delete recipe menu
-
-
-release
--------
+- improved recipe list
+    - do not show title if does not exist
+    - use first photo
+- tags
+    - add, with database
+    - delete
 - fix light theme for dialog boxes
     - if not possible, then use custom dark theme
 - automatic daily backup
-- restore database menu
-    - show list of previous backups to choose from
+- restore database
+    - handle result
+        - restore from file
+        - reload list
+        - test well
+    - add close button
 - remove tmp number from photo files
-- do not crash if photo was deleted
+- do not crash if photo file does not exist
+- handle if no external storage
+    - external storage is required
 - cleanup
 
 

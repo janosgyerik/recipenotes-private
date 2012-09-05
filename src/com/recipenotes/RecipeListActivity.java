@@ -170,7 +170,12 @@ public class RecipeListActivity extends ListActivity {
 			//			startActivity(new Intent(this, FileUploaderActivity.class));
 			return true;
 		case R.id.menu_restore:
-			//			startActivity(new Intent(this, SettingsActivity.class));
+			Intent intent = new Intent(this, FileSelectorActivity.class);
+			// TODO string to strings
+			intent.putExtra(FileSelectorActivity.PARAM_TITLE, "Select backup file");
+			intent.putExtra(FileSelectorActivity.PARAM_DIRPARAM, "RecipeNotes/backups");
+			intent.putExtra(FileSelectorActivity.PARAM_PATTERN, "^sqlite3-.*\\.db$");
+			startActivity(intent);
 			return true;    
 		case R.id.menu_quit:
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);

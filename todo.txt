@@ -1,6 +1,5 @@
 release
 -------
-- fix the database handling part, there are leak exceptions and crashes, esp on motorola, see android docs!
 - save changes immediately, no need for save button
     - add/delete ingredients
     - add/delete photos

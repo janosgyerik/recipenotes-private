@@ -225,4 +225,11 @@ public class RecipeListActivity extends ListActivity {
 			Log.e(TAG, "Exception in backupDatabaseFile", e);
 		}
 	}
+
+	@Override  
+	protected void onDestroy() {
+		Log.d(TAG, "++onDestroy");
+		super.onDestroy();
+		helper.close();
+	}
 }

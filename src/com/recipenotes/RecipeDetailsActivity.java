@@ -443,4 +443,11 @@ public class RecipeDetailsActivity extends Activity {
 		
 	}
 
+
+	@Override  
+	protected void onDestroy() {
+		Log.d(TAG, "++onDestroy");
+		super.onDestroy();
+		helper.close();
+	}
 }

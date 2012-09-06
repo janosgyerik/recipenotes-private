@@ -15,7 +15,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -54,7 +53,7 @@ public class RecipeDetailsActivity extends Activity {
 	private static final int PICTURE_TAKEN = 1;
 
 	private String recipeId;
-	private SQLiteOpenHelper helper;
+	private RecipeNotesSQLiteOpenHelper helper;
 
 	private EditText nameView;
 

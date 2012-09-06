@@ -6,24 +6,37 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.BaseColumns;
+import android.util.Log;
 
 public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 
+	// Debugging
+	private static final String TAG = "RecipeNotesSQLiteOpenHelper";
+
 	private static final String DATABASE_NAME = "sqlite3.db";
 	private static final int DATABASE_VERSION = 1;
-	
+
+	private static final String RECIPES_TABLE_NAME = "main_recipe";
+	private static final String INGREDIENTS_TABLE_NAME = "main_ingredient";
+	private static final String RECIPE_INGREDIENTS_TABLE_NAME = "main_recipeingredient";
+	private static final String RECIPE_PHOTOS_TABLE_NAME = "main_recipephoto";
+
 	private List<String> sqlCreateStatements;
 
 	RecipeNotesSQLiteOpenHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
-		
+
 		//context.deleteDatabase(DATABASE_NAME);
-		
+
 		try {
 			sqlCreateStatements = readSqlStatements(context, "sql_create.sql");
 		} catch (IOException e) {
@@ -31,7 +44,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 			e.printStackTrace();
 		}
 	}
-	
+
 	static List<String> readSqlStatements(Context context, String assetName) throws IOException {
 		List<String> statements = new ArrayList<String>();
 		InputStream stream = context.getAssets().open(assetName);
@@ -58,7 +71,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 		db.execSQL("insert into main_recipe (name, display_name) values ('Steak', 'Steak');");
 		db.execSQL("insert into main_recipe (name, display_name) values ('Pasta', 'Pasta with asparagus');");
 		db.execSQL("insert into main_recipe (name, display_name) values ('Cake', 'Cake with Lemon marmalade');");
-		
+
 		// initial ingredients collection
 		db.execSQL("insert into main_ingredient (name) values ('Avocado');");
 		db.execSQL("insert into main_ingredient (name) values ('Walnuts');");
@@ -118,7 +131,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 		db.execSQL("insert into main_ingredient (name) values ('Peanuts');");
 		db.execSQL("insert into main_ingredient (name) values ('Pine nuts');");
 		db.execSQL("insert into main_ingredient (name) values ('Acacia honey');");
-		
+
 		// initial tags collection
 		db.execSQL("insert into main_tag (name) values ('Main');");
 		db.execSQL("insert into main_tag (name) values ('Side dish');");
@@ -149,5 +162,116 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
 		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * Returns new recipeId on success or else null
+	 * @return
+	 */
+	public String newRecipe() {
+		ContentValues values = new ContentValues();
+		long createdDt = new Date().getTime();
+		values.put("created_dt", createdDt);
+		values.put("updated_dt", createdDt);
+		long ret = getWritableDatabase().insert(RECIPES_TABLE_NAME, null, values);
+		Log.d(TAG, "insert recipe ret = " + ret);
+		if (ret >= 0) {
+			String recipeId = String.valueOf(ret);
+			return recipeId;
+		}
+		else {
+			return null;
+		}
+	}
+
+	public boolean saveRecipe(String recipeId, String name) {
+		ContentValues values = new ContentValues();
+		values.put("name", name);
+		long updatedDt = new Date().getTime();
+		values.put("updated_dt", updatedDt);
+
+		// display_name
+		// TODO
+		/*
+		String displayName = "";
+		for (int i = 0; i < ingredientsListAdapter.getCount(); ++i) {
+			displayName += ingredientsListAdapter.getItem(i);
+			if (i < ingredientsListAdapter.getCount() - 1) {
+				displayName += ", ";
+			}
+		}
+		values.put("display_name", displayName);
+		 */
+
+		int ret = getWritableDatabase().update(RECIPES_TABLE_NAME, values, 
+				BaseColumns._ID + " = ?", new String[]{ recipeId });
+		Log.d(TAG, "update ret = " + ret);
+		return ret == 1;
+	}
+
+	public boolean deleteRecipe(String recipeId) {
+		getWritableDatabase().delete(RECIPE_INGREDIENTS_TABLE_NAME, "recipe_id = ?", new String[]{ recipeId });
+		getWritableDatabase().delete(RECIPE_PHOTOS_TABLE_NAME, "recipe_id = ?", new String[]{ recipeId });
+		getWritableDatabase().delete(RECIPES_TABLE_NAME, "recipe_id = ?", new String[]{ recipeId });
+		// TODO
+		return true;
+	}
+
+	public String getOrCreateIngredient(String name) {
+		String ingredientId = getIngredientIdByName(name);
+		if (ingredientId == null) {
+			ingredientId = newIngredient(name);
+		}
+		return ingredientId;
+	}
+
+	/**
+	 * Returns ingredientId or null if ingredient does not exist.
+	 * @param name
+	 * @return
+	 */
+	public String getIngredientIdByName(String name) {
+		String ingredientId = null;
+		Cursor cursor = getReadableDatabase().query(
+				INGREDIENTS_TABLE_NAME, 
+				new String[] { BaseColumns._ID }, 
+				"name = ?", 
+				new String[] { name }, 
+				null, null, null, "1");
+		if (cursor.moveToNext()) {
+			ingredientId = cursor.getString(0);
+			Log.d(TAG, "got ingredientId = " + ingredientId);
+		}
+		cursor.close();
+		return ingredientId;
+	}
+
+	/**
+	 * Returns new ingredientId on success or else null
+	 * @return
+	 */
+	private String newIngredient(String name) {
+		ContentValues values = new ContentValues();
+		long createdDt = new Date().getTime();
+		values.put("created_dt", createdDt);
+		values.put("updated_dt", createdDt);
+		long ret = getWritableDatabase().insert(INGREDIENTS_TABLE_NAME, null, values);
+		Log.d(TAG, "insert ingredient ret = " + ret);
+		if (ret >= 0) {
+			String ingredientId = String.valueOf(ret);
+			return ingredientId;
+		}
+		else {
+			return null;
+		}
+	}
+
+	public boolean addRecipeIngredient(String recipeId, String ingredientId) {
+		ContentValues values = new ContentValues();
+		values.put("recipe_id", recipeId);
+		values.put("ingredient_id", ingredientId);
+		long ret = getWritableDatabase().insert(RECIPE_INGREDIENTS_TABLE_NAME, null, values);
+		Log.d(TAG, "insert recipe ingredient ret = " + ret);
+		return ret >= 0;
 	}
 }

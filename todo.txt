@@ -5,6 +5,7 @@ release
     - add/delete photos
     - change name
     - delete recipe menu
+- make add picture work with new recipes
 - improved recipe list
     - do not show title if does not exist
     - use first photo
@@ -24,6 +25,7 @@ release
 - do not crash if photo file does not exist
 - handle if no external storage
     - external storage is required
+    - it's ok to require sdcard, just do not crash
 - cleanup
 
 
@@ -33,13 +35,10 @@ version 3
     - any other tables missing?
 - delete misspelled ingredients
 - handle if camera is not accessible
-- handle if no sdcard (= no external storage)
-    - it's ok to require sdcard, just do not crash
 - show first photo in listview
 - add tabs
 - add search function
 - add favorites
-- make add picture work with new recipes
 - prevent adding duplicate ingredients
 - clean up unsaved photo files
 - make it possible to reorder lists

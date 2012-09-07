@@ -213,7 +213,8 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 		getWritableDatabase().delete(RECIPE_INGREDIENTS_TABLE_NAME, "recipe_id = ?", new String[]{ recipeId });
 		getWritableDatabase().delete(RECIPE_PHOTOS_TABLE_NAME, "recipe_id = ?", new String[]{ recipeId });
 		getWritableDatabase().delete(RECIPES_TABLE_NAME, "recipe_id = ?", new String[]{ recipeId });
-		// TODO
+		// TODO error handling
+		// TODO delete photos in the filesystem
 		return true;
 	}
 

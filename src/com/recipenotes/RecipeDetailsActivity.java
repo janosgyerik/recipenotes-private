@@ -80,7 +80,6 @@ public class RecipeDetailsActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.recipe_details);
-		Log.d(TAG, "ENV: " + storageDir);
 
 		helper = new RecipeNotesSQLiteOpenHelper(this);
 
@@ -258,6 +257,8 @@ public class RecipeDetailsActivity extends Activity {
 		if (ingredients.length() > 0) {
 			for (String ingredient : ingredients.split(",")) {
 				ingredient = capitalize(ingredient);
+				String ingredientId = helper.getIngredientIdByName(ingredient);
+				helper.addRecipeIngredient(recipeId, ingredientId);
 				ingredientsListAdapter.insert(ingredient, 0);
 			}
 			ingredientView.setText("");

@@ -1,5 +1,18 @@
 release
 -------
+- fix light theme for dialog boxes
+    - if not possible, then use custom dark theme
+- remove tmp number from photo files
+- automatic daily backup
+- help popup for how to delete
+- screenshots
+- release notes
+    - list of features
+
+
+version 3
+---------
+- install "Android Compatibility package" and rewrite queries
 - save changes immediately, no need for save button
     - add/delete ingredients
     - add/delete photos
@@ -12,16 +25,12 @@ release
 - tags
     - add, with database
     - delete
-- fix light theme for dialog boxes
-    - if not possible, then use custom dark theme
-- automatic daily backup
 - restore database
     - handle result
         - restore from file
         - reload list
         - test well
     - add close button
-- remove tmp number from photo files
 - do not crash if photo file does not exist
 - handle if no external storage
     - external storage is required
@@ -29,7 +38,7 @@ release
 - cleanup
 
 
-version 3
+version 4
 ---------
 - favorites table
     - any other tables missing?

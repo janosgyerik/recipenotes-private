@@ -4,8 +4,17 @@ release
     - if not possible, then use custom dark theme
 - remove tmp number from photo files
 - automatic daily backup
-- help popup for how to delete
+- help pages
+    - how to delete recipe
+    - how to delete ingredient
+- cleanup
+    - constants
+    - texts
 - screenshots
+    - list of recipes
+    - recipe details
+    - ingredient input with auto-complete
+    - help on recipe details page
 - release notes
     - list of features
 
@@ -14,7 +23,6 @@ version 3
 ---------
 - install "Android Compatibility package" and rewrite queries
 - save changes immediately, no need for save button
-    - add/delete ingredients
     - add/delete photos
     - change name
     - delete recipe menu
@@ -30,11 +38,10 @@ version 3
         - reload list
         - test well
     - add close button
-- do not crash if photo file does not exist
 - handle if no external storage
     - external storage is required
     - it's ok to require sdcard, just do not crash
-- cleanup
+- do not store photos in database, always just look at storage
 
 
 version 4
@@ -48,7 +55,6 @@ version 4
 - add search function
 - add favorites
 - prevent adding duplicate ingredients
-- clean up unsaved photo files
 - make it possible to reorder lists
 - more efficient handling of recipe editing
     - make use of the _id of ingredients in the autocomplete list

@@ -68,7 +68,7 @@ public class RecipeDetailsActivity extends Activity {
 	private static String PICTURES_DIR = "RecipeNotes/photos";
 
 	private static File storageDir = new File(Environment.getExternalStorageDirectory(), PICTURES_DIR);
-	
+
 	static {
 		if (!storageDir.isDirectory()) {
 			storageDir.mkdirs();
@@ -84,7 +84,7 @@ public class RecipeDetailsActivity extends Activity {
 		helper = new RecipeNotesSQLiteOpenHelper(this);
 
 		nameView = (EditText) findViewById(R.id.name);
-		
+
 		ArrayList<String> ingredientsAutoCompleteList = new ArrayList<String>();
 		{
 			Cursor ingredientsCursor = helper.getReadableDatabase().query(
@@ -145,7 +145,7 @@ public class RecipeDetailsActivity extends Activity {
 					ingredientsListAdapter.add(ingredient);
 				}
 				setListViewHeightBasedOnChildren(ingredientsListView);
-				
+
 				Cursor photosCursor = helper.getReadableDatabase().rawQuery(
 						String.format(
 								"SELECT filename FROM %s WHERE recipe_id = ?",
@@ -163,7 +163,7 @@ public class RecipeDetailsActivity extends Activity {
 				// TODO should exit with error
 			}
 		}
-		
+
 		Button addPhotoButton = (Button) findViewById(R.id.btn_add_photo);
 		addPhotoButton.setOnClickListener(new AddPhotoOnClickListener());
 
@@ -175,7 +175,7 @@ public class RecipeDetailsActivity extends Activity {
 		@Override
 		public void onClick(View view) {
 			addIngredients();
-			
+
 			ContentValues values = new ContentValues();
 
 			String name = capitalize(nameView.getText().toString());
@@ -250,7 +250,7 @@ public class RecipeDetailsActivity extends Activity {
 		params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
 		listView.setLayoutParams(params);
 	}
-	
+
 	private void addIngredients() {
 		String ingredients = ingredientView.getText().toString().trim();
 		if (ingredients.length() > 0) {
@@ -307,7 +307,7 @@ public class RecipeDetailsActivity extends Activity {
 	}
 
 	private File photoFile;
-	
+
 	private String getPhotoPath(String filename) {
 		return String.format("%s/%s", storageDir, filename);
 	}
@@ -341,24 +341,26 @@ public class RecipeDetailsActivity extends Activity {
 	}
 
 	private void addPhoto(File file) {
-		String path = file.getAbsolutePath();
-		Bitmap bitmap = BitmapFactory.decodeFile(path);
-		ImageView photoView = new ImageView(this);
-		photoView.setImageBitmap(bitmap);
-		photoView.setPadding(10, 10, 10, 10);
-		photoView.setTag(file.getName());
-		photoView.setOnLongClickListener(new PhotoLongClickListener(file));
-		
-		// dirty hack for motorola
-		int targetHeight = getWindowManager().getDefaultDisplay().getWidth() * bitmap.getHeight() / bitmap.getWidth();
-		Log.d(TAG, "targetHeight = " + targetHeight);
-		LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		photoView.setLayoutParams(params);
-		photoView.getLayoutParams().height = targetHeight;
-		
-		LinearLayout layout = (LinearLayout) findViewById(R.id.photos);
-		layout.addView(photoView);
-		photoFilenames.add(file.getName());
+		if (file.isFile()) {
+			String path = file.getAbsolutePath();
+			Bitmap bitmap = BitmapFactory.decodeFile(path);
+			ImageView photoView = new ImageView(this);
+			photoView.setImageBitmap(bitmap);
+			photoView.setPadding(10, 10, 10, 10);
+			photoView.setTag(file.getName());
+			photoView.setOnLongClickListener(new PhotoLongClickListener(file));
+
+			// dirty hack for motorola
+			int targetHeight = getWindowManager().getDefaultDisplay().getWidth() * bitmap.getHeight() / bitmap.getWidth();
+			Log.d(TAG, "targetHeight = " + targetHeight);
+			LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			photoView.setLayoutParams(params);
+			photoView.getLayoutParams().height = targetHeight;
+
+			LinearLayout layout = (LinearLayout) findViewById(R.id.photos);
+			layout.addView(photoView);
+			photoFilenames.add(file.getName());
+		}
 	}
 
 	class AddPhotoOnClickListener implements OnClickListener {
@@ -378,9 +380,9 @@ public class RecipeDetailsActivity extends Activity {
 			}
 		}
 	}
-	
+
 	class PhotoLongClickListener implements OnLongClickListener {
-		
+
 		private final String path;
 		private final String filename;
 
@@ -388,7 +390,7 @@ public class RecipeDetailsActivity extends Activity {
 			this.path = file.getAbsolutePath();
 			this.filename = file.getName();
 		}
-		
+
 		private void deletePhoto() {
 			photoFilenames.remove(filename);
 			LinearLayout layout = (LinearLayout) findViewById(R.id.photos);
@@ -415,7 +417,7 @@ public class RecipeDetailsActivity extends Activity {
 			.show();
 			return true;
 		}
-		
+
 	}
 
 

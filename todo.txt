@@ -1,12 +1,30 @@
 release
 -------
+- save changes immediately, no need for save button
+    - add/delete photos
+    - change name
+    - delete recipe menu
 - fix light theme for dialog boxes
     - if not possible, then use custom dark theme
 - remove tmp number from photo files
 - automatic daily backup
+- restore database
+    - handle result
+        - restore from file
+        - reload list
+        - test well
+    - add close button
+    - latest file at top
+    - long click to delete with confirmation
 - help pages
     - how to delete recipe
     - how to delete ingredient
+- tags
+    - add, with database
+    - delete
+- handle if no external storage
+    - external storage is required
+    - it's ok to require sdcard, just do not crash
 - cleanup
     - constants
     - texts
@@ -22,25 +40,9 @@ release
 version 3
 ---------
 - install "Android Compatibility package" and rewrite queries
-- save changes immediately, no need for save button
-    - add/delete photos
-    - change name
-    - delete recipe menu
 - improved recipe list
     - do not show title if does not exist
     - use first photo
-- tags
-    - add, with database
-    - delete
-- restore database
-    - handle result
-        - restore from file
-        - reload list
-        - test well
-    - add close button
-- handle if no external storage
-    - external storage is required
-    - it's ok to require sdcard, just do not crash
 - do not store photos in database, always just look at storage
 
 

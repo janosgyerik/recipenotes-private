@@ -42,32 +42,17 @@ public class RecipeListActivity extends ListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.recipe_list);
+		setContentView(R.layout.recipelist);
 
 		helper = new RecipeNotesSQLiteOpenHelper(this);
 		//helper.getWritableDatabase().execSQL("DELETE from main_recipe where name = ''");
 
-		/*
-		cursor = helper.getReadableDatabase().query(
-				"main_recipe", 
-				new String[]{ 
-						BaseColumns._ID, "name", "summary", "display_name",
-						}, 
-				null, null, null, null, "updated_dt desc, name");
-		 */
-		cursor = helper.getReadableDatabase().rawQuery(
-				"select _id, ifnull(nullif(name, ''), '(not yet named)') name, summary, display_name"
-						+ " from main_recipe"
-						+ " order by updated_dt desc, name",
-						null);
+		cursor = helper.getRecipeListCursor();
 		startManagingCursor(cursor);
-
-		//		View header = (View)getLayoutInflater().inflate(R.layout.recipelist_header_row, null);
-		//		getListView().addHeaderView(header);
 
 		ListAdapter adapter = new SimpleCursorAdapter(
 				this, // Context.
-				R.layout.recipe_list_item,
+				R.layout.recipelist_item,
 				cursor,
 				new String[] { 
 						BaseColumns._ID, "name", "display_name",
@@ -98,7 +83,6 @@ public class RecipeListActivity extends ListActivity {
 		@Override
 		public void onClick(View v) {
 			Intent intent = new Intent(RecipeListActivity.this, RecipeDetailsActivity.class);
-			intent.putExtra("dummy", "dummy");
 			startActivity(intent);
 		}
 	}

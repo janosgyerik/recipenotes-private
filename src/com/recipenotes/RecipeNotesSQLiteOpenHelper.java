@@ -277,7 +277,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 				recipeId, ingredientId, ret));
 		return ret >= 0;
 	}
-	
+
 	public boolean removeRecipeIngredient(String recipeId, String ingredientId) {
 		int ret = getWritableDatabase().delete(RECIPE_INGREDIENTS_TABLE_NAME,
 				"recipe_id = ? AND ingredient_id = ?",
@@ -285,6 +285,15 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 		Log.d(TAG, String.format("delete recipe ingredient %s %s ret = %s",
 				recipeId, ingredientId, ret));
 		return ret > 0;
+	}
+
+	public Cursor getRecipeListCursor() {
+		Cursor cursor = getReadableDatabase().rawQuery(
+				"select _id, ifnull(nullif(name, ''), '(recipe)') name, summary, display_name"
+						+ " from main_recipe"
+						+ " order by updated_dt desc, name",
+						null);
+		return cursor;
 	}
 
 }

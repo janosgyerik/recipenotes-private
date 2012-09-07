@@ -200,7 +200,6 @@ public class RecipeDetailsActivity extends Activity {
 				Log.d(TAG, "insert recipe ret = " + ret);
 				if (ret >= 0) {
 					recipeId = String.valueOf(ret);
-					saveIngredients();
 					savePhotos();
 					Toast.makeText(getApplicationContext(), "Successfully added new recipe", Toast.LENGTH_SHORT).show();
 				}
@@ -213,8 +212,6 @@ public class RecipeDetailsActivity extends Activity {
 						BaseColumns._ID + " = ?", new String[]{ recipeId });
 				Log.d(TAG, "update ret = " + ret);
 				if (ret == 1) {
-					helper.getWritableDatabase().delete(RECIPE_INGREDIENTS_TABLE_NAME, "recipe_id = ?", new String[]{ recipeId });
-					saveIngredients();
 					helper.getWritableDatabase().delete(RECIPE_PHOTOS_TABLE_NAME, "recipe_id = ?", new String[]{ recipeId });
 					savePhotos();
 					Toast.makeText(getApplicationContext(), "Successfully updated recipe", Toast.LENGTH_SHORT).show();
@@ -258,8 +255,10 @@ public class RecipeDetailsActivity extends Activity {
 			for (String ingredient : ingredients.split(",")) {
 				ingredient = capitalize(ingredient);
 				String ingredientId = helper.getIngredientIdByName(ingredient);
-				helper.addRecipeIngredient(recipeId, ingredientId);
-				ingredientsListAdapter.insert(ingredient, 0);
+				if (ingredientId != null
+						&& helper.addRecipeIngredient(recipeId, ingredientId)) {
+					ingredientsListAdapter.insert(ingredient, 0);
+				}
 			}
 			ingredientView.setText("");
 			setListViewHeightBasedOnChildren(ingredientsListView);
@@ -271,37 +270,6 @@ public class RecipeDetailsActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			addIngredients();
-		}
-	}
-
-	private void saveIngredients() {
-		for (int i = 0; i < ingredientsListAdapter.getCount(); ++i) {
-			String ingredient = ingredientsListAdapter.getItem(i);
-			Cursor ingredientIdCursor =
-					helper.getReadableDatabase().query(INGREDIENTS_TABLE_NAME,
-							new String[]{ BaseColumns._ID, },
-							"name = ?",
-							new String[]{ ingredient, },
-							null, null, null, "1");
-			startManagingCursor(ingredientIdCursor);
-
-			String ingredientId;
-			if (ingredientIdCursor.moveToNext()) {
-				ingredientId = ingredientIdCursor.getString(0);
-				Log.d(TAG, "got ingredientId = " + ingredientId);
-			}
-			else {
-				ContentValues values = new ContentValues();
-				values.put("name", ingredient);
-				long ret = helper.getWritableDatabase().insert(INGREDIENTS_TABLE_NAME, null, values);
-				Log.d(TAG, "insert ingredient ret = " + ret);
-				ingredientId = String.valueOf(ret);
-			}
-			ContentValues values = new ContentValues();
-			values.put("recipe_id", recipeId);
-			values.put("ingredient_id", ingredientId);
-			long ret = helper.getWritableDatabase().insert(RECIPE_INGREDIENTS_TABLE_NAME, null, values);
-			Log.d(TAG, "insert recipe ingredient ret = " + ret);
 		}
 	}
 
@@ -325,8 +293,13 @@ public class RecipeDetailsActivity extends Activity {
 		@Override
 		public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 				int arg2, long arg3) {
-			ingredientsListAdapter.remove(ingredientsListAdapter.getItem(arg2));
-			setListViewHeightBasedOnChildren(ingredientsListView);
+			String name = ingredientsListAdapter.getItem(arg2);
+			String ingredientId = helper.getIngredientIdByName(name);
+			if (ingredientId != null
+					&& helper.removeRecipeIngredient(recipeId, ingredientId)) {
+				ingredientsListAdapter.remove(name);
+				setListViewHeightBasedOnChildren(ingredientsListView);
+			}
 			return true;
 		}
 	}

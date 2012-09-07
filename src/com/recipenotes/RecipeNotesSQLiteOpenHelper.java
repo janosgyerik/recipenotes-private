@@ -272,7 +272,18 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 		values.put("recipe_id", recipeId);
 		values.put("ingredient_id", ingredientId);
 		long ret = getWritableDatabase().insert(RECIPE_INGREDIENTS_TABLE_NAME, null, values);
-		Log.d(TAG, "insert recipe ingredient ret = " + ret);
+		Log.d(TAG, String.format("insert recipe ingredient %s %s ret = %s",
+				recipeId, ingredientId, ret));
 		return ret >= 0;
 	}
+	
+	public boolean removeRecipeIngredient(String recipeId, String ingredientId) {
+		int ret = getWritableDatabase().delete(RECIPE_INGREDIENTS_TABLE_NAME,
+				"recipe_id = ? AND ingredient_id = ?",
+				new String[]{ recipeId, ingredientId });
+		Log.d(TAG, String.format("delete recipe ingredient %s %s ret = %s",
+				recipeId, ingredientId, ret));
+		return ret > 0;
+	}
+
 }

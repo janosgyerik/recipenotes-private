@@ -241,7 +241,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 				null, null, null, "1");
 		if (cursor.moveToNext()) {
 			ingredientId = cursor.getString(0);
-			Log.d(TAG, "got ingredientId = " + ingredientId);
+			Log.d(TAG, String.format("got ingredient: %s -> %s", ingredientId, name));
 		}
 		cursor.close();
 		return ingredientId;
@@ -253,11 +253,12 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 	 */
 	private String newIngredient(String name) {
 		ContentValues values = new ContentValues();
+		values.put("name", name);
 		long createdDt = new Date().getTime();
 		values.put("created_dt", createdDt);
 		values.put("updated_dt", createdDt);
 		long ret = getWritableDatabase().insert(INGREDIENTS_TABLE_NAME, null, values);
-		Log.d(TAG, "insert ingredient ret = " + ret);
+		Log.d(TAG, String.format("insert ingredient: %s -> %s", ret, name));
 		if (ret >= 0) {
 			String ingredientId = String.valueOf(ret);
 			return ingredientId;

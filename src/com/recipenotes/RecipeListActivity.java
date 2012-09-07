@@ -12,7 +12,6 @@ import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.BaseColumns;
@@ -36,7 +35,7 @@ public class RecipeListActivity extends ListActivity {
 	// Debugging
 	private static final String TAG = "RecipeListActivity";
 
-	private SQLiteOpenHelper helper;
+	private RecipeNotesSQLiteOpenHelper helper;
 	private Cursor cursor;
 
 	/** Called when the activity is first created. */

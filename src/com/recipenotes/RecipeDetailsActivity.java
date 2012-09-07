@@ -256,7 +256,7 @@ public class RecipeDetailsActivity extends Activity {
 		if (ingredients.length() > 0) {
 			for (String ingredient : ingredients.split(",")) {
 				ingredient = capitalize(ingredient);
-				String ingredientId = helper.getIngredientIdByName(ingredient);
+				String ingredientId = helper.getOrCreateIngredient(ingredient);
 				if (ingredientId != null
 						&& helper.addRecipeIngredient(recipeId, ingredientId)) {
 					ingredientsListAdapter.insert(ingredient, 0);

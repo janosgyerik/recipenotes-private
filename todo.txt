@@ -18,7 +18,6 @@ version 3
     - add/delete photos
     - change name
     - delete recipe menu
-- make add picture work with new recipes
 - improved recipe list
     - do not show title if does not exist
     - use first photo

@@ -119,7 +119,10 @@ public class RecipeDetailsActivity extends Activity {
 
 		// load recipe data
 		recipeId = getIntent().getExtras().getString(BaseColumns._ID);
-		if (recipeId != null) {
+		if (recipeId == null) {
+			recipeId = helper.newRecipe();
+		}
+		else {
 			Cursor recipeCursor = helper.getReadableDatabase().query(
 					RECIPES_TABLE_NAME, new String[]{ "name", }, 
 					BaseColumns._ID + " = ?", new String[]{ recipeId },
@@ -155,15 +158,14 @@ public class RecipeDetailsActivity extends Activity {
 					String filename = photosCursor.getString(0);
 					addPhoto(new File(getPhotoPath(filename)));
 				}
-				
-				Button addPhotoButton = (Button) findViewById(R.id.btn_add_photo);
-				addPhotoButton.setOnClickListener(new AddPhotoOnClickListener());
-				addPhotoButton.setVisibility(View.VISIBLE);
 			}
 			else {
 				// TODO should exit with error
 			}
 		}
+		
+		Button addPhotoButton = (Button) findViewById(R.id.btn_add_photo);
+		addPhotoButton.setOnClickListener(new AddPhotoOnClickListener());
 
 		Button save = (Button) findViewById(R.id.btn_save);
 		save.setOnClickListener(new SaveRecipeOnClickListener());

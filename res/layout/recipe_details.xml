@@ -71,8 +71,7 @@
                 android:id="@+id/btn_add_photo"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Add a photo"
-                android:visibility="gone" />
+                android:text="Add a photo" />
 
             <LinearLayout
                 android:id="@+id/photos"

@@ -144,6 +144,8 @@ public class RecipeListActivity extends ListActivity {
 			intent.putExtra(FileSelectorActivity.IN_DIRPARAM, RecipeFileManager.BACKUPS_DIRPARAM);
 			intent.putExtra(FileSelectorActivity.IN_PATTERN, RecipeFileManager.BACKUPFILES_PATTERN);
 			intent.putExtra(FileSelectorActivity.IN_ORDER, FileSelectorActivity.ORDER_ZYX);
+			intent.putExtra(FileSelectorActivity.IN_CONFIRMATION_TITLE, getString(R.string.title_confirm_restore));
+			intent.putExtra(FileSelectorActivity.IN_CONFIRMATION_MESSAGE, getString(R.string.confirm_restore));
 			startActivityForResult(intent, FILE_SELECTED);
 			return true;
 

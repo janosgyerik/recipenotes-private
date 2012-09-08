@@ -17,6 +17,10 @@
     <string name="msg_backup_created">Database backup successfully created</string>
     <string name="error_backup_failed">Backup failed</string>
     <string name="error_backup_exception">Backup failed unexpectedly</string>
+    <string name="title_confirm_restore">Restore database</string>
+    <string name="confirm_restore">The database will be replaced with the selected file.
+        Make sure you took a backup of the current database before doing this.
+        Are you sure to go ahead?</string>
     <string name="msg_restore_success">Restored database</string>
     <string name="error_restore_failed">Restore failed</string>
     <string name="error_restore_exception">Restore failed unexpectedly</string>

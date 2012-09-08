@@ -5,7 +5,9 @@ import java.io.FileFilter;
 import java.util.Comparator;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -25,6 +27,8 @@ public class FileSelectorActivity extends ListActivity {
 	public static final String IN_DIRPARAM = "DIRPARAM";
 	public static final String IN_PATTERN = "PATTERN";
 	public static final String IN_ORDER = "ORDER";
+	public static final String IN_CONFIRMATION_TITLE = "CONFIRMATION_TITLE";
+	public static final String IN_CONFIRMATION_MESSAGE = "CONFIRMATION_MESSAGE";
 	
 	public static final String ORDER_ABC = "ABC";
 	public static final String ORDER_ZYX = "ZYX";
@@ -44,6 +48,8 @@ public class FileSelectorActivity extends ListActivity {
 		final String dirparam = extras.getString(IN_DIRPARAM);
 		final String pattern = extras.getString(IN_PATTERN);
 		final String order = extras.getString(IN_ORDER);
+		final String confirmationTitle = extras.getString(IN_CONFIRMATION_TITLE);
+		final String confirmationMessage = extras.getString(IN_CONFIRMATION_MESSAGE);
 		
 		Comparator<String> comparator;
 		if (order != null && order.equals(ORDER_ZYX)) {
@@ -80,16 +86,37 @@ public class FileSelectorActivity extends ListActivity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				String filename = adapter.getItem(arg2);
-
-				Intent intent = new Intent();
-				intent.putExtra(OUT_FILENAME, filename);
-
-				// Set result and finish this Activity
-				setResult(Activity.RESULT_OK, intent);
-				finish();
+				final String filename = adapter.getItem(arg2);
+				
+				if (confirmationTitle != null || confirmationMessage != null) {
+					new AlertDialog.Builder(FileSelectorActivity.this)
+					.setTitle(confirmationTitle)
+					.setMessage(confirmationMessage)
+					.setCancelable(true)
+					.setPositiveButton(R.string.btn_yes, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							returnResult(filename);
+						}
+					})
+					.setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.cancel();
+						}
+					})
+					.show();
+				}
+				else {
+					returnResult(filename);
+				}
 			}
 		});
+	}
+	
+	private void returnResult(String filename) {
+		Intent intent = new Intent();
+		intent.putExtra(OUT_FILENAME, filename);
+		setResult(Activity.RESULT_OK, intent);
+		finish();
 	}
 
 	public static boolean isExternalStorageWritable() {

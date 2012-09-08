@@ -5,8 +5,7 @@ release
     - if not possible, then use custom dark theme
 - automatic daily backup
 - restore database
-    - add close button
-    - latest file at top
+    - confirm, this is a dangerous operation
     - long click to delete with confirmation
 - help pages
     - how to delete recipe

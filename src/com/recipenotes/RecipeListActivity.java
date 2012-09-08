@@ -140,9 +140,10 @@ public class RecipeListActivity extends ListActivity {
 
 		case R.id.menu_restore:
 			Intent intent = new Intent(this, FileSelectorActivity.class);
-			intent.putExtra(FileSelectorActivity.PARAM_TITLE, getString(R.string.title_select_backupfile));
-			intent.putExtra(FileSelectorActivity.PARAM_DIRPARAM, RecipeFileManager.BACKUPS_DIRPARAM);
-			intent.putExtra(FileSelectorActivity.PARAM_PATTERN, RecipeFileManager.BACKUPFILES_PATTERN);
+			intent.putExtra(FileSelectorActivity.IN_TITLE, getString(R.string.title_select_backupfile));
+			intent.putExtra(FileSelectorActivity.IN_DIRPARAM, RecipeFileManager.BACKUPS_DIRPARAM);
+			intent.putExtra(FileSelectorActivity.IN_PATTERN, RecipeFileManager.BACKUPFILES_PATTERN);
+			intent.putExtra(FileSelectorActivity.IN_ORDER, FileSelectorActivity.ORDER_ZYX);
 			startActivityForResult(intent, FILE_SELECTED);
 			return true;
 
@@ -168,7 +169,7 @@ public class RecipeListActivity extends ListActivity {
 	private void handleRestoreDatabaseResult(Intent data) {
 		Bundle extras = data.getExtras();
 		if (extras != null) {
-			String filename = extras.getString(FileSelectorActivity.RESULT_FILENAME);
+			String filename = extras.getString(FileSelectorActivity.OUT_FILENAME);
 			Log.d(TAG, "selected filename = " + filename);
 			if (filename != null) {
 				try {

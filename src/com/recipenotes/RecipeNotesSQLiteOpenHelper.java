@@ -27,7 +27,9 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 
 	private static final String RECIPES_TABLE_NAME = "main_recipe";
 	private static final String INGREDIENTS_TABLE_NAME = "main_ingredient";
+	private static final String TAGS_TABLE_NAME = "main_tag";
 	private static final String RECIPE_INGREDIENTS_TABLE_NAME = "main_recipeingredient";
+	private static final String RECIPE_TAGS_TABLE_NAME = "main_recipetag";
 	private static final String RECIPE_PHOTOS_TABLE_NAME = "main_recipephoto";
 
 	private List<String> sqlCreateStatements;
@@ -214,6 +216,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 
 	public boolean deleteRecipe(String recipeId) {
 		getWritableDatabase().delete(RECIPE_INGREDIENTS_TABLE_NAME, "recipe_id = ?", new String[]{ recipeId });
+		getWritableDatabase().delete(RECIPE_TAGS_TABLE_NAME, "recipe_id = ?", new String[]{ recipeId });
 		getWritableDatabase().delete(RECIPE_PHOTOS_TABLE_NAME, "recipe_id = ?", new String[]{ recipeId });
 		getWritableDatabase().delete(RECIPES_TABLE_NAME, "_id = ?", new String[]{ recipeId });
 		Log.d(TAG, "deleted recipe " + recipeId);
@@ -221,6 +224,78 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 		return true;
 	}
 
+	public String getOrCreateTag(String name) {
+		String tagId = getTagIdByName(name);
+		if (tagId == null) {
+			tagId = newTag(name);
+		}
+		return tagId;
+	}
+
+	/**
+	 * Returns tagId or null if tag does not exist.
+	 * @param name
+	 * @return
+	 */
+	public String getTagIdByName(String name) {
+		String tagId = null;
+		Cursor cursor = getReadableDatabase().query(
+				TAGS_TABLE_NAME, 
+				new String[] { BaseColumns._ID }, 
+				"name = ?", 
+				new String[] { name }, 
+				null, null, null, "1");
+		if (cursor.moveToNext()) {
+			tagId = cursor.getString(0);
+			Log.d(TAG, String.format("got tag: %s -> %s", tagId, name));
+		}
+		cursor.close();
+		return tagId;
+	}
+
+	/**
+	 * Returns new tagId on success or else null
+	 * @return
+	 */
+	private String newTag(String name) {
+		ContentValues values = new ContentValues();
+		values.put("name", name);
+		long createdDt = new Date().getTime();
+		values.put("created_dt", createdDt);
+		values.put("updated_dt", createdDt);
+		long ret = getWritableDatabase().insert(TAGS_TABLE_NAME, null, values);
+		Log.d(TAG, String.format("insert tag: %s -> %s", ret, name));
+		if (ret >= 0) {
+			String tagId = String.valueOf(ret);
+			return tagId;
+		}
+		else {
+			return null;
+		}
+	}
+
+	public boolean addRecipeTag(String recipeId, String tagId) {
+		ContentValues values = new ContentValues();
+		values.put("recipe_id", recipeId);
+		values.put("tag_id", tagId);
+		long createdDt = new Date().getTime();
+		values.put("created_dt", createdDt);
+		values.put("updated_dt", createdDt);
+		long ret = getWritableDatabase().insert(RECIPE_TAGS_TABLE_NAME, null, values);
+		Log.d(TAG, String.format("insert recipe tag %s %s ret = %s",
+				recipeId, tagId, ret));
+		return ret >= 0;
+	}
+
+	public boolean removeRecipeTag(String recipeId, String tagId) {
+		int ret = getWritableDatabase().delete(RECIPE_TAGS_TABLE_NAME,
+				"recipe_id = ? AND tag_id = ?",
+				new String[]{ recipeId, tagId });
+		Log.d(TAG, String.format("delete recipe tag %s %s ret = %s",
+				recipeId, tagId, ret));
+		return ret > 0;
+	}
+	
 	public String getOrCreateIngredient(String name) {
 		String ingredientId = getIngredientIdByName(name);
 		if (ingredientId == null) {
@@ -332,6 +407,14 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 		return cursor;
 	}
 
+	public Cursor getTagsListCursor() {
+		Cursor cursor = getReadableDatabase().query(
+				TAGS_TABLE_NAME, 
+				new String[]{ BaseColumns._ID, "name", }, 
+				null, null, null, null, "name");
+		return cursor;
+	}
+
 	public Cursor getRecipeDetailsCursor(String recipeId) {
 		Cursor cursor = getReadableDatabase().query(
 				RECIPES_TABLE_NAME, new String[]{ "name", }, 
@@ -345,6 +428,17 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 				String.format(
 						"SELECT i.name FROM %s ri JOIN %s i ON ri.ingredient_id = i.%s WHERE ri.recipe_id = ? ORDER BY i.name",
 						RECIPE_INGREDIENTS_TABLE_NAME, INGREDIENTS_TABLE_NAME, BaseColumns._ID
+						),
+						new String[]{ recipeId }
+				);
+		return cursor;
+	}
+
+	public Cursor getRecipeTagsCursor(String recipeId) {
+		Cursor cursor = getReadableDatabase().rawQuery(
+				String.format(
+						"SELECT t.name FROM %s rt JOIN %s t ON rt.tag_id = t.%s WHERE rt.recipe_id = ? ORDER BY t.name",
+						RECIPE_TAGS_TABLE_NAME, TAGS_TABLE_NAME, BaseColumns._ID
 						),
 						new String[]{ recipeId }
 				);

@@ -67,6 +67,32 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent" />
 
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/btn_add_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/btn_add" />
+
+                <MultiAutoCompleteTextView
+                    android:id="@+id/tag"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/btn_add_tag"
+                    android:hint="@string/hint_tag"
+                    android:singleLine="true" />
+            </RelativeLayout>
+
+            <ListView
+                android:id="@+id/tags"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+
             <Button
                 android:id="@+id/btn_add_photo"
                 android:layout_width="fill_parent"

@@ -49,9 +49,12 @@ public class RecipeDetailsActivity extends Activity {
 	private EditText nameView;
 
 	private MultiAutoCompleteTextView ingredientView;
-
 	private ArrayAdapter<String> ingredientsListAdapter;
 	private ListView ingredientsListView;
+
+	private MultiAutoCompleteTextView tagView;
+	private ArrayAdapter<String> tagsListAdapter;
+	private ListView tagsListView;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -63,6 +66,8 @@ public class RecipeDetailsActivity extends Activity {
 
 		nameView = (EditText) findViewById(R.id.name);
 
+		
+		// add ingredient
 		// TODO store id too
 		ArrayList<String> ingredientsAutoCompleteList = new ArrayList<String>();
 		{
@@ -90,6 +95,37 @@ public class RecipeDetailsActivity extends Activity {
 
 		Button addIngredientButton = (Button) findViewById(R.id.btn_add_ingredient);
 		addIngredientButton.setOnClickListener(new AddIngredientOnClickListener());
+		
+
+		// add tag
+		
+		ArrayList<String> tagsAutoCompleteList = new ArrayList<String>();
+		{
+			Cursor tagsCursor = helper.getTagsListCursor();
+			startManagingCursor(tagsCursor);
+
+			int i = tagsCursor.getColumnIndex("name");
+			while (tagsCursor.moveToNext()) {
+				tagsAutoCompleteList.add(tagsCursor.getString(i));
+			}
+		}
+		
+		ArrayAdapter<String> tagsAutoCompleteAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_dropdown_item_1line, tagsAutoCompleteList);
+		tagView = (MultiAutoCompleteTextView) findViewById(R.id.tag);
+		tagView.setAdapter(tagsAutoCompleteAdapter);
+		tagView.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+
+		ArrayList<String> tagsList = new ArrayList<String>();
+		tagsListAdapter = new ArrayAdapter<String>(this,
+				R.layout.tagslist_item, tagsList);
+		tagsListView = (ListView) findViewById(R.id.tags);
+		tagsListView.setAdapter(tagsListAdapter);
+		tagsListView.setOnItemLongClickListener(new TagListOnItemLongClickListener());
+
+		Button addTagButton = (Button) findViewById(R.id.btn_add_tag);
+		addTagButton.setOnClickListener(new AddTagOnClickListener());
+
 
 		// load recipe data
 		Bundle extras = getIntent().getExtras();
@@ -113,6 +149,14 @@ public class RecipeDetailsActivity extends Activity {
 					ingredientsListAdapter.add(ingredient);
 				}
 				setListViewHeightBasedOnChildren(ingredientsListView);
+
+				Cursor tagsCursor = helper.getRecipeTagsCursor(recipeId);
+				startManagingCursor(tagsCursor);
+				while (tagsCursor.moveToNext()) {
+					String tag = tagsCursor.getString(0);
+					tagsListAdapter.add(tag);
+				}
+				setListViewHeightBasedOnChildren(tagsListView);
 
 				Cursor photosCursor = helper.getRecipePhotosCursor(recipeId);
 				startManagingCursor(photosCursor);
@@ -230,6 +274,53 @@ public class RecipeDetailsActivity extends Activity {
 				int arg2, long arg3) {
 			String ingredientName = ingredientsListAdapter.getItem(arg2);
 			removeIngredient(ingredientName);
+			return true;
+		}
+	}
+
+	private void addTags() {
+		String tags = tagView.getText().toString().trim();
+		if (tags.length() > 0) {
+			StringBuffer tagsListMsgBuffer = new StringBuffer();
+			for (String tag : tags.split(",")) {
+				tag = capitalize(tag);
+				tagsListMsgBuffer.append(tag);
+				tagsListMsgBuffer.append(", ");
+				String tagId = helper.getOrCreateTag(tag);
+				if (tagId != null
+						&& helper.addRecipeTag(recipeId, tagId)) {
+					tagsListAdapter.insert(tag, 0);
+				}
+			}
+			tagView.setText("");
+			setListViewHeightBasedOnChildren(tagsListView);
+			String tagsListMsg = tagsListMsgBuffer.substring(0, tagsListMsgBuffer.lastIndexOf(","));
+			Toast.makeText(getApplicationContext(), "Added " + tagsListMsg, Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	private void removeTag(String tagName) {
+		String tagId = helper.getTagIdByName(tagName);
+		if (tagId != null
+				&& helper.removeRecipeTag(recipeId, tagId)) {
+			tagsListAdapter.remove(tagName);
+			setListViewHeightBasedOnChildren(tagsListView);
+		}
+	}
+
+	class AddTagOnClickListener implements OnClickListener {
+		@Override
+		public void onClick(View v) {
+			addTags();
+		}
+	}
+
+	class TagListOnItemLongClickListener implements OnItemLongClickListener {
+		@Override
+		public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+				int arg2, long arg3) {
+			String tagName = tagsListAdapter.getItem(arg2);
+			removeTag(tagName);
 			return true;
 		}
 	}

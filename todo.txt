@@ -6,9 +6,6 @@ release
 - help pages
     - how to delete recipe
     - how to delete ingredient
-- tags
-    - add, with database
-    - delete
 - screenshots
     - list of recipes
     - recipe details
@@ -30,6 +27,12 @@ version 2
 
 version 3
 ---------
+- clean up database file paths
+    - a.getDatabasePath("sqlite3.db") -> /data/data/com.recipenotes/databases/sqlite3.db
+    - a.getPackageCodePath -> /data/app/com.recipenotes.apk
+    - a.getPackageName -> com.recipenotes
+    - Environment.getDataDirectory -> /data
+    - Environment.getExternalStorageDirectory -> /sdcard
 - delete misspelled ingredients
 - handle if camera is not accessible
 - show first photo in listview

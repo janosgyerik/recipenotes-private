@@ -10,7 +10,7 @@
         android:background="#910101"
         android:gravity="center_vertical"
         android:padding="10dp"
-        android:text="Recipes"
+        android:text="@string/title_recipelist"
         android:textColor="#FFFFFF"
         android:textSize="22dp"
         android:textStyle="bold" />
@@ -18,21 +18,15 @@
     <ListView
         android:id="@android:id/list"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dip"
         android:layout_weight="1"
         android:drawSelectorOnTop="false" />
-
-    <TextView
-        android:id="@android:id/empty"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="No data" />
 
     <Button
         android:id="@+id/btn_add_recipe"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:text="Add recipe" />
+        android:text="@string/btn_add_recipe" />
 
 </LinearLayout>

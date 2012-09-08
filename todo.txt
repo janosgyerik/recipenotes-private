@@ -15,25 +15,23 @@ release
     - it's ok to require sdcard, just do not crash
 - cleanup
     - helper
-    - no texts in layout files
-    - no warnings in java
-    - no warnings in layout files
 - screenshots
     - list of recipes
     - recipe details
     - ingredient input with auto-complete
     - help on recipe details page
+    - menu with backup / restore
 - release notes
     - list of features
 
 
 version 3
 ---------
-- install "Android Compatibility package" and rewrite queries
+- separate recipe details and editing
 - improved recipe list
     - do not show title if does not exist
     - use first photo
-- do not store photos in database, always just look at storage
+- install "Android Compatibility package" and rewrite queries
 
 
 version 4

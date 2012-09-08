@@ -36,6 +36,8 @@ public class RecipeListActivity extends ListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Log.d(TAG, "++onCreate");
+		
 		setContentView(R.layout.recipelist);
 
 		helper = new RecipeNotesSQLiteOpenHelper(this);
@@ -60,6 +62,14 @@ public class RecipeListActivity extends ListActivity {
 		getListView().setOnItemLongClickListener(new RecipeListOnItemLongClickListener());
 
 		((Button)findViewById(R.id.btn_add_recipe)).setOnClickListener(new AddRecipeOnClickListener());
+		
+		RecipeFileManager.updateDailyBackup();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		Log.d(TAG, "++onResume");
 	}
 
 	class AddRecipeOnClickListener implements OnClickListener {

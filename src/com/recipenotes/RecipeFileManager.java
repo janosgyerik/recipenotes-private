@@ -24,6 +24,7 @@ public class RecipeFileManager {
 
 	public static final String BACKUPFILE_FORMAT = "";
 	public static final String BACKUPFILES_PATTERN = "^sqlite3-.*\\.db$";
+	public static final String DAILY_BACKUPFILE = "sqlite3-daily.db";
 
 	public static final String RECIPE_PHOTOFILE_FORMAT = "recipe_%s_%d.jpg";
 	public static final String RECIPE_PHOTOFILES_PATTERN = "^recipe_%s_.*";
@@ -48,17 +49,21 @@ public class RecipeFileManager {
 	}
 	
 	public static boolean backupDatabaseFile() throws IOException {
+		String filename = String.format("sqlite3-%s.db", new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date()));
+		return backupDatabaseFile(filename);
+	}
+	
+	private static boolean backupDatabaseFile(String filename) throws IOException {
 		File sd = Environment.getExternalStorageDirectory();
 		File data = Environment.getDataDirectory();
 
 		if (sd.canWrite()) {
-			String backupName = String.format("sqlite3-%s.db", new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date()));
 			File backupDir = new File(sd, BACKUPS_DIRPARAM);
 			if (! backupDir.isDirectory()) {
 				backupDir.mkdirs();
 			}
 			File currentDB = new File(data, getDatabasePath());
-			File backupFile = new File(backupDir, backupName);
+			File backupFile = new File(backupDir, filename);
 
 			FileChannel src = new FileInputStream(currentDB).getChannel();
 			FileChannel dst = new FileOutputStream(backupFile).getChannel();
@@ -95,6 +100,26 @@ public class RecipeFileManager {
 	public static File newPhotoFile(String recipeId) throws IOException {
 		return File.createTempFile(String.format("recipe_%s_", recipeId),
 				".jpg", PHOTOS_DIR);
+	}
+
+	private static Date lastDailyBackup;
+	
+	/**
+	 * Update daily database backup, only once a day.
+	 */
+	public static void updateDailyBackup() {
+		Log.d(TAG, "lastDailyBackup " + lastDailyBackup);
+		
+		Date now = new Date();
+		if (lastDailyBackup == null || lastDailyBackup.getDay() < now.getDay()) {
+			try {
+				backupDatabaseFile(DAILY_BACKUPFILE);
+				lastDailyBackup = now;
+				Log.d(TAG, "Updated daily backup");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

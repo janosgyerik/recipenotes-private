@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 
 public class FileSelectorActivity extends ListActivity {
@@ -64,7 +65,7 @@ public class FileSelectorActivity extends ListActivity {
 		final ArrayAdapter<String> adapter =
 				new ArrayAdapter<String>(this, R.layout.filename);
 
-		File externalDir =
+		final File externalDir =
 				new File(Environment.getExternalStorageDirectory(), dirparam);
 
 		FileFilter fileFilter = new FileFilter() {
@@ -108,6 +109,39 @@ public class FileSelectorActivity extends ListActivity {
 				else {
 					returnResult(filename);
 				}
+			}
+		});
+		
+		getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
+			private void deleteSelectedFilename(String filename) {
+				if (externalDir.isDirectory()) {
+					if (new File(externalDir, filename).delete()) {
+						adapter.remove(filename);
+					}
+				}
+			}
+			
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				final String filename = adapter.getItem(arg2);
+
+				new AlertDialog.Builder(FileSelectorActivity.this)
+				.setTitle(R.string.title_delete_file)
+				.setMessage(R.string.confirm_are_you_sure)
+				.setCancelable(true)
+				.setPositiveButton(R.string.btn_yes, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						deleteSelectedFilename(filename);
+					}
+				})
+				.setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}
+				})
+				.show();
+				return true;
 			}
 		});
 	}

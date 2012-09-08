@@ -94,9 +94,9 @@ public class RecipeListActivity extends ListActivity {
 				int arg2, long arg3) {
 			final String recipeId = String.valueOf(arg3);
 			new AlertDialog.Builder(RecipeListActivity.this)
+			.setTitle(R.string.title_delete_recipe)
 			.setMessage(R.string.confirm_are_you_sure)
 			.setCancelable(true)
-			.setTitle(R.string.title_delete_recipe)
 			.setPositiveButton(R.string.btn_yes, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
 					deleteRecipe(recipeId);

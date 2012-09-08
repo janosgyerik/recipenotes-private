@@ -18,6 +18,7 @@ public class RecipeFileManager {
 	private static final String TAG = "RecipeFileManager";
 
 	public static final String BACKUPS_DIRPARAM = "RecipeNotes/backups";
+	public static final File BACKUPS_DIR = new File(Environment.getExternalStorageDirectory(), BACKUPS_DIRPARAM);
 	public static final String PHOTOS_DIRPARAM = "RecipeNotes/photos";
 	public static final File PHOTOS_DIR = new File(Environment.getExternalStorageDirectory(), PHOTOS_DIRPARAM);
 
@@ -40,24 +41,45 @@ public class RecipeFileManager {
 		return true;
 	}
 
+	private static String getDatabasePath() {
+		String packageName = "com.recipenotes";
+		String dbname = "sqlite3.db";
+		return String.format("/data/%s/databases/%s", packageName, dbname);
+	}
+	
 	public static boolean backupDatabaseFile() throws IOException {
 		File sd = Environment.getExternalStorageDirectory();
 		File data = Environment.getDataDirectory();
 
 		if (sd.canWrite()) {
-			String packageName = "com.recipenotes";
-			String dbname = "sqlite3.db";
 			String backupName = String.format("sqlite3-%s.db", new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date()));
-			String currentDBPath = String.format("/data/%s/databases/%s", packageName, dbname);
 			File backupDir = new File(sd, BACKUPS_DIRPARAM);
 			if (! backupDir.isDirectory()) {
 				backupDir.mkdirs();
 			}
-			File currentDB = new File(data, currentDBPath);
+			File currentDB = new File(data, getDatabasePath());
 			File backupFile = new File(backupDir, backupName);
 
 			FileChannel src = new FileInputStream(currentDB).getChannel();
 			FileChannel dst = new FileOutputStream(backupFile).getChannel();
+			dst.transferFrom(src, 0, src.size());
+			src.close();
+			dst.close();
+			return true;
+		}
+		return false;
+	}
+	
+	public static boolean restoreDatabaseFile(String filename) throws IOException {
+		File sd = Environment.getExternalStorageDirectory();
+		File data = Environment.getDataDirectory();
+
+		if (sd.canWrite()) {
+			File currentFile = new File(data, getDatabasePath());
+			File backupFile = new File(BACKUPS_DIR, filename);
+
+			FileChannel src = new FileInputStream(backupFile).getChannel();
+			FileChannel dst = new FileOutputStream(currentFile).getChannel();
 			dst.transferFrom(src, 0, src.size());
 			src.close();
 			dst.close();

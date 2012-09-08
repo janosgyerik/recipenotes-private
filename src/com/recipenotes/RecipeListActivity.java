@@ -1,5 +1,7 @@
 package com.recipenotes;
 
+import java.io.IOException;
+
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
@@ -29,6 +31,8 @@ public class RecipeListActivity extends ListActivity {
 	private RecipeNotesSQLiteOpenHelper helper;
 	private Cursor cursor;
 
+	private static final int FILE_SELECTED = 1;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -139,7 +143,7 @@ public class RecipeListActivity extends ListActivity {
 			intent.putExtra(FileSelectorActivity.PARAM_TITLE, getString(R.string.title_select_backupfile));
 			intent.putExtra(FileSelectorActivity.PARAM_DIRPARAM, RecipeFileManager.BACKUPS_DIRPARAM);
 			intent.putExtra(FileSelectorActivity.PARAM_PATTERN, RecipeFileManager.BACKUPFILES_PATTERN);
-			startActivity(intent);
+			startActivityForResult(intent, FILE_SELECTED);
 			return true;
 
 		case R.id.menu_quit:
@@ -159,6 +163,39 @@ public class RecipeListActivity extends ListActivity {
 			return true;
 		}
 		return false;
+	}
+	
+	private void handleRestoreDatabaseResult(Intent data) {
+		Bundle extras = data.getExtras();
+		if (extras != null) {
+			String filename = extras.getString(FileSelectorActivity.RESULT_FILENAME);
+			Log.d(TAG, "selected filename = " + filename);
+			if (filename != null) {
+				try {
+					if (RecipeFileManager.restoreDatabaseFile(filename)) {
+						Toast.makeText(getBaseContext(), R.string.msg_restore_success, Toast.LENGTH_LONG).show();
+					}
+					else {
+						Toast.makeText(getBaseContext(), R.string.error_restore_failed, Toast.LENGTH_LONG).show();
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+					Toast.makeText(getBaseContext(), R.string.error_restore_exception, Toast.LENGTH_LONG).show();
+				}
+				cursor.requery();
+			}
+		}
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == RESULT_OK) {
+			switch (requestCode) {
+			case FILE_SELECTED:
+				handleRestoreDatabaseResult(data);
+				break;
+			}
+		}
 	}
 
 	@Override  

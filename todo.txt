@@ -9,9 +9,6 @@ release
 - tags
     - add, with database
     - delete
-- handle if no external storage
-    - external storage is required
-    - it's ok to require sdcard, just do not crash
 - screenshots
     - list of recipes
     - recipe details

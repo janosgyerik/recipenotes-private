@@ -32,12 +32,26 @@ public class RecipeListActivity extends ListActivity {
 	private Cursor cursor;
 
 	private static final int FILE_SELECTED = 1;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.d(TAG, "++onCreate");
-		
+
+		if (!RecipeFileManager.isExternalStorageWritable()) {
+			new AlertDialog.Builder(this)
+			.setTitle(R.string.app_name)
+			.setMessage(R.string.fatal_sdcard_required)
+			.setCancelable(false)
+			.setIcon(R.drawable.launcher_main)
+			.setPositiveButton(R.string.btn_ok, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					finish();
+				}
+			})
+			.show();
+		}
+
 		setContentView(R.layout.recipelist);
 
 		helper = new RecipeNotesSQLiteOpenHelper(this);
@@ -62,7 +76,7 @@ public class RecipeListActivity extends ListActivity {
 		getListView().setOnItemLongClickListener(new RecipeListOnItemLongClickListener());
 
 		((Button)findViewById(R.id.btn_add_recipe)).setOnClickListener(new AddRecipeOnClickListener());
-		
+
 		RecipeFileManager.updateDailyBackup();
 	}
 
@@ -177,7 +191,7 @@ public class RecipeListActivity extends ListActivity {
 		}
 		return false;
 	}
-	
+
 	private void handleRestoreDatabaseResult(Intent data) {
 		Bundle extras = data.getExtras();
 		if (extras != null) {
@@ -199,7 +213,7 @@ public class RecipeListActivity extends ListActivity {
 			}
 		}
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {

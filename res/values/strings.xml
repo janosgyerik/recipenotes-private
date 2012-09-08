@@ -2,6 +2,9 @@
 <resources>
 
     <string name="app_name">Recipe Notes</string>
+    <string name="fatal_sdcard_required">Oh snap. SD card is not available
+        or not writable, and this app cannot work properly like that.
+        This may be improved in an upcoming version.</string>
     <string name="title_recipelist">Recipes</string>
     <string name="title_delete_recipe">Delete recipe</string>
     <string name="title_delete_photo">Delete photo</string>
@@ -19,6 +22,7 @@
     <string name="btn_yes">Yes</string>
     <string name="btn_cancel">Cancel</string>
     <string name="btn_add">Add</string>
+    <string name="btn_ok">OK</string>
     <string name="menu_backup">Backup</string>
     <string name="menu_restore">Restore</string>
     <string name="menu_quit">Quit</string>

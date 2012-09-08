@@ -47,12 +47,12 @@ public class RecipeFileManager {
 		String dbname = "sqlite3.db";
 		return String.format("/data/%s/databases/%s", packageName, dbname);
 	}
-	
+
 	public static boolean backupDatabaseFile() throws IOException {
 		String filename = String.format("sqlite3-%s.db", new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date()));
 		return backupDatabaseFile(filename);
 	}
-	
+
 	private static boolean backupDatabaseFile(String filename) throws IOException {
 		File sd = Environment.getExternalStorageDirectory();
 		File data = Environment.getDataDirectory();
@@ -74,7 +74,7 @@ public class RecipeFileManager {
 		}
 		return false;
 	}
-	
+
 	public static boolean restoreDatabaseFile(String filename) throws IOException {
 		File sd = Environment.getExternalStorageDirectory();
 		File data = Environment.getDataDirectory();
@@ -103,13 +103,13 @@ public class RecipeFileManager {
 	}
 
 	private static Date lastDailyBackup;
-	
+
 	/**
 	 * Update daily database backup, only once a day.
 	 */
 	public static void updateDailyBackup() {
 		Log.d(TAG, "lastDailyBackup " + lastDailyBackup);
-		
+
 		Date now = new Date();
 		if (lastDailyBackup == null || lastDailyBackup.getDay() < now.getDay()) {
 			try {
@@ -120,6 +120,10 @@ public class RecipeFileManager {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public static boolean isExternalStorageWritable() {
+		return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
 	}
 
 }

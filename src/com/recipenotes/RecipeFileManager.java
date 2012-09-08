@@ -19,6 +19,7 @@ public class RecipeFileManager {
 
 	public static final String BACKUPS_DIRPARAM = "RecipeNotes/backups";
 	public static final String PHOTOS_DIRPARAM = "RecipeNotes/photos";
+	public static final File PHOTOS_DIR = new File(Environment.getExternalStorageDirectory(), PHOTOS_DIRPARAM);
 
 	public static final String BACKUPFILE_FORMAT = "";
 	public static final String BACKUPFILES_PATTERN = "^sqlite3-.*\\.db$";
@@ -63,6 +64,15 @@ public class RecipeFileManager {
 			return true;
 		}
 		return false;
+	}
+
+	public static File getPhotoFile(String filename) {
+		return new File(PHOTOS_DIR, filename);
+	}
+
+	public static File newPhotoFile(String recipeId) throws IOException {
+		return File.createTempFile(String.format("recipe_%s_", recipeId),
+				".jpg", PHOTOS_DIR);
 	}
 
 }

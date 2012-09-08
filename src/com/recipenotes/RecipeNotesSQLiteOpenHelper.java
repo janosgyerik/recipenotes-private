@@ -184,7 +184,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 		}
 	}
 
-	public boolean saveRecipe(String recipeId, String name) {
+	public boolean saveRecipe(String recipeId, String name, String displayName) {
 		ContentValues values = new ContentValues();
 		values.put("name", name);
 		long updatedDt = new Date().getTime();
@@ -200,8 +200,11 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 				displayName += ", ";
 			}
 		}
-		values.put("display_name", displayName);
 		 */
+		values.put("display_name", displayName);
+
+		// display_image
+		//TODO
 
 		int ret = getWritableDatabase().update(RECIPES_TABLE_NAME, values, 
 				BaseColumns._ID + " = ?", new String[]{ recipeId });
@@ -212,7 +215,8 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 	public boolean deleteRecipe(String recipeId) {
 		getWritableDatabase().delete(RECIPE_INGREDIENTS_TABLE_NAME, "recipe_id = ?", new String[]{ recipeId });
 		getWritableDatabase().delete(RECIPE_PHOTOS_TABLE_NAME, "recipe_id = ?", new String[]{ recipeId });
-		getWritableDatabase().delete(RECIPES_TABLE_NAME, "recipe_id = ?", new String[]{ recipeId });
+		getWritableDatabase().delete(RECIPES_TABLE_NAME, "_id = ?", new String[]{ recipeId });
+		Log.d(TAG, "deleted recipe " + recipeId);
 		// TODO error handling
 		return true;
 	}
@@ -271,6 +275,9 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 		ContentValues values = new ContentValues();
 		values.put("recipe_id", recipeId);
 		values.put("ingredient_id", ingredientId);
+		long createdDt = new Date().getTime();
+		values.put("created_dt", createdDt);
+		values.put("updated_dt", createdDt);
 		long ret = getWritableDatabase().insert(RECIPE_INGREDIENTS_TABLE_NAME, null, values);
 		Log.d(TAG, String.format("insert recipe ingredient %s %s ret = %s",
 				recipeId, ingredientId, ret));
@@ -285,13 +292,73 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 				recipeId, ingredientId, ret));
 		return ret > 0;
 	}
+	
+	public boolean addRecipePhoto(String recipeId, String filename) {
+		ContentValues values = new ContentValues();
+		values.put("recipe_id", recipeId);
+		values.put("filename", filename);
+		long createdDt = new Date().getTime();
+		values.put("created_dt", createdDt);
+		values.put("updated_dt", createdDt);
+		long ret = getWritableDatabase().insert(RECIPE_PHOTOS_TABLE_NAME, null, values);
+		Log.d(TAG, String.format("insert recipe photo %s %s ret = %s",
+				recipeId, filename, ret));
+		return ret >= 0;
+	}
 
+	public boolean removeRecipePhoto(String recipeId, String filename) {
+		int ret = getWritableDatabase().delete(RECIPE_PHOTOS_TABLE_NAME,
+				"recipe_id = ? AND filename = ?",
+				new String[]{ recipeId, filename });
+		Log.d(TAG, String.format("delete recipe photo %s %s ret = %s",
+				recipeId, filename, ret));
+		return ret > 0;
+	}
+	
 	public Cursor getRecipeListCursor() {
 		Cursor cursor = getReadableDatabase().rawQuery(
 				"select _id, ifnull(nullif(name, ''), '(recipe)') name, summary, display_name"
 						+ " from main_recipe"
 						+ " order by updated_dt desc, name",
 						null);
+		return cursor;
+	}
+
+	public Cursor getIngredientsListCursor() {
+		Cursor cursor = getReadableDatabase().query(
+				INGREDIENTS_TABLE_NAME, 
+				new String[]{ BaseColumns._ID, "name", }, 
+				null, null, null, null, "name");
+		return cursor;
+	}
+
+	public Cursor getRecipeDetailsCursor(String recipeId) {
+		Cursor cursor = getReadableDatabase().query(
+				RECIPES_TABLE_NAME, new String[]{ "name", }, 
+				BaseColumns._ID + " = ?", new String[]{ recipeId },
+				null, null, null);
+		return cursor;
+	}
+
+	public Cursor getRecipeIngredientsCursor(String recipeId) {
+		Cursor cursor = getReadableDatabase().rawQuery(
+				String.format(
+						"SELECT i.name FROM %s ri JOIN %s i ON ri.ingredient_id = i.%s WHERE ri.recipe_id = ? ORDER BY i.name",
+						RECIPE_INGREDIENTS_TABLE_NAME, INGREDIENTS_TABLE_NAME, BaseColumns._ID
+						),
+						new String[]{ recipeId }
+				);
+		return cursor;
+	}
+
+	public Cursor getRecipePhotosCursor(String recipeId) {
+		Cursor cursor = getReadableDatabase().rawQuery(
+				String.format(
+						"SELECT filename FROM %s WHERE recipe_id = ?",
+						RECIPE_PHOTOS_TABLE_NAME
+						),
+						new String[]{ recipeId }
+				);
 		return cursor;
 	}
 

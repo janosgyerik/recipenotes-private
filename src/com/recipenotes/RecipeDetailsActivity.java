@@ -3,12 +3,10 @@ package com.recipenotes;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,7 +17,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.BaseColumns;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -44,11 +41,6 @@ public class RecipeDetailsActivity extends Activity {
 
 	private static final String TAG = "RecipeDetailsActivity";
 
-	private static final String RECIPES_TABLE_NAME = "main_recipe";
-	private static final String INGREDIENTS_TABLE_NAME = "main_ingredient";
-	private static final String RECIPE_INGREDIENTS_TABLE_NAME = "main_recipeingredient";
-	private static final String RECIPE_PHOTOS_TABLE_NAME = "main_recipephoto";
-
 	private static final int PICTURE_TAKEN = 1;
 
 	private String recipeId;
@@ -61,19 +53,6 @@ public class RecipeDetailsActivity extends Activity {
 	private ArrayAdapter<String> ingredientsListAdapter;
 	private ListView ingredientsListView;
 
-	private List<String> photoFilenames;
-	private List<String> photosToDelete = new ArrayList<String>();
-
-	private static String PICTURES_DIR = "RecipeNotes/photos";
-
-	private static File storageDir = new File(Environment.getExternalStorageDirectory(), PICTURES_DIR);
-
-	static {
-		if (!storageDir.isDirectory()) {
-			storageDir.mkdirs();
-		}
-	}
-
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -84,12 +63,10 @@ public class RecipeDetailsActivity extends Activity {
 
 		nameView = (EditText) findViewById(R.id.name);
 
+		// TODO store id too
 		ArrayList<String> ingredientsAutoCompleteList = new ArrayList<String>();
 		{
-			Cursor ingredientsCursor = helper.getReadableDatabase().query(
-					INGREDIENTS_TABLE_NAME, 
-					new String[]{ BaseColumns._ID, "name", }, 
-					null, null, null, null, "name");
+			Cursor ingredientsCursor = helper.getIngredientsListCursor();
 			startManagingCursor(ingredientsCursor);
 
 			int i = ingredientsCursor.getColumnIndex("name");
@@ -109,35 +86,27 @@ public class RecipeDetailsActivity extends Activity {
 				R.layout.ingredientslist_item, ingredientsList);
 		ingredientsListView = (ListView) findViewById(R.id.ingredients);
 		ingredientsListView.setAdapter(ingredientsListAdapter);
-		ingredientsListView.setOnItemLongClickListener(new IngredientListItemLongClickListener());
-
-		photoFilenames = new ArrayList<String>();
+		ingredientsListView.setOnItemLongClickListener(new IngredientListOnItemLongClickListener());
 
 		Button addIngredientButton = (Button) findViewById(R.id.btn_add_ingredient);
 		addIngredientButton.setOnClickListener(new AddIngredientOnClickListener());
 
 		// load recipe data
-		recipeId = getIntent().getExtras().getString(BaseColumns._ID);
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			recipeId = extras.getString(BaseColumns._ID);
+		}
 		if (recipeId == null) {
 			recipeId = helper.newRecipe();
 		}
 		else {
-			Cursor recipeCursor = helper.getReadableDatabase().query(
-					RECIPES_TABLE_NAME, new String[]{ "name", }, 
-					BaseColumns._ID + " = ?", new String[]{ recipeId },
-					null, null, null);
+			Cursor recipeCursor = helper.getRecipeDetailsCursor(recipeId);
 			startManagingCursor(recipeCursor);
 
 			if (recipeCursor.moveToNext()) {
 				nameView.setText(recipeCursor.getString(0));
 
-				Cursor ingredientsCursor = helper.getReadableDatabase().rawQuery(
-						String.format(
-								"SELECT i.name FROM %s ri JOIN %s i ON ri.ingredient_id = i.%s WHERE ri.recipe_id = ? ORDER BY i.name",
-								RECIPE_INGREDIENTS_TABLE_NAME, INGREDIENTS_TABLE_NAME, BaseColumns._ID
-								),
-								new String[]{ recipeId }
-						);
+				Cursor ingredientsCursor = helper.getRecipeIngredientsCursor(recipeId);
 				startManagingCursor(ingredientsCursor);
 				while (ingredientsCursor.moveToNext()) {
 					String ingredient = ingredientsCursor.getString(0);
@@ -145,17 +114,11 @@ public class RecipeDetailsActivity extends Activity {
 				}
 				setListViewHeightBasedOnChildren(ingredientsListView);
 
-				Cursor photosCursor = helper.getReadableDatabase().rawQuery(
-						String.format(
-								"SELECT filename FROM %s WHERE recipe_id = ?",
-								RECIPE_PHOTOS_TABLE_NAME
-								),
-								new String[]{ recipeId }
-						);
+				Cursor photosCursor = helper.getRecipePhotosCursor(recipeId);
 				startManagingCursor(photosCursor);
 				while (photosCursor.moveToNext()) {
 					String filename = photosCursor.getString(0);
-					addPhoto(new File(getPhotoPath(filename)));
+					addPhotoToLayout(RecipeFileManager.getPhotoFile(filename));
 				}
 			}
 			else {
@@ -175,13 +138,9 @@ public class RecipeDetailsActivity extends Activity {
 		public void onClick(View view) {
 			addIngredients();
 
-			ContentValues values = new ContentValues();
-
 			String name = capitalize(nameView.getText().toString());
-			values.put("name", name);
-			long updatedDt = new Date().getTime();
-			values.put("updated_dt", updatedDt);
 
+			// TODO
 			// display_name
 			String displayName = "";
 			for (int i = 0; i < ingredientsListAdapter.getCount(); ++i) {
@@ -190,38 +149,14 @@ public class RecipeDetailsActivity extends Activity {
 					displayName += ", ";
 				}
 			}
-			values.put("display_name", displayName);
 
-			// display_image
-			//TODO
-
-			if (recipeId == null) {
-				values.put("created_dt", updatedDt);
-				long ret = helper.getWritableDatabase().insert(RECIPES_TABLE_NAME, null, values);
-				Log.d(TAG, "insert recipe ret = " + ret);
-				if (ret >= 0) {
-					recipeId = String.valueOf(ret);
-					savePhotos();
-					Toast.makeText(getApplicationContext(), "Successfully added new recipe", Toast.LENGTH_SHORT).show();
-				}
-				else {
-					Toast.makeText(getApplicationContext(), "Error adding new recipe", Toast.LENGTH_SHORT).show();
-				}
+			if (helper.saveRecipe(recipeId, name, displayName)) {
+				Toast.makeText(getApplicationContext(), "Successfully updated recipe", Toast.LENGTH_SHORT).show();
+				finish();
 			}
 			else {
-				int ret = helper.getWritableDatabase().update(RECIPES_TABLE_NAME, values, 
-						BaseColumns._ID + " = ?", new String[]{ recipeId });
-				Log.d(TAG, "update ret = " + ret);
-				if (ret == 1) {
-					helper.getWritableDatabase().delete(RECIPE_PHOTOS_TABLE_NAME, "recipe_id = ?", new String[]{ recipeId });
-					savePhotos();
-					Toast.makeText(getApplicationContext(), "Successfully updated recipe", Toast.LENGTH_SHORT).show();
-				}
-				else {
-					Toast.makeText(getApplicationContext(), "Error updating recipe", Toast.LENGTH_SHORT).show();
-				}
+				Toast.makeText(getApplicationContext(), "Error updating recipe", Toast.LENGTH_SHORT).show();
 			}
-			finish();
 		}
 	}
 
@@ -232,11 +167,13 @@ public class RecipeDetailsActivity extends Activity {
 	}
 
 	public static void setListViewHeightBasedOnChildren(ListView listView) {
-		ListAdapter listAdapter = listView.getAdapter(); 
+		ListAdapter listAdapter = listView.getAdapter();
+		/*
 		if (listAdapter == null) {
 			// pre-condition
 			return;
 		}
+		 */
 
 		int totalHeight = 0;
 		for (int i = 0; i < listAdapter.getCount(); i++) {
@@ -253,8 +190,11 @@ public class RecipeDetailsActivity extends Activity {
 	private void addIngredients() {
 		String ingredients = ingredientView.getText().toString().trim();
 		if (ingredients.length() > 0) {
+			StringBuffer ingredientsListMsgBuffer = new StringBuffer();
 			for (String ingredient : ingredients.split(",")) {
 				ingredient = capitalize(ingredient);
+				ingredientsListMsgBuffer.append(ingredient);
+				ingredientsListMsgBuffer.append(", ");
 				String ingredientId = helper.getOrCreateIngredient(ingredient);
 				if (ingredientId != null
 						&& helper.addRecipeIngredient(recipeId, ingredientId)) {
@@ -263,7 +203,17 @@ public class RecipeDetailsActivity extends Activity {
 			}
 			ingredientView.setText("");
 			setListViewHeightBasedOnChildren(ingredientsListView);
-			Toast.makeText(getApplicationContext(), "Added " + ingredients, Toast.LENGTH_SHORT).show();
+			String ingredientsListMsg = ingredientsListMsgBuffer.substring(0, ingredientsListMsgBuffer.lastIndexOf(","));
+			Toast.makeText(getApplicationContext(), "Added " + ingredientsListMsg, Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	private void removeIngredient(String ingredientName) {
+		String ingredientId = helper.getIngredientIdByName(ingredientName);
+		if (ingredientId != null
+				&& helper.removeRecipeIngredient(recipeId, ingredientId)) {
+			ingredientsListAdapter.remove(ingredientName);
+			setListViewHeightBasedOnChildren(ingredientsListView);
 		}
 	}
 
@@ -274,51 +224,72 @@ public class RecipeDetailsActivity extends Activity {
 		}
 	}
 
-	private void savePhotos() {
-		for (String filename : photoFilenames) {
-			ContentValues values = new ContentValues();
-			values.put("recipe_id", recipeId);
-			values.put("filename", filename);
-			long ret = helper.getWritableDatabase().insert(RECIPE_PHOTOS_TABLE_NAME, null, values);
-			Log.d(TAG, "insert recipe photo ret = " + ret);
-		}
-		for (String path : photosToDelete) {
-			File photoFile = new File(path);
-			if (photoFile.isFile()) {
-				photoFile.delete();
-			}
-		}
-	}
-
-	class IngredientListItemLongClickListener implements OnItemLongClickListener {
+	class IngredientListOnItemLongClickListener implements OnItemLongClickListener {
 		@Override
 		public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 				int arg2, long arg3) {
-			String name = ingredientsListAdapter.getItem(arg2);
-			String ingredientId = helper.getIngredientIdByName(name);
-			if (ingredientId != null
-					&& helper.removeRecipeIngredient(recipeId, ingredientId)) {
-				ingredientsListAdapter.remove(name);
-				setListViewHeightBasedOnChildren(ingredientsListView);
-			}
+			String ingredientName = ingredientsListAdapter.getItem(arg2);
+			removeIngredient(ingredientName);
 			return true;
 		}
 	}
 
+	private void addPhotoToRecipe(File photoFile) {
+		helper.addRecipePhoto(recipeId, photoFile.getName());
+	}
+
+	private void addPhotoToLayout(File photoFile) {
+		String path = photoFile.getAbsolutePath();
+		Bitmap bitmap = BitmapFactory.decodeFile(path);
+		ImageView photoView = new ImageView(this);
+		photoView.setImageBitmap(bitmap);
+		photoView.setPadding(10, 10, 10, 10);
+		photoView.setTag(photoFile.getName());
+		photoView.setOnLongClickListener(new PhotoOnLongClickListener(photoFile));
+
+		// dirty hack for motorola
+		int targetHeight = getWindowManager().getDefaultDisplay().getWidth() * bitmap.getHeight() / bitmap.getWidth();
+		Log.d(TAG, "targetHeight = " + targetHeight);
+		LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		photoView.setLayoutParams(params);
+		photoView.getLayoutParams().height = targetHeight;
+
+		LinearLayout layout = (LinearLayout) findViewById(R.id.photos);
+		layout.addView(photoView);
+	}
+
+	private void removePhoto(File photoFile) {
+		if (photoFile.delete()) {
+			if (removePhotoFromRecipe(photoFile)) {
+				removePhotoFromLayout(photoFile);
+			}
+		}
+	}
+
+	private boolean removePhotoFromRecipe(File photoFile) {
+		return helper.removeRecipePhoto(recipeId, photoFile.getName());
+	}
+
+	private void removePhotoFromLayout(File photoFile) {
+		LinearLayout layout = (LinearLayout) findViewById(R.id.photos);
+		layout.removeView(layout.findViewWithTag(photoFile.getName()));
+	}
+
 	private File photoFile;
 
-	private String getPhotoPath(String filename) {
-		return String.format("%s/%s", storageDir, filename);
+	class AddPhotoOnClickListener implements OnClickListener {
+		@Override
+		public void onClick(View v) {
+			dispatchTakePictureIntent();
+		}
 	}
 
 	private void dispatchTakePictureIntent() {
 		try {
-			photoFile = File.createTempFile(String.format(
-					"recipe_%s_%d_", recipeId, photoFilenames.size()+1),
-					".jpg", storageDir);
+			photoFile = RecipeFileManager.newPhotoFile(recipeId);
 		} catch (IOException e) {
 			e.printStackTrace();
-			photoFile = null; // TODO better way to handle it?
+			photoFile = null;
 		}
 		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
@@ -334,38 +305,9 @@ public class RecipeDetailsActivity extends Activity {
 	}
 
 	private void handleSmallCameraPhoto(Intent intent) {
-		if (photoFile != null) {
-			addPhoto(photoFile);
-		}
-	}
-
-	private void addPhoto(File file) {
-		if (file.isFile()) {
-			String path = file.getAbsolutePath();
-			Bitmap bitmap = BitmapFactory.decodeFile(path);
-			ImageView photoView = new ImageView(this);
-			photoView.setImageBitmap(bitmap);
-			photoView.setPadding(10, 10, 10, 10);
-			photoView.setTag(file.getName());
-			photoView.setOnLongClickListener(new PhotoLongClickListener(file));
-
-			// dirty hack for motorola
-			int targetHeight = getWindowManager().getDefaultDisplay().getWidth() * bitmap.getHeight() / bitmap.getWidth();
-			Log.d(TAG, "targetHeight = " + targetHeight);
-			LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-			photoView.setLayoutParams(params);
-			photoView.getLayoutParams().height = targetHeight;
-
-			LinearLayout layout = (LinearLayout) findViewById(R.id.photos);
-			layout.addView(photoView);
-			photoFilenames.add(file.getName());
-		}
-	}
-
-	class AddPhotoOnClickListener implements OnClickListener {
-		@Override
-		public void onClick(View v) {
-			dispatchTakePictureIntent();
+		if (photoFile != null && photoFile.isFile()) {
+			addPhotoToRecipe(photoFile);
+			addPhotoToLayout(photoFile);
 		}
 	}
 
@@ -378,23 +320,17 @@ public class RecipeDetailsActivity extends Activity {
 				break;
 			}
 		}
+		else if (photoFile != null && photoFile.isFile()) {
+			photoFile.delete();
+		}
 	}
 
-	class PhotoLongClickListener implements OnLongClickListener {
+	class PhotoOnLongClickListener implements OnLongClickListener {
 
-		private final String path;
-		private final String filename;
+		private final File photoFile;
 
-		public PhotoLongClickListener(File file) {
-			this.path = file.getAbsolutePath();
-			this.filename = file.getName();
-		}
-
-		private void deletePhoto() {
-			photoFilenames.remove(filename);
-			LinearLayout layout = (LinearLayout) findViewById(R.id.photos);
-			layout.removeView(layout.findViewWithTag(filename));
-			photosToDelete.add(path);
+		public PhotoOnLongClickListener(File photoFile) {
+			this.photoFile = photoFile;
 		}
 
 		@Override
@@ -405,7 +341,7 @@ public class RecipeDetailsActivity extends Activity {
 			.setTitle(R.string.title_delete_photo)
 			.setPositiveButton(R.string.btn_yes, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
-					deletePhoto();
+					removePhoto(photoFile);
 				}
 			})
 			.setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
@@ -418,7 +354,6 @@ public class RecipeDetailsActivity extends Activity {
 		}
 
 	}
-
 
 	@Override  
 	protected void onDestroy() {

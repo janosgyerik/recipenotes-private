@@ -42,7 +42,6 @@ import android.widget.Toast;
 
 public class RecipeDetailsActivity extends Activity {
 
-	// Debugging
 	private static final String TAG = "RecipeDetailsActivity";
 
 	private static final String RECIPES_TABLE_NAME = "main_recipe";

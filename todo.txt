@@ -25,9 +25,14 @@ release
 - handle if no external storage
     - external storage is required
     - it's ok to require sdcard, just do not crash
+- favorites table
+    - any other tables missing?
 - cleanup
-    - constants
-    - texts
+    - recipe details
+    - helper
+    - no texts in layout files
+    - no warnings in java
+    - no warnings in layout files
 - screenshots
     - list of recipes
     - recipe details
@@ -48,8 +53,6 @@ version 3
 
 version 4
 ---------
-- favorites table
-    - any other tables missing?
 - delete misspelled ingredients
 - handle if camera is not accessible
 - show first photo in listview

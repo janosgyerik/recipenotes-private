@@ -81,4 +81,32 @@ class RecipePhoto(models.Model):
         unique_together = (('recipe', 'filename',))
 
 
+class FavoriteRecipe(models.Model):
+    recipe = models.ForeignKey(Recipe, unique=True)
+    display_order = models.IntegerField()
+    created_dt = models.DateTimeField(default=datetime.now)
+    updated_dt = models.DateTimeField(default=datetime.now)
+
+
+class FavoriteIngredient(models.Model):
+    ingredient = models.ForeignKey(Ingredient, unique=True)
+    display_order = models.IntegerField()
+    created_dt = models.DateTimeField(default=datetime.now)
+    updated_dt = models.DateTimeField(default=datetime.now)
+
+
+class FavoriteRecipePhoto(models.Model):
+    recipe_photo = models.ForeignKey(RecipePhoto, unique=True)
+    display_order = models.IntegerField()
+    created_dt = models.DateTimeField(default=datetime.now)
+    updated_dt = models.DateTimeField(default=datetime.now)
+
+
+class FavoriteTag(models.Model):
+    tag = models.ForeignKey(Tag, unique=True)
+    display_order = models.IntegerField()
+    created_dt = models.DateTimeField(default=datetime.now)
+    updated_dt = models.DateTimeField(default=datetime.now)
+
+
 # eof

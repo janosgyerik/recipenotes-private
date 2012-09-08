@@ -1,7 +1,6 @@
 release
 -------
 - favorites table
-    - any other tables missing?
 - fix light theme for dialog boxes
     - if not possible, then use custom dark theme
 - automatic daily backup

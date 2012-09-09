@@ -195,11 +195,11 @@ public class EditRecipeActivity extends Activity {
 			}
 
 			if (helper.saveRecipe(recipeId, name, displayName)) {
-				Toast.makeText(getApplicationContext(), "Successfully updated recipe", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), R.string.msg_updated_recipe, Toast.LENGTH_SHORT).show();
 				finish();
 			}
 			else {
-				Toast.makeText(getApplicationContext(), "Error updating recipe", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), R.string.error_update_recipe, Toast.LENGTH_SHORT).show();
 			}
 		}
 	}

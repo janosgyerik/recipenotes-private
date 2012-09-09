@@ -22,7 +22,10 @@ public class ViewRecipeActivity extends Activity {
 
 	private static final String TAG = "ViewRecipeActivity";
 
+	protected static final int RETURN_FROM_EDIT = 1;
+
 	private RecipeNotesSQLiteOpenHelper helper;
+	private String recipeId;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -31,13 +34,36 @@ public class ViewRecipeActivity extends Activity {
 
 		helper = new RecipeNotesSQLiteOpenHelper(this);
 
-		String tmpRecipeId = null;
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			tmpRecipeId = extras.getString(BaseColumns._ID);
+			recipeId = extras.getString(BaseColumns._ID);
 		}
-		final String recipeId = tmpRecipeId; 
 
+		updateRecipeView();
+	}
+
+	private void addPhotoToLayout(File photoFile) {
+		if (photoFile.isFile()) {
+			String path = photoFile.getAbsolutePath();
+			Bitmap bitmap = BitmapFactory.decodeFile(path);
+			ImageView photoView = new ImageView(this);
+			photoView.setImageBitmap(bitmap);
+			photoView.setPadding(10, 10, 10, 10);
+			photoView.setTag(photoFile.getName());
+
+			// dirty hack for motorola
+			int targetHeight = getWindowManager().getDefaultDisplay().getWidth() * bitmap.getHeight() / bitmap.getWidth();
+			Log.d(TAG, "targetHeight = " + targetHeight);
+			LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			photoView.setLayoutParams(params);
+			photoView.getLayoutParams().height = targetHeight;
+
+			LinearLayout layout = (LinearLayout) findViewById(R.id.photos);
+			layout.addView(photoView);
+		}
+	}
+
+	private void updateRecipeView() {
 		if (recipeId != null) {
 			Cursor recipeCursor = helper.getRecipeDetailsCursor(recipeId);
 			startManagingCursor(recipeCursor);
@@ -84,14 +110,14 @@ public class ViewRecipeActivity extends Activity {
 					String filename = photosCursor.getString(0);
 					addPhotoToLayout(RecipeFileManager.getPhotoFile(filename));
 				}
-				
+
 				Button editButton = (Button) findViewById(R.id.btn_edit);
 				editButton.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						Intent intent = new Intent(ViewRecipeActivity.this, EditRecipeActivity.class);
 						intent.putExtra(BaseColumns._ID, recipeId);
-						startActivity(intent);
+						startActivityForResult(intent, RETURN_FROM_EDIT);
 					}
 				});
 			}
@@ -101,24 +127,12 @@ public class ViewRecipeActivity extends Activity {
 		}
 	}
 
-	private void addPhotoToLayout(File photoFile) {
-		if (photoFile.isFile()) {
-			String path = photoFile.getAbsolutePath();
-			Bitmap bitmap = BitmapFactory.decodeFile(path);
-			ImageView photoView = new ImageView(this);
-			photoView.setImageBitmap(bitmap);
-			photoView.setPadding(10, 10, 10, 10);
-			photoView.setTag(photoFile.getName());
-
-			// dirty hack for motorola
-			int targetHeight = getWindowManager().getDefaultDisplay().getWidth() * bitmap.getHeight() / bitmap.getWidth();
-			Log.d(TAG, "targetHeight = " + targetHeight);
-			LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-			photoView.setLayoutParams(params);
-			photoView.getLayoutParams().height = targetHeight;
-
-			LinearLayout layout = (LinearLayout) findViewById(R.id.photos);
-			layout.addView(photoView);
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+		case RETURN_FROM_EDIT:
+			updateRecipeView();
+			break;
 		}
 	}
 

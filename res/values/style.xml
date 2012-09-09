@@ -62,7 +62,6 @@
     <style name="Theme.Light.NoTitleBar" parent="@android:style/Theme.Light.NoTitleBar">
         <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewLight</item>
         <item name="android:dropDownItemStyle">@style/Widget.DropDownItemLight</item>
-        <item name="android:background">#eee</item>
     </style>
-
+    
 </resources>

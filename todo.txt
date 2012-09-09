@@ -1,7 +1,5 @@
 release
 -------
-- fix light theme for dialog boxes
-    - if not possible, then use custom dark theme
 - take screenshots
     - list of recipes
     - view recipe

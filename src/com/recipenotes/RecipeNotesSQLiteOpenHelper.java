@@ -16,6 +16,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 import android.util.Log;
+import android.util.SparseArray;
 
 public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 
@@ -23,7 +24,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 	private static final String TAG = "RecipeNotesSQLiteOpenHelper";
 
 	private static final String DATABASE_NAME = "sqlite3.db";
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 
 	private static final String RECIPES_TABLE_NAME = "main_recipe";
 	private static final String INGREDIENTS_TABLE_NAME = "main_ingredient";
@@ -33,18 +34,27 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 	private static final String RECIPE_PHOTOS_TABLE_NAME = "main_recipephoto";
 
 	private List<String> sqlCreateStatements;
+	private SparseArray<List<String>> sqlUpgradeStatements;
 
 	RecipeNotesSQLiteOpenHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 
 		//context.deleteDatabase(DATABASE_NAME);
 
+		sqlCreateStatements = getSqlStatements(context, "sql_create.sql");
+		sqlUpgradeStatements = new SparseArray<List<String>>();
+		sqlUpgradeStatements.put(2, getSqlStatements(context, "sql_upgrade2.sql"));
+	}
+	
+	private List<String> getSqlStatements(Context context, String assetName) {
+		List<String> statements;
 		try {
-			sqlCreateStatements = readSqlStatements(context, "sql_create.sql");
+			statements = readSqlStatements(context, assetName);
 		} catch (IOException e) {
-			sqlCreateStatements = Collections.emptyList();
+			statements = Collections.emptyList();
 			e.printStackTrace();
 		}
+		return statements;
 	}
 
 	static List<String> readSqlStatements(Context context, String assetName) throws IOException {
@@ -69,6 +79,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 			db.execSQL(sql);
 			// TODO check success
 		}
+		// TODO replace with import from an export file
 		// dummy recipes
 		db.execSQL("insert into main_recipe (name, display_name) values ('Steak', 'Steak');");
 		db.execSQL("insert into main_recipe (name, display_name) values ('Pasta', 'Pasta with asparagus');");
@@ -162,8 +173,17 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 	}
 
 	@Override
-	public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
-		// TODO Auto-generated method stub
+	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		for (int i = oldVersion; i < newVersion; ++i) {
+			upgradeToVersion(db, i + 1);
+		}
+	}
+	
+	private void upgradeToVersion(SQLiteDatabase db, int version) {
+		Log.d(TAG, "upgrade to version " + version);
+		for (String sql : sqlUpgradeStatements.get(version)) {
+			db.execSQL(sql);
+		}
 	}
 
 	/**

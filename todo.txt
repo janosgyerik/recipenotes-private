@@ -1,10 +1,9 @@
 release
 -------
-- favorites table
+- separate recipe details and editing
 - fix light theme for dialog boxes
     - if not possible, then use custom dark theme
-- separate recipe details and editing
-- screenshots
+- take screenshots
     - list of recipes
     - recipe details
     - recipe editing
@@ -33,6 +32,7 @@ version 3
     - a.getPackageName -> com.recipenotes
     - Environment.getDataDirectory -> /data
     - Environment.getExternalStorageDirectory -> /sdcard
+- clean up NULLs in database schema
 - delete misspelled ingredients
 - do not crash if no camera or not accessible
 - add tabs

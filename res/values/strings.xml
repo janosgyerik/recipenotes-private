@@ -10,7 +10,7 @@
     <string name="title_delete_photo">Delete photo</string>
     <string name="title_delete_file">Delete file</string>
     <string name="title_select_backupfile">Select backup file</string>
-    <string name="title_recipe_details">Recipe Info</string>
+    <string name="title_recipe_details">Recipe</string>
     <string name="hint_name">Name (optional)</string>
     <string name="hint_ingredient">Ingredient</string>
     <string name="hint_tag">Tag</string>
@@ -27,8 +27,8 @@
     <string name="menu_backup">Backup</string>
     <string name="menu_restore">Restore</string>
     <string name="menu_quit">Quit</string>
-    <string name="msg_recipe_deleted">Recipe successfully deleted</string>
-    <string name="msg_backup_created">Database backup successfully created</string>
+    <string name="msg_recipe_deleted">Deleted recipe</string>
+    <string name="msg_backup_created">Created backup</string>
     <string name="error_backup_failed">Backup failed</string>
     <string name="error_backup_exception">Backup failed unexpectedly</string>
     <string name="title_confirm_restore">Restore database</string>

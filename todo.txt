@@ -1,7 +1,6 @@
 release
 -------
 - favorites table
-- restore bugfix: close db before replacing file!
 - fix light theme for dialog boxes
     - if not possible, then use custom dark theme
 - separate recipe details and editing

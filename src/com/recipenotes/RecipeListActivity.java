@@ -54,11 +54,20 @@ public class RecipeListActivity extends ListActivity {
 
 		setContentView(R.layout.recipelist);
 
-		helper = new RecipeNotesSQLiteOpenHelper(this);
+		initCursor();
 
+		getListView().setOnItemClickListener(new RecipeListOnItemClickListener());
+		getListView().setOnItemLongClickListener(new RecipeListOnItemLongClickListener());
+
+		((Button)findViewById(R.id.btn_add_recipe)).setOnClickListener(new AddRecipeOnClickListener());
+
+		RecipeFileManager.updateDailyBackup();
+	}
+	
+	private void initCursor() {
+		helper = new RecipeNotesSQLiteOpenHelper(this);
 		cursor = helper.getRecipeListCursor();
 		startManagingCursor(cursor);
-
 		ListAdapter adapter = new SimpleCursorAdapter(
 				this, // Context.
 				R.layout.recipelist_item,
@@ -71,13 +80,6 @@ public class RecipeListActivity extends ListActivity {
 				}
 				); // ... view ids to bind to
 		setListAdapter(adapter);
-
-		getListView().setOnItemClickListener(new RecipeListOnItemClickListener());
-		getListView().setOnItemLongClickListener(new RecipeListOnItemLongClickListener());
-
-		((Button)findViewById(R.id.btn_add_recipe)).setOnClickListener(new AddRecipeOnClickListener());
-
-		RecipeFileManager.updateDailyBackup();
 	}
 
 	@Override
@@ -198,6 +200,7 @@ public class RecipeListActivity extends ListActivity {
 			String filename = extras.getString(FileSelectorActivity.OUT_FILENAME);
 			Log.d(TAG, "selected filename = " + filename);
 			if (filename != null) {
+				helper.close();
 				try {
 					if (RecipeFileManager.restoreDatabaseFile(filename)) {
 						Toast.makeText(getBaseContext(), R.string.msg_restore_success, Toast.LENGTH_LONG).show();
@@ -209,7 +212,7 @@ public class RecipeListActivity extends ListActivity {
 					e.printStackTrace();
 					Toast.makeText(getBaseContext(), R.string.error_restore_exception, Toast.LENGTH_LONG).show();
 				}
-				cursor.requery();
+				initCursor();
 			}
 		}
 	}

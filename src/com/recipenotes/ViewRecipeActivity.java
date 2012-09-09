@@ -38,7 +38,7 @@ public class ViewRecipeActivity extends Activity {
 		if (extras != null) {
 			recipeId = extras.getString(BaseColumns._ID);
 		}
-
+		
 		updateRecipeView();
 	}
 
@@ -70,7 +70,13 @@ public class ViewRecipeActivity extends Activity {
 
 			if (recipeCursor.moveToNext()) {
 				TextView nameView = (TextView) findViewById(R.id.name);
-				nameView.setText(recipeCursor.getString(0));
+				String name = recipeCursor.getString(0);
+				if (name != null && name.length() > 0) {
+					nameView.setText(name);
+				}
+				else {
+					nameView.setText(R.string.title_noname_recipe);
+				}
 
 				Cursor ingredientsCursor = helper.getRecipeIngredientsCursor(recipeId);
 				startManagingCursor(ingredientsCursor);
@@ -129,10 +135,10 @@ public class ViewRecipeActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
-		case RETURN_FROM_EDIT:
-			updateRecipeView();
-			break;
+			switch (requestCode) {
+			case RETURN_FROM_EDIT:
+				updateRecipeView();
+				break;
 		}
 	}
 

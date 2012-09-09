@@ -11,6 +11,7 @@
     <string name="title_delete_file">Delete file</string>
     <string name="title_select_backupfile">Select backup file</string>
     <string name="title_recipe">Recipe</string>
+    <string name="title_noname_recipe">Recipe</string>
     <string name="title_recipe_details">Recipe</string>
     <string name="hint_name">Name (optional)</string>
     <string name="hint_ingredient">Ingredient</string>

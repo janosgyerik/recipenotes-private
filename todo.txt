@@ -6,7 +6,6 @@ release
 - cleanup style
     - move header to style
     - more padding on left of recipe view
-- use default title 'Recipe' when editing recipe with no title
 - improve daily backup
     - rename file to -autobackup
     - do not rely on static method value, check the date of the file

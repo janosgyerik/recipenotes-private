@@ -9,7 +9,7 @@
         android:text="@string/title_recipelist" />
 
     <ListView
-        android:id="@android:id/list"
+        android:id="@+android:id/list"
         style="@style/mainContent"
         android:drawSelectorOnTop="false" />
 

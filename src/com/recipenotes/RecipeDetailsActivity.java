@@ -66,7 +66,7 @@ public class RecipeDetailsActivity extends Activity {
 
 		nameView = (EditText) findViewById(R.id.name);
 
-		
+
 		// add ingredient
 		// TODO store id too
 		ArrayList<String> ingredientsAutoCompleteList = new ArrayList<String>();
@@ -95,10 +95,10 @@ public class RecipeDetailsActivity extends Activity {
 
 		Button addIngredientButton = (Button) findViewById(R.id.btn_add_ingredient);
 		addIngredientButton.setOnClickListener(new AddIngredientOnClickListener());
-		
+
 
 		// add tag
-		
+
 		ArrayList<String> tagsAutoCompleteList = new ArrayList<String>();
 		{
 			Cursor tagsCursor = helper.getTagsListCursor();
@@ -109,7 +109,7 @@ public class RecipeDetailsActivity extends Activity {
 				tagsAutoCompleteList.add(tagsCursor.getString(i));
 			}
 		}
-		
+
 		ArrayAdapter<String> tagsAutoCompleteAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_dropdown_item_1line, tagsAutoCompleteList);
 		tagView = (MultiAutoCompleteTextView) findViewById(R.id.tag);
@@ -330,23 +330,25 @@ public class RecipeDetailsActivity extends Activity {
 	}
 
 	private void addPhotoToLayout(File photoFile) {
-		String path = photoFile.getAbsolutePath();
-		Bitmap bitmap = BitmapFactory.decodeFile(path);
-		ImageView photoView = new ImageView(this);
-		photoView.setImageBitmap(bitmap);
-		photoView.setPadding(10, 10, 10, 10);
-		photoView.setTag(photoFile.getName());
-		photoView.setOnLongClickListener(new PhotoOnLongClickListener(photoFile));
+		if (photoFile.isFile()) {
+			String path = photoFile.getAbsolutePath();
+			Bitmap bitmap = BitmapFactory.decodeFile(path);
+			ImageView photoView = new ImageView(this);
+			photoView.setImageBitmap(bitmap);
+			photoView.setPadding(10, 10, 10, 10);
+			photoView.setTag(photoFile.getName());
+			photoView.setOnLongClickListener(new PhotoOnLongClickListener(photoFile));
 
-		// dirty hack for motorola
-		int targetHeight = getWindowManager().getDefaultDisplay().getWidth() * bitmap.getHeight() / bitmap.getWidth();
-		Log.d(TAG, "targetHeight = " + targetHeight);
-		LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		photoView.setLayoutParams(params);
-		photoView.getLayoutParams().height = targetHeight;
+			// dirty hack for motorola
+			int targetHeight = getWindowManager().getDefaultDisplay().getWidth() * bitmap.getHeight() / bitmap.getWidth();
+			Log.d(TAG, "targetHeight = " + targetHeight);
+			LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			photoView.setLayoutParams(params);
+			photoView.getLayoutParams().height = targetHeight;
 
-		LinearLayout layout = (LinearLayout) findViewById(R.id.photos);
-		layout.addView(photoView);
+			LinearLayout layout = (LinearLayout) findViewById(R.id.photos);
+			layout.addView(photoView);
+		}
 	}
 
 	private void removePhoto(File photoFile) {

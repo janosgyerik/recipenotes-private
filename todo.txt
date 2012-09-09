@@ -1,16 +1,15 @@
 release
 -------
 - favorites table
+- restore bugfix: close db before replacing file!
 - fix light theme for dialog boxes
     - if not possible, then use custom dark theme
-- help pages
-    - how to delete recipe
-    - how to delete ingredient
+- separate recipe details and editing
 - screenshots
     - list of recipes
     - recipe details
+    - recipe editing
     - ingredient input with auto-complete
-    - help on recipe details page
     - menu with backup / restore
 - release notes
     - list of features
@@ -18,10 +17,12 @@ release
 
 version 2
 ---------
-- separate recipe details and editing
 - improved recipe list
     - do not show title if does not exist
     - use first photo
+- help pages
+    - how to delete recipe
+    - how to delete ingredient
 - install "Android Compatibility package" and rewrite queries
 
 
@@ -34,11 +35,10 @@ version 3
     - Environment.getDataDirectory -> /data
     - Environment.getExternalStorageDirectory -> /sdcard
 - delete misspelled ingredients
-- handle if camera is not accessible
-- show first photo in listview
+- do not crash if no camera or not accessible
 - add tabs
-- add search function
-- add favorites
+- add search function to main list page or a dedicated search tab
+- add favorites tab
 - prevent adding duplicate ingredients
 - make it possible to reorder lists
 - more efficient handling of recipe editing

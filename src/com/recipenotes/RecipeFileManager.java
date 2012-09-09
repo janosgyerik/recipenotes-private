@@ -14,7 +14,6 @@ import android.util.Log;
 
 public class RecipeFileManager {
 
-	// Debugging
 	private static final String TAG = "RecipeFileManager";
 
 	public static final String BACKUPS_DIRPARAM = "RecipeNotes/backups";
@@ -24,7 +23,7 @@ public class RecipeFileManager {
 
 	public static final String BACKUPFILE_FORMAT = "";
 	public static final String BACKUPFILES_PATTERN = "^sqlite3-.*\\.db$";
-	public static final String DAILY_BACKUPFILE = "sqlite3-daily.db";
+	public static final String DAILY_BACKUPFILE = "sqlite3-autobackup.db";
 
 	public static final String RECIPE_PHOTOFILE_FORMAT = "recipe_%s_%d.jpg";
 	public static final String RECIPE_PHOTOFILES_PATTERN = "^recipe_%s_.*";
@@ -46,6 +45,10 @@ public class RecipeFileManager {
 		String packageName = "com.recipenotes";
 		String dbname = "sqlite3.db";
 		return String.format("/data/%s/databases/%s", packageName, dbname);
+	}
+
+	public static File getBackupFile(String filename) {
+		return new File(BACKUPS_DIR, filename);
 	}
 
 	public static boolean backupDatabaseFile() throws IOException {
@@ -102,19 +105,19 @@ public class RecipeFileManager {
 				".jpg", PHOTOS_DIR);
 	}
 
-	private static Date lastDailyBackup;
-
 	/**
 	 * Update daily database backup, only once a day.
 	 */
 	public static void updateDailyBackup() {
-		Log.d(TAG, "lastDailyBackup " + lastDailyBackup);
-
 		Date now = new Date();
-		if (lastDailyBackup == null || lastDailyBackup.getDay() < now.getDay()) {
+		Date lastModified = null;
+		File backupFile = getBackupFile(DAILY_BACKUPFILE);
+		if (backupFile.isFile()) {
+			lastModified = new Date(backupFile.lastModified());
+		}
+		if (lastModified == null || lastModified.getDay() < now.getDay()) {
 			try {
 				backupDatabaseFile(DAILY_BACKUPFILE);
-				lastDailyBackup = now;
 				Log.d(TAG, "Updated daily backup");
 			} catch (IOException e) {
 				e.printStackTrace();

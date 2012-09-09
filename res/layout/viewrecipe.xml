@@ -7,13 +7,10 @@
 
     <TextView
         android:id="@+id/name"
-        style="@style/recipeHeader"
+        style="@style/mainHeader"
         android:text="@string/title_recipe" />
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1" >
+    <ScrollView style="@style/mainContent" >
 
         <LinearLayout
             android:layout_width="fill_parent"

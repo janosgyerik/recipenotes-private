@@ -5,14 +5,12 @@
     android:orientation="vertical" >
 
     <TextView
-        style="@style/recipeHeader"
+        style="@style/mainHeader"
         android:text="@string/title_recipelist" />
 
     <ListView
         android:id="@android:id/list"
-        android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"
+        style="@style/mainContent"
         android:drawSelectorOnTop="false" />
 
     <Button

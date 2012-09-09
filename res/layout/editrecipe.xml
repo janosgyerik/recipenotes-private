@@ -6,21 +6,21 @@
     android:scrollbars="none" >
 
     <TextView
-        style="@style/recipeHeader"
+        style="@style/mainHeader"
         android:text="@string/title_recipe_details" />
 
-    <!-- Dirty to hack to avoid auto-focus on the first text field
-    		and android opening the soft keyboard -->
+    <!--
+         Dirty to hack to avoid auto-focus on the first text field
+    		and android opening the soft keyboard
+    -->
+
     <TextView
         android:layout_width="0px"
         android:layout_height="0px"
         android:focusable="true"
         android:focusableInTouchMode="true" />
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1" >
+    <ScrollView style="@style/mainContent" >
 
         <LinearLayout
             android:layout_width="fill_parent"

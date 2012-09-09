@@ -42,6 +42,11 @@ public class ViewRecipeActivity extends Activity {
 		updateRecipeView();
 	}
 
+	private void clearPhotosFromLayout() {
+		LinearLayout layout = (LinearLayout) findViewById(R.id.photos);
+		layout.removeAllViews();
+	}
+	
 	private void addPhotoToLayout(File photoFile) {
 		if (photoFile.isFile()) {
 			String path = photoFile.getAbsolutePath();
@@ -112,6 +117,7 @@ public class ViewRecipeActivity extends Activity {
 
 				Cursor photosCursor = helper.getRecipePhotosCursor(recipeId);
 				startManagingCursor(photosCursor);
+				clearPhotosFromLayout();
 				while (photosCursor.moveToNext()) {
 					String filename = photosCursor.getString(0);
 					addPhotoToLayout(RecipeFileManager.getPhotoFile(filename));

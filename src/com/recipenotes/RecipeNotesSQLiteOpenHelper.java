@@ -230,7 +230,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 
 		int ret = getWritableDatabase().update(RECIPES_TABLE_NAME, values, 
 				BaseColumns._ID + " = ?", new String[]{ recipeId });
-		Log.d(TAG, "update ret = " + ret);
+		Log.d(TAG, String.format("update recipe %s -> %s <- %s", recipeId, name, ret));
 		return ret == 1;
 	}
 
@@ -284,7 +284,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 		values.put("created_dt", createdDt);
 		values.put("updated_dt", createdDt);
 		long ret = getWritableDatabase().insert(TAGS_TABLE_NAME, null, values);
-		Log.d(TAG, String.format("insert tag: %s -> %s", ret, name));
+		Log.d(TAG, String.format("insert tag: %s <- %s", name, ret));
 		if (ret >= 0) {
 			String tagId = String.valueOf(ret);
 			return tagId;
@@ -302,7 +302,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 		values.put("created_dt", createdDt);
 		values.put("updated_dt", createdDt);
 		long ret = getWritableDatabase().insert(RECIPE_TAGS_TABLE_NAME, null, values);
-		Log.d(TAG, String.format("insert recipe tag %s %s ret = %s",
+		Log.d(TAG, String.format("insert recipe tag: %s, %s <- %s",
 				recipeId, tagId, ret));
 		return ret >= 0;
 	}
@@ -311,7 +311,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 		int ret = getWritableDatabase().delete(RECIPE_TAGS_TABLE_NAME,
 				"recipe_id = ? AND tag_id = ?",
 				new String[]{ recipeId, tagId });
-		Log.d(TAG, String.format("delete recipe tag %s %s ret = %s",
+		Log.d(TAG, String.format("delete recipe tag: %s, %s <- %s",
 				recipeId, tagId, ret));
 		return ret > 0;
 	}
@@ -356,7 +356,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 		values.put("created_dt", createdDt);
 		values.put("updated_dt", createdDt);
 		long ret = getWritableDatabase().insert(INGREDIENTS_TABLE_NAME, null, values);
-		Log.d(TAG, String.format("insert ingredient: %s -> %s", ret, name));
+		Log.d(TAG, String.format("insert ingredient: %s <- %s", name, ret));
 		if (ret >= 0) {
 			String ingredientId = String.valueOf(ret);
 			return ingredientId;
@@ -374,7 +374,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 		values.put("created_dt", createdDt);
 		values.put("updated_dt", createdDt);
 		long ret = getWritableDatabase().insert(RECIPE_INGREDIENTS_TABLE_NAME, null, values);
-		Log.d(TAG, String.format("insert recipe ingredient %s %s ret = %s",
+		Log.d(TAG, String.format("insert recipe ingredient: %s, %s <- %s",
 				recipeId, ingredientId, ret));
 		return ret >= 0;
 	}
@@ -383,7 +383,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 		int ret = getWritableDatabase().delete(RECIPE_INGREDIENTS_TABLE_NAME,
 				"recipe_id = ? AND ingredient_id = ?",
 				new String[]{ recipeId, ingredientId });
-		Log.d(TAG, String.format("delete recipe ingredient %s %s ret = %s",
+		Log.d(TAG, String.format("delete recipe ingredient: %s, %s <- %s",
 				recipeId, ingredientId, ret));
 		return ret > 0;
 	}
@@ -396,7 +396,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 		values.put("created_dt", createdDt);
 		values.put("updated_dt", createdDt);
 		long ret = getWritableDatabase().insert(RECIPE_PHOTOS_TABLE_NAME, null, values);
-		Log.d(TAG, String.format("insert recipe photo %s %s ret = %s",
+		Log.d(TAG, String.format("insert recipe photo: %s, %s <- %s",
 				recipeId, filename, ret));
 		return ret >= 0;
 	}
@@ -405,12 +405,13 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 		int ret = getWritableDatabase().delete(RECIPE_PHOTOS_TABLE_NAME,
 				"recipe_id = ? AND filename = ?",
 				new String[]{ recipeId, filename });
-		Log.d(TAG, String.format("delete recipe photo %s %s ret = %s",
+		Log.d(TAG, String.format("delete recipe photo: %s, %s <- %s",
 				recipeId, filename, ret));
 		return ret > 0;
 	}
 	
 	public Cursor getRecipeListCursor() {
+		Log.d(TAG, "get all recipes");
 		Cursor cursor = getReadableDatabase().rawQuery(
 				"select _id, ifnull(nullif(name, ''), '(recipe)') name, summary, display_name"
 						+ " from main_recipe"
@@ -420,6 +421,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 	}
 
 	public Cursor getIngredientsListCursor() {
+		Log.d(TAG, "get all ingredients");
 		Cursor cursor = getReadableDatabase().query(
 				INGREDIENTS_TABLE_NAME, 
 				new String[]{ BaseColumns._ID, "name", }, 
@@ -428,6 +430,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 	}
 
 	public Cursor getTagsListCursor() {
+		Log.d(TAG, "get all tags");
 		Cursor cursor = getReadableDatabase().query(
 				TAGS_TABLE_NAME, 
 				new String[]{ BaseColumns._ID, "name", }, 
@@ -436,6 +439,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 	}
 
 	public Cursor getRecipeDetailsCursor(String recipeId) {
+		Log.d(TAG, "get recipe " + recipeId);
 		Cursor cursor = getReadableDatabase().query(
 				RECIPES_TABLE_NAME, new String[]{ "name", }, 
 				BaseColumns._ID + " = ?", new String[]{ recipeId },
@@ -444,6 +448,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 	}
 
 	public Cursor getRecipeIngredientsCursor(String recipeId) {
+		Log.d(TAG, "get recipe ingredients " + recipeId);
 		Cursor cursor = getReadableDatabase().rawQuery(
 				String.format(
 						"SELECT i.name FROM %s ri JOIN %s i ON ri.ingredient_id = i.%s WHERE ri.recipe_id = ? ORDER BY i.name",
@@ -455,6 +460,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 	}
 
 	public Cursor getRecipeTagsCursor(String recipeId) {
+		Log.d(TAG, "get recipe tags " + recipeId);
 		Cursor cursor = getReadableDatabase().rawQuery(
 				String.format(
 						"SELECT t.name FROM %s rt JOIN %s t ON rt.tag_id = t.%s WHERE rt.recipe_id = ? ORDER BY t.name",
@@ -466,6 +472,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 	}
 
 	public Cursor getRecipePhotosCursor(String recipeId) {
+		Log.d(TAG, "get recipe photos " + recipeId);
 		Cursor cursor = getReadableDatabase().rawQuery(
 				String.format(
 						"SELECT filename FROM %s WHERE recipe_id = ?",

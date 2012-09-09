@@ -1,8 +1,5 @@
 release
 -------
-- add more logging in sql helper
-    - load recipe details
-    - review all "ret = "
 - cleanup style
     - move header to style
     - more padding on left of recipe view
@@ -10,8 +7,8 @@ release
     - if not possible, then use custom dark theme
 - take screenshots
     - list of recipes
-    - recipe details
-    - recipe editing
+    - view recipe
+    - edit recipe
     - ingredient input with auto-complete
     - menu with backup / restore
 - release notes
@@ -34,12 +31,13 @@ version 2
 
 version 3
 ---------
-- clean up database file paths
+- clean up file paths in RecipeFileManager
     - a.getDatabasePath("sqlite3.db") -> /data/data/com.recipenotes/databases/sqlite3.db
     - a.getPackageCodePath -> /data/app/com.recipenotes.apk
     - a.getPackageName -> com.recipenotes
     - Environment.getDataDirectory -> /data
     - Environment.getExternalStorageDirectory -> /sdcard
+    - eliminate code duplication
 - clean up NULLs in database schema
 - delete misspelled ingredients
 - do not crash if no camera or not accessible

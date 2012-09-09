@@ -37,9 +37,9 @@ import android.widget.ListView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Toast;
 
-public class RecipeDetailsActivity extends Activity {
+public class EditRecipeActivity extends Activity {
 
-	private static final String TAG = "RecipeDetailsActivity";
+	private static final String TAG = "EditRecipeActivity";
 
 	private static final int PICTURE_TAKEN = 1;
 
@@ -60,7 +60,7 @@ public class RecipeDetailsActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.recipe_details);
+		setContentView(R.layout.editrecipe);
 
 		helper = new RecipeNotesSQLiteOpenHelper(this);
 
@@ -428,7 +428,7 @@ public class RecipeDetailsActivity extends Activity {
 
 		@Override
 		public boolean onLongClick(View arg0) {
-			new AlertDialog.Builder(RecipeDetailsActivity.this)
+			new AlertDialog.Builder(EditRecipeActivity.this)
 			.setMessage(R.string.confirm_are_you_sure)
 			.setCancelable(true)
 			.setTitle(R.string.title_delete_photo)

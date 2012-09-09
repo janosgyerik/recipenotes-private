@@ -91,7 +91,7 @@ public class RecipeListActivity extends ListActivity {
 	class AddRecipeOnClickListener implements OnClickListener {
 		@Override
 		public void onClick(View v) {
-			Intent intent = new Intent(RecipeListActivity.this, RecipeDetailsActivity.class);
+			Intent intent = new Intent(RecipeListActivity.this, EditRecipeActivity.class);
 			startActivity(intent);
 		}
 	}
@@ -100,7 +100,7 @@ public class RecipeListActivity extends ListActivity {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
-			Intent intent = new Intent(RecipeListActivity.this, RecipeDetailsActivity.class);
+			Intent intent = new Intent(RecipeListActivity.this, EditRecipeActivity.class);
 			intent.putExtra(BaseColumns._ID, ((TextView)view.findViewById(R.id._ID)).getText());
 			startActivity(intent);
 		}

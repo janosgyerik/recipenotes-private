@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RecipeDetailsActivity"
+            android:name=".EditRecipeActivity"
             android:label="Recipe"
             android:screenOrientation="nosensor" >
         </activity>

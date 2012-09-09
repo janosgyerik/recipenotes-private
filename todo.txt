@@ -1,6 +1,5 @@
 release
 -------
-- separate recipe details and editing
 - fix light theme for dialog boxes
     - if not possible, then use custom dark theme
 - take screenshots

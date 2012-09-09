@@ -1,5 +1,15 @@
 release
 -------
+- add more logging in sql helper
+    - load recipe details
+    - review all "ret = "
+- cleanup style
+    - move header to style
+- use default title 'Recipe' when editing recipe with no title
+- update recipe view when return from Edit
+- improve daily backup
+    - rename file to -autobackup
+    - do not rely on static method value, check the date of the file
 - fix light theme for dialog boxes
     - if not possible, then use custom dark theme
 - take screenshots
@@ -21,6 +31,9 @@ version 2
     - how to delete recipe
     - how to delete ingredient
 - install "Android Compatibility package" and rewrite queries
+- optimization
+    - rewrite parts inside ScrollView with RelativeLayout
+    - rewrite ingredient list and tag list editor using regular TextViews
 
 
 version 3

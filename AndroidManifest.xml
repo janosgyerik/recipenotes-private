@@ -23,17 +23,23 @@
             android:screenOrientation="nosensor" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".EditRecipeActivity"
+            android:label="Edit recipe"
+            android:screenOrientation="nosensor" >
+        </activity>
+        <activity
+            android:name=".ViewRecipeActivity"
             android:label="Recipe"
             android:screenOrientation="nosensor" >
         </activity>
         <activity
-            android:label="File Selector"
             android:name=".FileSelectorActivity"
+            android:label="File Selector"
             android:screenOrientation="nosensor"
             android:theme="@android:style/Theme.Dialog" >
         </activity>

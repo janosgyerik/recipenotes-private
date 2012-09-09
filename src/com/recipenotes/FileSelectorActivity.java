@@ -41,6 +41,8 @@ public class FileSelectorActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		if (D) Log.d(TAG, "+++ ON CREATE +++");
 
+		setContentView(R.layout.fileselector);
+
 		Bundle extras = getIntent().getExtras();
 
 		final String title = extras.getString(IN_TITLE);

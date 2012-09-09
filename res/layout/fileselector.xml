@@ -4,20 +4,20 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <TextView
-        style="@style/mainHeader"
-        android:text="@string/title_recipelist" />
-
     <ListView
         android:id="@android:id/list"
-        style="@style/mainContent"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
         android:drawSelectorOnTop="false" />
 
-    <Button
-        android:id="@+id/btn_add_recipe"
+    <TextView
+        android:id="@android:id/empty"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:text="@string/btn_add_recipe" />
+        android:layout_gravity="center"
+        android:padding="15dp"
+        android:text="@string/msg_no_matching_files"
+        android:textSize="18sp" />
 
 </LinearLayout>

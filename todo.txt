@@ -1,7 +1,5 @@
 release
 -------
-- cleanup style
-    - move header to style
 - fix light theme for dialog boxes
     - if not possible, then use custom dark theme
 - take screenshots

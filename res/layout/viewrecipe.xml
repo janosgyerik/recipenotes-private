@@ -7,16 +7,8 @@
 
     <TextView
         android:id="@+id/name"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:background="#910101"
-        android:gravity="center_vertical"
-        android:padding="10dp"
-        android:text="@string/title_recipe"
-        android:textColor="#FFFFFF"
-        android:textSize="22dp"
-        android:textStyle="bold" />
+        style="@style/recipeHeader"
+        android:text="@string/title_recipe" />
 
     <ScrollView
         android:layout_width="fill_parent"

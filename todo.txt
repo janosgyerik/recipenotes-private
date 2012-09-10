@@ -1,13 +1,8 @@
 release
 -------
-- take screenshots
-    - list of recipes
-    - view recipe
-    - edit recipe
-    - ingredient input with auto-complete
-    - menu with backup / restore
+- google play page
 - release notes
-    - list of features
+- list of features
 
 
 version 2
@@ -22,6 +17,7 @@ version 2
 - optimization
     - rewrite parts inside ScrollView with RelativeLayout
     - rewrite ingredient list and tag list editor using regular TextViews
+    - reduce code duplication between ViewRecipe and EditRecipe
 
 
 version 3

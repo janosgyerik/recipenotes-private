@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.util.Log;
@@ -49,16 +48,15 @@ public class ViewRecipeActivity extends Activity {
 	
 	private void addPhotoToLayout(File photoFile) {
 		if (photoFile.isFile()) {
-			String path = photoFile.getAbsolutePath();
-			Bitmap bitmap = BitmapFactory.decodeFile(path);
+			int appWidth = getWindowManager().getDefaultDisplay().getWidth();
+			Bitmap bitmap = BitmapTools.createScaledBitmap(photoFile, appWidth);
 			ImageView photoView = new ImageView(this);
 			photoView.setImageBitmap(bitmap);
 			photoView.setPadding(10, 10, 10, 10);
 			photoView.setTag(photoFile.getName());
 
 			// dirty hack for motorola
-			int targetHeight = getWindowManager().getDefaultDisplay().getWidth() * bitmap.getHeight() / bitmap.getWidth();
-			Log.d(TAG, "targetHeight = " + targetHeight);
+			int targetHeight = appWidth * bitmap.getHeight() / bitmap.getWidth();
 			LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			photoView.setLayoutParams(params);
 			photoView.getLayoutParams().height = targetHeight;

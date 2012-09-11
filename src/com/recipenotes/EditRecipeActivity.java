@@ -180,6 +180,7 @@ public class EditRecipeActivity extends Activity {
 		@Override
 		public void onClick(View view) {
 			addIngredients();
+			addTags();
 
 			String name = capitalize(nameView.getText().toString());
 

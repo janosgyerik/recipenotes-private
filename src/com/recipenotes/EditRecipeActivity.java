@@ -337,6 +337,7 @@ public class EditRecipeActivity extends Activity {
 			photoView.setImageBitmap(bitmap);
 			photoView.setPadding(10, 10, 10, 10);
 			photoView.setTag(photoFile.getName());
+			photoView.setOnLongClickListener(new PhotoOnLongClickListener(photoFile));
 
 			// dirty hack for motorola
 			int targetHeight = appWidth * bitmap.getHeight() / bitmap.getWidth();

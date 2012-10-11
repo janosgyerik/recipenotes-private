@@ -23,6 +23,11 @@
     <string name="msg_no_matching_files">No matching files</string>
     <string name="btn_add_recipe">Add recipe</string>
     <string name="btn_edit_recipe">Edit recipe</string>
+    <string name="btn_edit">Edit</string>
+    <string name="btn_add_ingredients">Add ingredients</string>
+    <string name="btn_add_tags">Add tags</string>
+    <string name="btn_add_photos">Add photos</string>
+    <string name="btn_edit_photos">Edit photos</string>
     <string name="btn_save_recipe">Save</string>
     <string name="btn_add_photo">Add a photo</string>
     <string name="btn_yes">Yes</string>

@@ -6,8 +6,9 @@
     android:scrollbars="none" >
 
     <TextView
+        android:id="@+id/name"
         style="@style/mainHeader"
-        android:text="@string/title_recipe_details" />
+        android:text="@string/title_recipe" />
 
     <!--
          Dirty to hack to avoid auto-focus on the first text field
@@ -22,82 +23,89 @@
 
     <ScrollView style="@style/mainContent" >
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
             <EditText
-                android:id="@+id/name"
+                android:id="@+id/name_edit"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_name"
                 android:singleLine="true" />
 
             <RelativeLayout
-                android:layout_width="fill_parent"
+                android:id="@+id/ingredients_container"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:layout_below="@id/name_edit" >
 
-                <Button
-                    android:id="@+id/btn_add_ingredient"
+                <TextView
+                    android:id="@+id/label_ingredients"
+                    style="@style/recipeViewLabel"
+                    android:text="@string/label_ingredients" />
+
+                <TextView
+                    android:id="@+id/ingredients"
+                    style="@style/recipeViewValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/label_ingredients"
+                    android:layout_toLeftOf="@+id/btn_edit_ingredients" />
+
+                <Button
+                    android:id="@id/btn_edit_ingredients"
+                    style="@style/recipeViewButton"
                     android:layout_alignParentRight="true"
-                    android:text="@string/btn_add" />
-
-                <MultiAutoCompleteTextView
-                    android:id="@+id/ingredient"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@id/btn_add_ingredient"
-                    android:hint="@string/hint_ingredient"
-                    android:singleLine="true" />
+                    android:layout_below="@id/label_ingredients"
+                    android:text="@string/btn_edit" />
             </RelativeLayout>
-
-            <ListView
-                android:id="@+id/ingredients"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
 
             <RelativeLayout
-                android:layout_width="fill_parent"
+                android:id="@+id/tags_container"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:layout_below="@id/ingredients_container" >
+
+                <TextView
+                    android:id="@+id/label_tags"
+                    style="@style/recipeViewLabel"
+                    android:text="@string/label_tags" />
+
+                <TextView
+                    android:id="@+id/tags"
+                    style="@style/recipeViewValue"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/label_tags"
+                    android:layout_toLeftOf="@+id/btn_edit_tags" />
 
                 <Button
-                    android:id="@+id/btn_add_tag"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@id/btn_edit_tags"
+                    style="@style/recipeViewButton"
                     android:layout_alignParentRight="true"
-                    android:text="@string/btn_add" />
-
-                <MultiAutoCompleteTextView
-                    android:id="@+id/tag"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@id/btn_add_tag"
-                    android:hint="@string/hint_tag"
-                    android:singleLine="true" />
+                    android:layout_below="@id/label_tags"
+                    android:text="@string/btn_edit" />
             </RelativeLayout>
-
-            <ListView
-                android:id="@+id/tags"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" />
-
-            <Button
-                android:id="@+id/btn_add_photo"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/btn_add_photo" />
 
             <LinearLayout
                 android:id="@+id/photos"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" />
-        </LinearLayout>
+                android:layout_below="@id/tags_container"
+                android:orientation="vertical" >
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_edit_photos"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/photos"
+                android:text="@string/btn_edit_photos" />
+        </RelativeLayout>
     </ScrollView>
 
     <Button

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,8 +24,8 @@ public class ViewRecipeActivity extends Activity {
 
 	protected static final int RETURN_FROM_EDIT = 1;
 
-	private RecipeNotesSQLiteOpenHelper helper;
-	private String recipeId;
+	protected RecipeNotesSQLiteOpenHelper helper;
+	protected String recipeId;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,16 @@ public class ViewRecipeActivity extends Activity {
 		if (extras != null) {
 			recipeId = extras.getString(BaseColumns._ID);
 		}
+		
+		Button editButton = (Button) findViewById(R.id.btn_edit);
+		editButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(ViewRecipeActivity.this, EditRecipeActivity.class);
+				intent.putExtra(BaseColumns._ID, recipeId);
+				startActivityForResult(intent, RETURN_FROM_EDIT);
+			}
+		});
 		
 		updateRecipeView();
 	}
@@ -66,16 +77,20 @@ public class ViewRecipeActivity extends Activity {
 		}
 	}
 
-	private void updateRecipeView() {
+	protected void updateRecipeView() {
 		if (recipeId != null) {
 			Cursor recipeCursor = helper.getRecipeDetailsCursor(recipeId);
 			startManagingCursor(recipeCursor);
 
 			if (recipeCursor.moveToNext()) {
 				TextView nameView = (TextView) findViewById(R.id.name);
+				EditText nameEditView = (EditText) findViewById(R.id.name_edit);
 				String name = recipeCursor.getString(0);
 				if (name != null && name.length() > 0) {
 					nameView.setText(name);
+					if (nameEditView != null) {
+						nameEditView.setText(name);
+					}
 				}
 				else {
 					nameView.setText(R.string.title_noname_recipe);
@@ -120,16 +135,6 @@ public class ViewRecipeActivity extends Activity {
 					String filename = photosCursor.getString(0);
 					addPhotoToLayout(RecipeFileManager.getPhotoFile(filename));
 				}
-
-				Button editButton = (Button) findViewById(R.id.btn_edit);
-				editButton.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						Intent intent = new Intent(ViewRecipeActivity.this, EditRecipeActivity.class);
-						intent.putExtra(BaseColumns._ID, recipeId);
-						startActivityForResult(intent, RETURN_FROM_EDIT);
-					}
-				});
 			}
 			else {
 				// TODO

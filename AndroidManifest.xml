@@ -43,6 +43,12 @@
             android:screenOrientation="nosensor"
             android:theme="@android:style/Theme.Dialog" >
         </activity>
+        <activity
+            android:name=".EditIngredientsActivity"
+            android:label="Ingredients"
+            android:screenOrientation="nosensor"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
     </application>
 
 </manifest>

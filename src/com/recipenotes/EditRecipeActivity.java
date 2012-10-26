@@ -1,5 +1,6 @@
 package com.recipenotes;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.BaseColumns;
@@ -27,31 +28,38 @@ public class EditRecipeActivity extends ViewRecipeActivity {
 
 		helper = new RecipeNotesSQLiteOpenHelper(this);
 
-		/*
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			recipeId = extras.getString(BaseColumns._ID);
 		}
 		if (recipeId == null) {
-			recipeId = helper.newRecipe();
+//			recipeId = helper.newRecipe();
+			recipeId = "44";
 		}
-		*/
-		recipeId = "63";
-			
+
 		nameView = (EditText) findViewById(R.id.name_edit);
 
+		final Activity this_ = this;
+
 		Button editIngredientsButton = (Button) findViewById(R.id.btn_edit_ingredients);
-		editIngredientsButton.setOnClickListener(new EditIngredientsOnClickListener());
+		editIngredientsButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(this_, EditIngredientsActivity.class);
+				intent.putExtra(BaseColumns._ID, recipeId);
+				startActivityForResult(intent, RETURN_FROM_EDIT);
+			}
+		});
 
 		Button editTagsButton = (Button) findViewById(R.id.btn_edit_tags);
-		editTagsButton.setOnClickListener(new EditTagsOnClickListener());
-		
+		//		editTagsButton.setOnClickListener(new EditTagsOnClickListener());
+
 		Button editPhotosButton = (Button) findViewById(R.id.btn_edit_photos);
-		editPhotosButton.setOnClickListener(new EditPhotosOnClickListener());
+		//		editPhotosButton.setOnClickListener(new EditPhotosOnClickListener());
 
 		Button save = (Button) findViewById(R.id.btn_save);
 		save.setOnClickListener(new SaveRecipeOnClickListener());
-		
+
 		updateRecipeView();
 	}
 
@@ -70,7 +78,7 @@ public class EditRecipeActivity extends ViewRecipeActivity {
 					displayName += ", ";
 				}
 			}
-			*/
+			 */
 
 			if (helper.saveRecipe(recipeId, name, displayName)) {
 				Toast.makeText(getApplicationContext(), R.string.msg_updated_recipe, Toast.LENGTH_SHORT).show();
@@ -88,35 +96,12 @@ public class EditRecipeActivity extends ViewRecipeActivity {
 		return Character.toUpperCase(name.charAt(0)) + name.substring(1);
 	}
 
-	class EditIngredientsOnClickListener implements OnClickListener {
-		@Override
-		public void onClick(View v) {
-//			addIngredients();
-		}
-	}
-
-	class EditTagsOnClickListener implements OnClickListener {
-		@Override
-		public void onClick(View v) {
-//			addTags();
-		}
-	}
-
-
-	class EditPhotosOnClickListener implements OnClickListener {
-		@Override
-		public void onClick(View v) {
-//			dispatchTakePictureIntent();
-		}
-	}
-
-
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
 			switch (requestCode) {
-			case RETURN_FROM_EDIT_PHOTOS:
-//				handleSmallCameraPhoto(data);
+			case RETURN_FROM_EDIT_INGREDIENTS:
+				//				handleSmallCameraPhoto(data);
 				updateRecipeView();
 				break;
 			}

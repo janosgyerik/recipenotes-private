@@ -17,7 +17,6 @@ public class EditRecipeActivity extends ViewRecipeActivity {
 
 	private static final int RETURN_FROM_EDIT_INGREDIENTS = 1;
 	private static final int RETURN_FROM_EDIT_TAGS = 2;
-	private static final int RETURN_FROM_EDIT_PHOTOS = 3;
 
 	private EditText nameView;
 
@@ -34,7 +33,8 @@ public class EditRecipeActivity extends ViewRecipeActivity {
 		}
 		if (recipeId == null) {
 //			recipeId = helper.newRecipe();
-			recipeId = "44";
+			recipeId = "42"; // rich
+			recipeId = "44"; // empty
 		}
 
 		nameView = (EditText) findViewById(R.id.name_edit);
@@ -47,15 +47,19 @@ public class EditRecipeActivity extends ViewRecipeActivity {
 			public void onClick(View v) {
 				Intent intent = new Intent(this_, EditIngredientsActivity.class);
 				intent.putExtra(BaseColumns._ID, recipeId);
-				startActivityForResult(intent, RETURN_FROM_EDIT);
+				startActivityForResult(intent, RETURN_FROM_EDIT_INGREDIENTS);
 			}
 		});
 
 		Button editTagsButton = (Button) findViewById(R.id.btn_edit_tags);
-		//		editTagsButton.setOnClickListener(new EditTagsOnClickListener());
-
-		Button editPhotosButton = (Button) findViewById(R.id.btn_edit_photos);
-		//		editPhotosButton.setOnClickListener(new EditPhotosOnClickListener());
+		editTagsButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(this_, EditIngredientsActivity.class);
+				intent.putExtra(BaseColumns._ID, recipeId);
+				startActivityForResult(intent, RETURN_FROM_EDIT_TAGS);
+			}
+		});
 
 		Button save = (Button) findViewById(R.id.btn_save);
 		save.setOnClickListener(new SaveRecipeOnClickListener());

@@ -53,14 +53,14 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@id/label_ingredients"
-                    android:layout_toLeftOf="@+id/btn_edit_ingredients" />
+                    android:paddingBottom="0dp" />
 
                 <Button
-                    android:id="@id/btn_edit_ingredients"
+                    android:id="@+id/btn_edit_ingredients"
                     style="@style/recipeViewButton"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@id/label_ingredients"
-                    android:text="@string/btn_edit" />
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/ingredients"
+                    android:text="@string/btn_edit_ingredients" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -81,30 +81,30 @@
                     android:layout_height="fill_parent"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@id/label_tags"
-                    android:layout_toLeftOf="@+id/btn_edit_tags" />
+                    android:paddingBottom="0dp" />
 
                 <Button
-                    android:id="@id/btn_edit_tags"
+                    android:id="@+id/btn_edit_tags"
                     style="@style/recipeViewButton"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@id/label_tags"
-                    android:text="@string/btn_edit" />
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/tags"
+                    android:text="@string/btn_edit_tags" />
             </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_add_photo"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tags_container"
+                android:text="@string/btn_add_photo" />
 
             <LinearLayout
                 android:id="@+id/photos"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tags_container"
+                android:layout_below="@id/btn_add_photo"
                 android:orientation="vertical" >
             </LinearLayout>
-
-            <Button
-                android:id="@+id/btn_edit_photos"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/photos"
-                android:text="@string/btn_edit_photos" />
         </RelativeLayout>
     </ScrollView>
 

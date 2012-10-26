@@ -22,7 +22,7 @@ public class ViewRecipeActivity extends Activity {
 
 	private static final String TAG = "ViewRecipeActivity";
 
-	protected static final int RETURN_FROM_EDIT = 1;
+	protected static final int RETURN_FROM_EDIT_INGREDIENTS = 1;
 
 	protected RecipeNotesSQLiteOpenHelper helper;
 	protected String recipeId;
@@ -45,7 +45,7 @@ public class ViewRecipeActivity extends Activity {
 			public void onClick(View v) {
 				Intent intent = new Intent(ViewRecipeActivity.this, EditRecipeActivity.class);
 				intent.putExtra(BaseColumns._ID, recipeId);
-				startActivityForResult(intent, RETURN_FROM_EDIT);
+				startActivityForResult(intent, RETURN_FROM_EDIT_INGREDIENTS);
 			}
 		});
 		
@@ -145,7 +145,7 @@ public class ViewRecipeActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 			switch (requestCode) {
-			case RETURN_FROM_EDIT:
+			case RETURN_FROM_EDIT_INGREDIENTS:
 				updateRecipeView();
 				break;
 		}

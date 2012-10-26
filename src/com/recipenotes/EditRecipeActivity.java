@@ -55,7 +55,7 @@ public class EditRecipeActivity extends ViewRecipeActivity {
 		editTagsButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(this_, EditIngredientsActivity.class);
+				Intent intent = new Intent(this_, EditTagsActivity.class);
 				intent.putExtra(BaseColumns._ID, recipeId);
 				startActivityForResult(intent, RETURN_FROM_EDIT_TAGS);
 			}

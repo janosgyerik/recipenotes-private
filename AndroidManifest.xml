@@ -49,6 +49,12 @@
             android:screenOrientation="nosensor"
             android:theme="@android:style/Theme.Dialog" >
         </activity>
+        <activity
+            android:name=".EditTagsActivity"
+            android:label="Tags"
+            android:screenOrientation="nosensor"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
     </application>
 
 </manifest>

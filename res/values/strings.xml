@@ -20,6 +20,10 @@
         and extra spaces trimmed.</string>
     <string name="msg_no_ingredients">No ingredients. Use the input box above to add some!</string>
     <string name="hint_tag">Tags to add&#8230;</string>
+    <string name="note_entering_tags">Note: you can enter multiple tags
+        at once, separated by comma. Tag names will be capitalized
+        and extra spaces trimmed.</string>
+    <string name="msg_no_tags">No tags. Use the input box above to add some!</string>
     <string name="msg_updated_recipe">Updated recipe</string>
     <string name="error_update_recipe">Could not update recipe</string>
     <string name="confirm_are_you_sure">Are you sure?</string>

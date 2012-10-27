@@ -57,7 +57,7 @@ public class ViewRecipeActivity extends Activity {
 		layout.removeAllViews();
 	}
 	
-	private void addPhotoToLayout(File photoFile) {
+	protected View addPhotoToLayout(File photoFile) {
 		if (photoFile.isFile()) {
 			int appWidth = getWindowManager().getDefaultDisplay().getWidth();
 			Bitmap bitmap = BitmapTools.createScaledBitmap(photoFile, appWidth);
@@ -74,7 +74,10 @@ public class ViewRecipeActivity extends Activity {
 
 			LinearLayout layout = (LinearLayout) findViewById(R.id.photos);
 			layout.addView(photoView);
+			
+			return photoView;
 		}
+		return null;
 	}
 
 	protected void reloadAndRefreshRecipeDetails() {

@@ -14,15 +14,13 @@
     <string name="title_noname_recipe">Recipe</string>
     <string name="title_recipe_details">Recipe</string>
     <string name="hint_name">Name (optional)</string>
-    <string name="hint_ingredient">Ingredients to add&#8230;</string>
-    <string name="note_entering_ingredients">Note: you can enter multiple ingredients
-        at once, separated by comma. Ingredient names will be capitalized
-        and extra spaces trimmed.</string>
+    <string name="hint_ingredient">Ingredients&#8230;</string>
+    <string name="note_entering_ingredients">Hint: you can add many at once, separated by comma.
+        Don\'t worry about formatting, your input will be automatically normalized.</string>
     <string name="msg_no_ingredients">No ingredients. Use the input box above to add some!</string>
-    <string name="hint_tag">Tags to add&#8230;</string>
-    <string name="note_entering_tags">Note: you can enter multiple tags
-        at once, separated by comma. Tag names will be capitalized
-        and extra spaces trimmed.</string>
+    <string name="hint_tag">Tags&#8230;</string>
+    <string name="note_entering_tags">Hint: you can add many at once, separated by comma.
+        Don\'t worry about formatting, your input will be automatically normalized.</string>
     <string name="msg_no_tags">No tags. Use the input box above to add some!</string>
     <string name="msg_updated_recipe">Updated recipe</string>
     <string name="error_update_recipe">Could not update recipe</string>

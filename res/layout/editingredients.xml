@@ -14,9 +14,15 @@
         android:paddingTop="0dp" >
 
         <Button
-            android:id="@+id/btn_add"
+            android:id="@+id/btn_done"
             style="@style/customButton"
             android:layout_alignParentRight="true"
+            android:text="@string/btn_done" />
+
+        <Button
+            android:id="@+id/btn_add"
+            style="@style/customButton"
+            android:layout_toLeftOf="@id/btn_done"
             android:text="@string/btn_add" />
 
         <MultiAutoCompleteTextView
@@ -24,6 +30,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@id/btn_add"
+            android:ellipsize="end"
             android:hint="@string/hint_ingredient"
             android:singleLine="true" />
     </RelativeLayout>

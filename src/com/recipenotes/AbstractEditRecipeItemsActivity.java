@@ -36,12 +36,12 @@ public abstract class AbstractEditRecipeItemsActivity extends ListActivity {
 	private ListView itemListView;
 
 	private boolean isChanged;
-	
+
 	abstract int getContentViewId();
 
 	abstract Cursor getAutoCompleteListCursor();
 	abstract Cursor getItemListCursor();
-	
+
 	abstract String getOrCreateItem(String name);
 	abstract boolean addRecipeItem(String itemId);
 	abstract String getItemIdByName(String name);
@@ -88,6 +88,9 @@ public abstract class AbstractEditRecipeItemsActivity extends ListActivity {
 
 		Button addItemButton = (Button) findViewById(R.id.btn_add);
 		addItemButton.setOnClickListener(new AddItemOnClickListener());
+
+		Button doneButton = (Button) findViewById(R.id.btn_done);
+		doneButton.setOnClickListener(new DoneOnClickListener());
 
 		Cursor itemsCursor = getItemListCursor();
 		while (itemsCursor.moveToNext()) {
@@ -151,6 +154,14 @@ public abstract class AbstractEditRecipeItemsActivity extends ListActivity {
 		@Override
 		public void onClick(View v) {
 			addItems();
+		}
+	}
+
+	class DoneOnClickListener implements OnClickListener {
+		@Override
+		public void onClick(View v) {
+			addItems();
+			returnResult();
 		}
 	}
 

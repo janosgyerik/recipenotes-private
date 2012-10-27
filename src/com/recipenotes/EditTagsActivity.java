@@ -26,7 +26,7 @@ public class EditTagsActivity extends ListActivity {
 	private static final String TAG = "EditTagsActivity";
 	private static final boolean D = false;
 
-	private static final String OUT_CHANGED = "CHANGED";
+	public static final String OUT_CHANGED = "CHANGED";
 
 	private RecipeNotesSQLiteOpenHelper helper;
 	private String recipeId;

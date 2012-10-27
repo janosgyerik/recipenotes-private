@@ -116,6 +116,32 @@ public class EditRecipeActivity extends ViewRecipeActivity {
 		name = name.trim();
 		return Character.toUpperCase(name.charAt(0)) + name.substring(1);
 	}
+	
+	private void handleReturnFromEditIngredients(Intent data) {
+		Bundle extras = data.getExtras();
+		if (extras != null) {
+			boolean isChanged = extras.getBoolean(EditIngredientsActivity.OUT_CHANGED);
+			if (isChanged) {
+				Log.i(TAG, "ingredients have changed -> reloading details");
+				reloadAndRefreshRecipeDetails();
+				return;
+			}
+		}
+		Log.i(TAG, "ingredients have NOT changed -> NOT reloading details");
+	}
+
+	private void handleReturnFromEditTags(Intent data) {
+		Bundle extras = data.getExtras();
+		if (extras != null) {
+			boolean isChanged = extras.getBoolean(EditTagsActivity.OUT_CHANGED);
+			if (isChanged) {
+				Log.i(TAG, "tags have changed -> reloading details");
+				reloadAndRefreshRecipeDetails();
+				return;
+			}
+		}
+		Log.i(TAG, "tags have NOT changed -> NOT reloading details");
+	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -124,11 +150,11 @@ public class EditRecipeActivity extends ViewRecipeActivity {
 			switch (requestCode) {
 			case RETURN_FROM_EDIT_INGREDIENTS:
 				Log.i(TAG, "OK edit ingredients");
-				reloadAndRefreshRecipeDetails();
+				handleReturnFromEditIngredients(data);
 				break;
 			case RETURN_FROM_EDIT_TAGS:
 				Log.i(TAG, "OK edit tags");
-				reloadAndRefreshRecipeDetails();
+				handleReturnFromEditTags(data);
 				break;
 			case RETURN_FROM_ADD_PHOTO:
 				handleSmallCameraPhoto(data);

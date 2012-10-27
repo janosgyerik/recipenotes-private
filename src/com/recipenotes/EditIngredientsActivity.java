@@ -50,8 +50,7 @@ public class EditIngredientsActivity extends ListActivity {
 			recipeId = extras.getString(BaseColumns._ID);
 		}
 		else {
-			// TODO just for debugging!
-			recipeId = "44";
+//			recipeId = "44";
 		}
 
 		// add ingredient

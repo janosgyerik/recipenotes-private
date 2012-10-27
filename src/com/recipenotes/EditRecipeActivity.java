@@ -46,9 +46,9 @@ public class EditRecipeActivity extends ViewRecipeActivity {
 			recipeId = extras.getString(BaseColumns._ID);
 		}
 		if (recipeId == null) {
-			//			recipeId = helper.newRecipe();
-			recipeId = "42"; // rich
-			recipeId = "44"; // empty
+			recipeId = helper.newRecipe();
+//			recipeId = "42"; // rich
+//			recipeId = "44"; // empty
 		}
 
 		nameView = (EditText) findViewById(R.id.name_edit);

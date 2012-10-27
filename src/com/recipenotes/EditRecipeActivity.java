@@ -5,12 +5,11 @@ import java.io.IOException;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.BaseColumns;
@@ -18,10 +17,8 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class EditRecipeActivity extends ViewRecipeActivity {
@@ -45,10 +42,13 @@ public class EditRecipeActivity extends ViewRecipeActivity {
 		if (extras != null) {
 			recipeId = extras.getString(BaseColumns._ID);
 		}
+		
+		// for debugging:
+		// recipeId = "44"; // empty
+		// recipeId = "42"; // rich
+		
 		if (recipeId == null) {
 			recipeId = helper.newRecipe();
-//			recipeId = "42"; // rich
-//			recipeId = "44"; // empty
 		}
 
 		nameView = (EditText) findViewById(R.id.name_edit);
@@ -81,7 +81,7 @@ public class EditRecipeActivity extends ViewRecipeActivity {
 		Button save = (Button) findViewById(R.id.btn_save);
 		save.setOnClickListener(new SaveRecipeOnClickListener());
 
-		reloadAndRefreshRecipeDetails();
+		reloadAndRefreshRecipeDetails(true);
 	}
 
 	class SaveRecipeOnClickListener implements OnClickListener {
@@ -89,17 +89,19 @@ public class EditRecipeActivity extends ViewRecipeActivity {
 		public void onClick(View view) {
 			String name = capitalize(nameView.getText().toString());
 
-			// TODO
 			// display_name
-			String displayName = "TODO:ingredients-list";
-			/*
-			for (int i = 0; i < ingredientsListAdapter.getCount(); ++i) {
-				displayName += ingredientsListAdapter.getItem(i);
-				if (i < ingredientsListAdapter.getCount() - 1) {
+			String displayName = "";
+			Cursor ingredientsCursor = helper.getRecipeIngredientsCursor(recipeId);
+			if (ingredientsCursor.moveToNext()) {
+				String ingredient = ingredientsCursor.getString(0);
+				displayName = ingredient;
+				while (ingredientsCursor.moveToNext()) {
 					displayName += ", ";
+					ingredient = ingredientsCursor.getString(0);
+					displayName += ingredient;
 				}
 			}
-			 */
+			ingredientsCursor.close();
 
 			if (helper.saveRecipe(recipeId, name, displayName)) {
 				Toast.makeText(getApplicationContext(), R.string.msg_updated_recipe, Toast.LENGTH_SHORT).show();
@@ -116,14 +118,14 @@ public class EditRecipeActivity extends ViewRecipeActivity {
 		name = name.trim();
 		return Character.toUpperCase(name.charAt(0)) + name.substring(1);
 	}
-	
+
 	private void handleReturnFromEditIngredients(Intent data) {
 		Bundle extras = data.getExtras();
 		if (extras != null) {
 			boolean isChanged = extras.getBoolean(EditIngredientsActivity.OUT_CHANGED);
 			if (isChanged) {
 				Log.i(TAG, "ingredients have changed -> reloading details");
-				reloadAndRefreshRecipeDetails();
+				reloadAndRefreshRecipeDetails(true);
 				return;
 			}
 		}
@@ -136,7 +138,7 @@ public class EditRecipeActivity extends ViewRecipeActivity {
 			boolean isChanged = extras.getBoolean(EditTagsActivity.OUT_CHANGED);
 			if (isChanged) {
 				Log.i(TAG, "tags have changed -> reloading details");
-				reloadAndRefreshRecipeDetails();
+				reloadAndRefreshRecipeDetails(true);
 				return;
 			}
 		}
@@ -219,57 +221,8 @@ public class EditRecipeActivity extends ViewRecipeActivity {
 	private void handleSmallCameraPhoto(Intent intent) {
 		if (photoFile != null && photoFile.isFile()) {
 			addPhotoToRecipe(photoFile);
-			View photoView = addPhotoToLayout(photoFile);
-			if (photoView != null) {
-				photoView.setOnLongClickListener(new PhotoOnLongClickListener(photoFile));
-			}
+			addPhotoToLayout(photoFile, true);
 		}
-	}
-
-	private void removePhoto(File photoFile) {
-		if (photoFile.delete()) {
-			if (removePhotoFromRecipe(photoFile)) {
-				removePhotoFromLayout(photoFile);
-			}
-		}
-	}
-
-	private void removePhotoFromLayout(File photoFile) {
-		LinearLayout layout = (LinearLayout) findViewById(R.id.photos);
-		layout.removeView(layout.findViewWithTag(photoFile.getName()));
-	}
-
-	private boolean removePhotoFromRecipe(File photoFile) {
-		return helper.removeRecipePhoto(recipeId, photoFile.getName());
-	}
-
-	class PhotoOnLongClickListener implements OnLongClickListener {
-		private final File photoFile;
-
-		public PhotoOnLongClickListener(File photoFile) {
-			this.photoFile = photoFile;
-		}
-
-		@Override
-		public boolean onLongClick(View arg0) {
-			new AlertDialog.Builder(EditRecipeActivity.this)
-			.setMessage(R.string.confirm_are_you_sure)
-			.setCancelable(true)
-			.setTitle(R.string.title_delete_photo)
-			.setPositiveButton(R.string.btn_yes, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					removePhoto(photoFile);
-				}
-			})
-			.setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					dialog.cancel();
-				}
-			})
-			.show();
-			return true;
-		}
-
 	}
 
 	@Override  

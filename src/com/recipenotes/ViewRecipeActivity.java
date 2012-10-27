@@ -3,6 +3,8 @@ package com.recipenotes;
 import java.io.File;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -11,6 +13,7 @@ import android.provider.BaseColumns;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +25,7 @@ public class ViewRecipeActivity extends Activity {
 
 	private static final String TAG = "ViewRecipeActivity";
 
-	protected static final int RETURN_FROM_EDIT_INGREDIENTS = 1;
+	protected static final int RETURN_FROM_EDIT = 1;
 
 	protected RecipeNotesSQLiteOpenHelper helper;
 	protected String recipeId;
@@ -38,26 +41,26 @@ public class ViewRecipeActivity extends Activity {
 		if (extras != null) {
 			recipeId = extras.getString(BaseColumns._ID);
 		}
-		
+
 		Button editButton = (Button) findViewById(R.id.btn_edit);
 		editButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(ViewRecipeActivity.this, EditRecipeActivity.class);
 				intent.putExtra(BaseColumns._ID, recipeId);
-				startActivityForResult(intent, RETURN_FROM_EDIT_INGREDIENTS);
+				startActivityForResult(intent, RETURN_FROM_EDIT);
 			}
 		});
-		
-		reloadAndRefreshRecipeDetails();
+
+		reloadAndRefreshRecipeDetails(false);
 	}
 
 	private void clearPhotosFromLayout() {
 		LinearLayout layout = (LinearLayout) findViewById(R.id.photos);
 		layout.removeAllViews();
 	}
-	
-	protected View addPhotoToLayout(File photoFile) {
+
+	protected void addPhotoToLayout(File photoFile, boolean editable) {
 		if (photoFile.isFile()) {
 			int appWidth = getWindowManager().getDefaultDisplay().getWidth();
 			Bitmap bitmap = BitmapTools.createScaledBitmap(photoFile, appWidth);
@@ -65,6 +68,9 @@ public class ViewRecipeActivity extends Activity {
 			photoView.setImageBitmap(bitmap);
 			photoView.setPadding(10, 10, 10, 10);
 			photoView.setTag(photoFile.getName());
+			if (editable) {
+				photoView.setOnLongClickListener(new PhotoOnLongClickListener(photoFile));
+			}
 
 			// dirty hack for motorola
 			int targetHeight = appWidth * bitmap.getHeight() / bitmap.getWidth();
@@ -74,13 +80,10 @@ public class ViewRecipeActivity extends Activity {
 
 			LinearLayout layout = (LinearLayout) findViewById(R.id.photos);
 			layout.addView(photoView);
-			
-			return photoView;
 		}
-		return null;
 	}
 
-	protected void reloadAndRefreshRecipeDetails() {
+	protected void reloadAndRefreshRecipeDetails(boolean editable) {
 		if (recipeId != null) {
 			Cursor recipeCursor = helper.getRecipeDetailsCursor(recipeId);
 			startManagingCursor(recipeCursor);
@@ -136,7 +139,7 @@ public class ViewRecipeActivity extends Activity {
 				clearPhotosFromLayout();
 				while (photosCursor.moveToNext()) {
 					String filename = photosCursor.getString(0);
-					addPhotoToLayout(RecipeFileManager.getPhotoFile(filename));
+					addPhotoToLayout(RecipeFileManager.getPhotoFile(filename), editable);
 				}
 			}
 			else {
@@ -147,11 +150,57 @@ public class ViewRecipeActivity extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-			switch (requestCode) {
-			case RETURN_FROM_EDIT_INGREDIENTS:
-				reloadAndRefreshRecipeDetails();
-				break;
+		switch (requestCode) {
+		case RETURN_FROM_EDIT:
+			reloadAndRefreshRecipeDetails(false);
+			break;
 		}
+	}
+
+	private void removePhoto(File photoFile) {
+		if (photoFile.delete()) {
+			if (removePhotoFromRecipe(photoFile)) {
+				removePhotoFromLayout(photoFile);
+			}
+		}
+	}
+
+	private void removePhotoFromLayout(File photoFile) {
+		LinearLayout layout = (LinearLayout) findViewById(R.id.photos);
+		layout.removeView(layout.findViewWithTag(photoFile.getName()));
+	}
+
+	private boolean removePhotoFromRecipe(File photoFile) {
+		return helper.removeRecipePhoto(recipeId, photoFile.getName());
+	}
+
+	class PhotoOnLongClickListener implements OnLongClickListener {
+		private final File photoFile;
+
+		public PhotoOnLongClickListener(File photoFile) {
+			this.photoFile = photoFile;
+		}
+
+		@Override
+		public boolean onLongClick(View arg0) {
+			new AlertDialog.Builder(ViewRecipeActivity.this)
+			.setMessage(R.string.confirm_are_you_sure)
+			.setCancelable(true)
+			.setTitle(R.string.title_delete_photo)
+			.setPositiveButton(R.string.btn_yes, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					removePhoto(photoFile);
+				}
+			})
+			.setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					dialog.cancel();
+				}
+			})
+			.show();
+			return true;
+		}
+
 	}
 
 	@Override  

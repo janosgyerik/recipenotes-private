@@ -7,17 +7,19 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        style="@style/mainHeaderWrapper"
         android:orientation="vertical" >
 
         <TextView
             style="@style/mainHeader"
+            android:layout_toLeftOf="@+id/btn_add_recipe"
             android:text="@string/title_recipelist" />
 
         <ImageButton
-            android:id="@+id/btn_add_recipe"
-            style="@style/customButton"
+            android:id="@id/btn_add_recipe"
+            style="@style/mainHeaderButton"
             android:layout_alignParentRight="true"
-            android:src="@drawable/btn_plus" />
+            android:src="@drawable/headerbtn_plus" />
     </RelativeLayout>
 
     <ListView

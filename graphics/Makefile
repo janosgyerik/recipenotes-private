@@ -66,6 +66,18 @@ $(mdpi_dir)/btn_%.png: $(src_dir)/btn_%.png
 	convert -geometry 36x $< $@
 	identify $@
 
+$(hdpi_dir)/headerbtn_%.png: $(src_dir)/headerbtn_%.png
+	convert -geometry 36x $< $@
+	identify $@
+
+$(ldpi_dir)/headerbtn_%.png: $(src_dir)/headerbtn_%.png
+	convert -geometry 18x $< $@
+	identify $@
+
+$(mdpi_dir)/headerbtn_%.png: $(src_dir)/headerbtn_%.png
+	convert -geometry 24x $< $@
+	identify $@
+
 $(hdpi_dir)/launcher_%.png: $(src_dir)/launcher_%.png
 	convert -geometry 72x $< $@
 	identify $@

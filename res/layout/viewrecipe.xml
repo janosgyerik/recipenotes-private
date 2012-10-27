@@ -19,9 +19,9 @@
 
         <ImageButton
             android:id="@id/btn_edit"
-            style="@style/customButton"
+            style="@style/mainHeaderButton"
             android:layout_alignParentRight="true"
-            android:src="@drawable/btn_edit" />
+            android:src="@drawable/headerbtn_edit" />
     </RelativeLayout>
 
     <ScrollView style="@style/mainContent" >

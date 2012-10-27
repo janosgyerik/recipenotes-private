@@ -18,7 +18,6 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -59,7 +58,7 @@ public class RecipeListActivity extends ListActivity {
 		getListView().setOnItemClickListener(new RecipeListOnItemClickListener());
 		getListView().setOnItemLongClickListener(new RecipeListOnItemLongClickListener());
 
-		((Button)findViewById(R.id.btn_add_recipe)).setOnClickListener(new AddRecipeOnClickListener());
+		((View)findViewById(R.id.btn_add_recipe)).setOnClickListener(new AddRecipeOnClickListener());
 
 		RecipeFileManager.updateDailyBackup();
 	}

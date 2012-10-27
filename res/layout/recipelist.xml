@@ -4,18 +4,29 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <TextView
-        style="@style/mainHeader"
-        android:text="@string/title_recipelist" />
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            style="@style/mainHeader"
+            android:drawableRight="@drawable/btn_plus"
+            android:text="@string/title_recipelist" />
+
+        <Button
+            android:id="@+id/btn_add_recipe"
+            style="@style/mainHeader"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="#07000000"
+            android:textColor="#07000000"
+            android:text="[add]" />
+    </RelativeLayout>
 
     <ListView
         android:id="@android:id/list"
         style="@style/mainContent"
         android:drawSelectorOnTop="false" />
-
-    <Button
-        android:id="@+id/btn_add_recipe"
-        style="@style/wideButton"
-        android:text="@string/btn_add_recipe" />
 
 </LinearLayout>

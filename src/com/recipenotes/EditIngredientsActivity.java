@@ -2,11 +2,14 @@ package com.recipenotes;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -22,13 +25,17 @@ public class EditIngredientsActivity extends ListActivity {
 	// Debugging
 	private static final String TAG = "EditIngredientsActivity";
 	private static final boolean D = false;
-	
+
+	private static final String OUT_CHANGED = "CHANGED";
+
 	private RecipeNotesSQLiteOpenHelper helper;
 	private String recipeId;
 
 	private MultiAutoCompleteTextView ingredientView;
 	private ArrayAdapter<String> ingredientsListAdapter;
 	private ListView ingredientsListView;
+
+	private boolean isChanged;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -46,7 +53,7 @@ public class EditIngredientsActivity extends ListActivity {
 			// TODO just for debugging!
 			recipeId = "44";
 		}
-		
+
 		// add ingredient
 		// TODO store id too
 		ArrayList<String> ingredientsAutoCompleteList = new ArrayList<String>();
@@ -81,18 +88,28 @@ public class EditIngredientsActivity extends ListActivity {
 			String ingredient = ingredientsCursor.getString(0);
 			ingredientsListAdapter.add(ingredient);
 		}
-		
+
 		setListAdapter(ingredientsListAdapter);
 	}
-	
-	/*
-	private void returnResult(String filename) {
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)  {
+		if (D) Log.d(TAG, "onKeyDown");
+		if (Integer.parseInt(android.os.Build.VERSION.SDK) < 5
+				&& keyCode == KeyEvent.KEYCODE_BACK
+				&& event.getRepeatCount() == 0) {
+			returnResult();
+		}
+
+		return super.onKeyDown(keyCode, event);
+	}
+
+	private void returnResult() {
 		Intent intent = new Intent();
-		intent.putExtra(OUT_CHANGED, filename);
+		intent.putExtra(OUT_CHANGED, isChanged);
 		setResult(Activity.RESULT_OK, intent);
 		finish();
 	}
-	*/
 
 	private void addIngredients() {
 		String ingredients = ingredientView.getText().toString().trim();
@@ -106,6 +123,7 @@ public class EditIngredientsActivity extends ListActivity {
 				if (ingredientId != null
 						&& helper.addRecipeIngredient(recipeId, ingredientId)) {
 					ingredientsListAdapter.insert(ingredient, 0);
+					isChanged = true;
 				}
 			}
 			ingredientView.setText("");
@@ -119,6 +137,7 @@ public class EditIngredientsActivity extends ListActivity {
 		if (ingredientId != null
 				&& helper.removeRecipeIngredient(recipeId, ingredientId)) {
 			ingredientsListAdapter.remove(ingredientName);
+			isChanged = true;
 		}
 	}
 

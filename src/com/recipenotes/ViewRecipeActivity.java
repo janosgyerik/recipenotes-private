@@ -49,7 +49,7 @@ public class ViewRecipeActivity extends Activity {
 			}
 		});
 		
-		updateRecipeView();
+		reloadAndRefreshRecipeDetails();
 	}
 
 	private void clearPhotosFromLayout() {
@@ -77,7 +77,7 @@ public class ViewRecipeActivity extends Activity {
 		}
 	}
 
-	protected void updateRecipeView() {
+	protected void reloadAndRefreshRecipeDetails() {
 		if (recipeId != null) {
 			Cursor recipeCursor = helper.getRecipeDetailsCursor(recipeId);
 			startManagingCursor(recipeCursor);
@@ -146,7 +146,7 @@ public class ViewRecipeActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 			switch (requestCode) {
 			case RETURN_FROM_EDIT_INGREDIENTS:
-				updateRecipeView();
+				reloadAndRefreshRecipeDetails();
 				break;
 		}
 	}

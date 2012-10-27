@@ -64,7 +64,7 @@ public class EditRecipeActivity extends ViewRecipeActivity {
 		Button save = (Button) findViewById(R.id.btn_save);
 		save.setOnClickListener(new SaveRecipeOnClickListener());
 
-		updateRecipeView();
+		reloadAndRefreshRecipeDetails();
 	}
 
 	class SaveRecipeOnClickListener implements OnClickListener {
@@ -102,12 +102,19 @@ public class EditRecipeActivity extends ViewRecipeActivity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Log.i(TAG, "onActivityResult");
 		if (resultCode == RESULT_OK) {
 			switch (requestCode) {
 			case RETURN_FROM_EDIT_INGREDIENTS:
-				//				handleSmallCameraPhoto(data);
-				updateRecipeView();
+				Log.i(TAG, "OK edit ingredients");
+				reloadAndRefreshRecipeDetails();
 				break;
+			case RETURN_FROM_EDIT_TAGS:
+				Log.i(TAG, "OK edit tags");
+				reloadAndRefreshRecipeDetails();
+				break;
+			default:
+				Log.i(TAG, "OK ???");
 			}
 		}
 	}

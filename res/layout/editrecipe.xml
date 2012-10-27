@@ -38,68 +38,81 @@
                 android:singleLine="true" />
 
             <RelativeLayout
-                android:id="@+id/ingredients_container"
+                android:id="@+id/ingredients_container2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/name_edit"
-                android:layout_toLeftOf="@+id/btn_edit_ingredients" >
+                android:layout_below="@id/name_edit" >
 
-                <TextView
-                    android:id="@+id/label_ingredients"
-                    style="@style/recipeViewLabel"
-                    android:text="@string/label_ingredients" />
-
-                <TextView
-                    android:id="@+id/ingredients"
-                    style="@style/recipeViewValue"
+                <RelativeLayout
+                    android:id="@+id/ingredients_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@id/label_ingredients" />
-            </RelativeLayout>
+                    android:layout_toLeftOf="@+id/btn_edit_ingredients" >
 
-            <Button
-                android:id="@id/btn_edit_ingredients"
-                style="@style/recipeViewButton"
-                android:layout_alignParentRight="true"
-                android:layout_below="@id/name_edit"
-                android:text="@string/btn_edit" />
+                    <TextView
+                        android:id="@+id/label_ingredients"
+                        style="@style/recipeViewLabel"
+                        android:text="@string/label_ingredients" />
+
+                    <TextView
+                        android:id="@+id/ingredients"
+                        style="@style/recipeViewValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/label_ingredients" />
+                </RelativeLayout>
+
+                <ImageButton
+                    android:id="@id/btn_edit_ingredients"
+                    style="@style/recipeViewButton"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/btn_edit"
+                    android:text="@string/btn_edit" />
+            </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/tags_container"
+                android:id="@+id/tags_container2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ingredients_container"
-                android:layout_toLeftOf="@+id/btn_edit_tags" >
+                android:layout_below="@id/ingredients_container2" >
 
-                <TextView
-                    android:id="@+id/label_tags"
-                    style="@style/recipeViewLabel"
-                    android:text="@string/label_tags" />
+                <RelativeLayout
+                    android:id="@+id/tags_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/btn_edit_tags" >
 
-                <TextView
-                    android:id="@+id/tags"
-                    style="@style/recipeViewValue"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@id/label_tags" />
+                    <TextView
+                        android:id="@+id/label_tags"
+                        style="@style/recipeViewLabel"
+                        android:text="@string/label_tags" />
+
+                    <TextView
+                        android:id="@+id/tags"
+                        style="@style/recipeViewValue"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/label_tags" />
+                </RelativeLayout>
+
+                <ImageButton
+                    android:id="@id/btn_edit_tags"
+                    style="@style/recipeViewButton"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/btn_edit"
+                    android:text="@string/btn_edit" />
             </RelativeLayout>
-
-            <Button
-                android:id="@id/btn_edit_tags"
-                style="@style/recipeViewButton"
-                android:layout_alignParentRight="true"
-                android:layout_below="@id/ingredients_container"
-                android:text="@string/btn_edit" />
 
             <Button
                 android:id="@+id/btn_add_photo"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tags_container"
+                android:layout_below="@id/tags_container2"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="10dp"
+                android:drawableRight="@drawable/btn_add_photo"
                 android:text="@string/btn_add_photo" />
 
             <LinearLayout

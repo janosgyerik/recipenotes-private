@@ -44,8 +44,9 @@ public class EditRecipeActivity extends ViewRecipeActivity {
 		}
 		
 		// for debugging:
-		// recipeId = "44"; // empty
-		// recipeId = "42"; // rich
+//		recipeId = "42"; // rich
+//		recipeId = "999"; // non-existent
+//		 recipeId = "44"; // lean
 		
 		if (recipeId == null) {
 			recipeId = helper.newRecipe();
@@ -55,7 +56,7 @@ public class EditRecipeActivity extends ViewRecipeActivity {
 
 		final Activity this_ = this;
 
-		Button editIngredientsButton = (Button) findViewById(R.id.btn_edit_ingredients);
+		View editIngredientsButton = (View) findViewById(R.id.btn_edit_ingredients);
 		editIngredientsButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -65,7 +66,7 @@ public class EditRecipeActivity extends ViewRecipeActivity {
 			}
 		});
 
-		Button editTagsButton = (Button) findViewById(R.id.btn_edit_tags);
+		View editTagsButton = (View) findViewById(R.id.btn_edit_tags);
 		editTagsButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -75,7 +76,7 @@ public class EditRecipeActivity extends ViewRecipeActivity {
 			}
 		});
 
-		Button addPhotoButton = (Button) findViewById(R.id.btn_add_photo);
+		View addPhotoButton = (View) findViewById(R.id.btn_add_photo);
 		addPhotoButton.setOnClickListener(new AddPhotoOnClickListener());
 
 		Button save = (Button) findViewById(R.id.btn_save);

@@ -85,8 +85,6 @@ public class ViewRecipeActivity extends Activity {
 	protected void reloadAndRefreshRecipeDetails(boolean editable) {
 		if (recipeId != null) {
 			Cursor recipeCursor = helper.getRecipeDetailsCursor(recipeId);
-			startManagingCursor(recipeCursor);
-
 			if (recipeCursor.moveToNext()) {
 				TextView nameView = (TextView) findViewById(R.id.name);
 				EditText nameEditView = (EditText) findViewById(R.id.name_edit);
@@ -102,13 +100,14 @@ public class ViewRecipeActivity extends Activity {
 				}
 
 				Cursor ingredientsCursor = helper.getRecipeIngredientsCursor(recipeId);
-				startManagingCursor(ingredientsCursor);
 				StringBuffer ingredientsBuffer = new StringBuffer();
 				while (ingredientsCursor.moveToNext()) {
 					String ingredient = ingredientsCursor.getString(0);
 					ingredientsBuffer.append(ingredient);
 					ingredientsBuffer.append(", ");
 				}
+				ingredientsCursor.close();
+				
 				TextView ingredientsView = (TextView) findViewById(R.id.ingredients);
 				if (ingredientsBuffer.length() > 2) {
 					ingredientsView.setText(ingredientsBuffer.substring(0, ingredientsBuffer.length() - 2));
@@ -118,13 +117,14 @@ public class ViewRecipeActivity extends Activity {
 				}
 
 				Cursor tagsCursor = helper.getRecipeTagsCursor(recipeId);
-				startManagingCursor(tagsCursor);
 				StringBuffer tagsBuffer = new StringBuffer();
 				while (tagsCursor.moveToNext()) {
 					String tag = tagsCursor.getString(0);
 					tagsBuffer.append(tag);
 					tagsBuffer.append(", ");
 				}
+				tagsCursor.close();
+				
 				TextView tagsView = (TextView) findViewById(R.id.tags);
 				if (tagsBuffer.length() > 2) {
 					tagsView.setText(tagsBuffer.substring(0, tagsBuffer.length() - 2));
@@ -134,16 +134,17 @@ public class ViewRecipeActivity extends Activity {
 				}
 
 				Cursor photosCursor = helper.getRecipePhotosCursor(recipeId);
-				startManagingCursor(photosCursor);
 				clearPhotosFromLayout();
 				while (photosCursor.moveToNext()) {
 					String filename = photosCursor.getString(0);
 					addPhotoToLayout(RecipeFileManager.getPhotoFile(filename), editable);
 				}
+				photosCursor.close();
 			}
 			else {
 				// TODO
 			}
+			recipeCursor.close();
 		}
 	}
 

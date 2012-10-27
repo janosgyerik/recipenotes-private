@@ -58,12 +58,11 @@ public class EditTagsActivity extends ListActivity {
 		ArrayList<String> tagsAutoCompleteList = new ArrayList<String>();
 		{
 			Cursor tagsCursor = helper.getTagsListCursor();
-			startManagingCursor(tagsCursor);
-
 			int i = tagsCursor.getColumnIndex("name");
 			while (tagsCursor.moveToNext()) {
 				tagsAutoCompleteList.add(tagsCursor.getString(i));
 			}
+			tagsCursor.close();
 		}
 
 		ArrayAdapter<String> tagsAutoCompleteAdapter = new ArrayAdapter<String>(this,
@@ -82,11 +81,11 @@ public class EditTagsActivity extends ListActivity {
 		addTagButton.setOnClickListener(new AddTagOnClickListener());
 
 		Cursor tagsCursor = helper.getRecipeTagsCursor(recipeId);
-		startManagingCursor(tagsCursor);
 		while (tagsCursor.moveToNext()) {
 			String tag = tagsCursor.getString(0);
 			tagsListAdapter.add(tag);
 		}
+		tagsCursor.close();
 
 		setListAdapter(tagsListAdapter);
 	}

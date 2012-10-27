@@ -58,12 +58,11 @@ public class EditIngredientsActivity extends ListActivity {
 		ArrayList<String> ingredientsAutoCompleteList = new ArrayList<String>();
 		{
 			Cursor ingredientsCursor = helper.getIngredientsListCursor();
-			startManagingCursor(ingredientsCursor);
-
 			int i = ingredientsCursor.getColumnIndex("name");
 			while (ingredientsCursor.moveToNext()) {
 				ingredientsAutoCompleteList.add(ingredientsCursor.getString(i));
 			}
+			ingredientsCursor.close();
 		}
 
 		ArrayAdapter<String> ingredientsAutoCompleteAdapter = new ArrayAdapter<String>(this,
@@ -82,11 +81,11 @@ public class EditIngredientsActivity extends ListActivity {
 		addIngredientButton.setOnClickListener(new AddIngredientOnClickListener());
 
 		Cursor ingredientsCursor = helper.getRecipeIngredientsCursor(recipeId);
-		startManagingCursor(ingredientsCursor);
 		while (ingredientsCursor.moveToNext()) {
 			String ingredient = ingredientsCursor.getString(0);
 			ingredientsListAdapter.add(ingredient);
 		}
+		ingredientsCursor.close();
 
 		setListAdapter(ingredientsListAdapter);
 	}

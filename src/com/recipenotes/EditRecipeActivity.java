@@ -116,7 +116,7 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 	private void handleReturnFromEditIngredients(Intent data) {
 		Bundle extras = data.getExtras();
 		if (extras != null) {
-			boolean isChanged = extras.getBoolean(EditIngredientsActivity.OUT_CHANGED);
+			boolean isChanged = extras.getBoolean(AbstractEditRecipeItemsActivity.OUT_CHANGED);
 			if (isChanged) {
 				Log.i(TAG, "ingredients have changed -> reloading details");
 				reloadAndRefreshRecipeDetails(true);
@@ -129,7 +129,7 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 	private void handleReturnFromEditTags(Intent data) {
 		Bundle extras = data.getExtras();
 		if (extras != null) {
-			boolean isChanged = extras.getBoolean(EditTagsActivity.OUT_CHANGED);
+			boolean isChanged = extras.getBoolean(AbstractEditRecipeItemsActivity.OUT_CHANGED);
 			if (isChanged) {
 				Log.i(TAG, "tags have changed -> reloading details");
 				reloadAndRefreshRecipeDetails(true);

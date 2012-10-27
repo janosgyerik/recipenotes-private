@@ -44,6 +44,7 @@
     <string name="btn_cancel">Cancel</string>
     <string name="btn_add">Add</string>
     <string name="btn_ok">OK</string>
+    <string name="btn_done">Done</string>
     <string name="label_ingredients">Ingredients: </string>
     <string name="label_tags">Tags: </string>
     <string name="label_none">(none)</string>

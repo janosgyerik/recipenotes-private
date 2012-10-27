@@ -14,16 +14,16 @@
         android:paddingTop="0dp" >
 
         <Button
-            android:id="@+id/btn_add_ingredient"
+            android:id="@+id/btn_add"
             style="@style/customButton"
             android:layout_alignParentRight="true"
             android:text="@string/btn_add" />
 
         <MultiAutoCompleteTextView
-            android:id="@+id/ingredient"
+            android:id="@+id/input"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/btn_add_ingredient"
+            android:layout_toLeftOf="@id/btn_add"
             android:hint="@string/hint_ingredient"
             android:singleLine="true" />
     </RelativeLayout>

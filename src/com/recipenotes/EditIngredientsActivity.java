@@ -50,7 +50,7 @@ public class EditIngredientsActivity extends ListActivity {
 			recipeId = extras.getString(BaseColumns._ID);
 		}
 		else {
-//			recipeId = "44";
+			//			recipeId = "44";
 		}
 
 		// add ingredient
@@ -93,8 +93,7 @@ public class EditIngredientsActivity extends ListActivity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		if (D) Log.d(TAG, "onKeyDown");
-		if (Integer.parseInt(android.os.Build.VERSION.SDK) < 5
-				&& keyCode == KeyEvent.KEYCODE_BACK
+		if (keyCode == KeyEvent.KEYCODE_BACK
 				&& event.getRepeatCount() == 0) {
 			returnResult();
 		}

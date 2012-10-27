@@ -21,7 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class EditRecipeActivity extends ViewRecipeActivity {
+public class EditRecipeActivity extends AbstractRecipeActivity {
 
 	private static final String TAG = "EditRecipeActivity";
 
@@ -36,13 +36,6 @@ public class EditRecipeActivity extends ViewRecipeActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.editrecipe);
 
-		helper = new RecipeNotesSQLiteOpenHelper(this);
-
-		Bundle extras = getIntent().getExtras();
-		if (extras != null) {
-			recipeId = extras.getString(BaseColumns._ID);
-		}
-		
 		// for debugging:
 //		recipeId = "42"; // rich
 //		recipeId = "999"; // non-existent
@@ -224,12 +217,5 @@ public class EditRecipeActivity extends ViewRecipeActivity {
 			addPhotoToRecipe(photoFile);
 			addPhotoToLayout(photoFile, true);
 		}
-	}
-
-	@Override  
-	protected void onDestroy() {
-		Log.d(TAG, "++onDestroy");
-		super.onDestroy();
-		helper.close();
 	}
 }

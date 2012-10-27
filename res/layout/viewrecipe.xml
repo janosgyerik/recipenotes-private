@@ -5,10 +5,24 @@
     android:orientation="vertical"
     android:scrollbars="none" >
 
-    <TextView
-        android:id="@+id/name"
-        style="@style/mainHeader"
-        android:text="@string/title_recipe" />
+    <RelativeLayout
+        style="@style/mainHeaderWrapper"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/name"
+            style="@style/mainHeader"
+            android:layout_toLeftOf="@+id/btn_edit"
+            android:text="@string/title_recipe" />
+
+        <ImageButton
+            android:id="@id/btn_edit"
+            style="@style/customButton"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/btn_edit" />
+    </RelativeLayout>
 
     <ScrollView style="@style/mainContent" >
 
@@ -45,10 +59,5 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:id="@+id/btn_edit"
-        style="@style/wideButton"
-        android:text="@string/btn_edit_recipe" />
 
 </LinearLayout>

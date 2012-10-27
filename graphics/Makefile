@@ -55,15 +55,15 @@ $(mdpi_dir)/menu_%.png: $(src_dir)/menu_%.png
 	identify $@
 
 $(hdpi_dir)/btn_%.png: $(src_dir)/btn_%.png
-	convert -geometry 64x $< $@
+	convert -geometry 48x $< $@
 	identify $@
 
 $(ldpi_dir)/btn_%.png: $(src_dir)/btn_%.png
-	convert -geometry 32x $< $@
+	convert -geometry 24x $< $@
 	identify $@
 
 $(mdpi_dir)/btn_%.png: $(src_dir)/btn_%.png
-	convert -geometry 42x $< $@
+	convert -geometry 36x $< $@
 	identify $@
 
 $(hdpi_dir)/launcher_%.png: $(src_dir)/launcher_%.png

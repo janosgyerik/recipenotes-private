@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -42,7 +41,7 @@ public class ViewRecipeActivity extends Activity {
 			recipeId = extras.getString(BaseColumns._ID);
 		}
 
-		Button editButton = (Button) findViewById(R.id.btn_edit);
+		View editButton = (View) findViewById(R.id.btn_edit);
 		editButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

@@ -11,17 +11,13 @@
 
         <TextView
             style="@style/mainHeader"
-            android:drawableRight="@drawable/btn_plus"
             android:text="@string/title_recipelist" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btn_add_recipe"
-            style="@style/mainHeader"
-            android:layout_width="wrap_content"
+            style="@style/customButton"
             android:layout_alignParentRight="true"
-            android:background="#07000000"
-            android:textColor="#07000000"
-            android:text="[add]" />
+            android:src="@drawable/btn_plus" />
     </RelativeLayout>
 
     <ListView

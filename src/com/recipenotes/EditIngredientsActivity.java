@@ -158,4 +158,10 @@ public class EditIngredientsActivity extends ListActivity {
 		}
 	}
 
+	@Override  
+	protected void onDestroy() {
+		Log.d(TAG, "++onDestroy");
+		super.onDestroy();
+		helper.close();
+	}
 }

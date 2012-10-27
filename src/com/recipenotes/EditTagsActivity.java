@@ -158,4 +158,10 @@ public class EditTagsActivity extends ListActivity {
 		}
 	}
 
+	@Override  
+	protected void onDestroy() {
+		Log.d(TAG, "++onDestroy");
+		super.onDestroy();
+		helper.close();
+	}
 }

@@ -15,9 +15,7 @@
 
     <Button
         android:id="@+id/btn_add_recipe"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        style="@style/wideButton"
         android:text="@string/btn_add_recipe" />
 
 </LinearLayout>

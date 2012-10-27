@@ -107,8 +107,7 @@
 
             <Button
                 android:id="@+id/btn_add_photo"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                style="@style/wideButton"
                 android:layout_below="@id/tags_container2"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="10dp"
@@ -127,9 +126,7 @@
 
     <Button
         android:id="@+id/btn_save"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        style="@style/wideButton"
         android:text="@string/btn_save_recipe" />
 
 </LinearLayout>

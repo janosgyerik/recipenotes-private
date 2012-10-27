@@ -38,7 +38,7 @@
     <string name="btn_edit_tags">Edit tags</string>
     <string name="btn_add_photos">Add photos</string>
     <string name="btn_edit_photos">Edit photos</string>
-    <string name="btn_save_recipe">Save</string>
+    <string name="btn_save_recipe">Done</string>
     <string name="btn_add_photo">Take a photo</string>
     <string name="btn_yes">Yes</string>
     <string name="btn_cancel">Cancel</string>

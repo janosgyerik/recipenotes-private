@@ -116,7 +116,7 @@ public class EditTagsActivity extends ListActivity {
 		if (tags.length() > 0) {
 			StringBuffer tagsListMsgBuffer = new StringBuffer();
 			for (String tag : tags.split(",")) {
-				tag = ClutteredEditRecipeActivity.capitalize(tag);
+				tag = EditRecipeActivity.capitalize(tag);
 				tagsListMsgBuffer.append(tag);
 				tagsListMsgBuffer.append(", ");
 				String tagId = helper.getOrCreateTag(tag);

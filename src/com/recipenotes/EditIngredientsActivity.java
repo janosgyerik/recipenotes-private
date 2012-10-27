@@ -116,7 +116,7 @@ public class EditIngredientsActivity extends ListActivity {
 		if (ingredients.length() > 0) {
 			StringBuffer ingredientsListMsgBuffer = new StringBuffer();
 			for (String ingredient : ingredients.split(",")) {
-				ingredient = ClutteredEditRecipeActivity.capitalize(ingredient);
+				ingredient = EditRecipeActivity.capitalize(ingredient);
 				ingredientsListMsgBuffer.append(ingredient);
 				ingredientsListMsgBuffer.append(", ");
 				String ingredientId = helper.getOrCreateIngredient(ingredient);

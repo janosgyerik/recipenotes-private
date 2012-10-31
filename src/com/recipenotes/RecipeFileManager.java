@@ -17,9 +17,12 @@ public class RecipeFileManager {
 	private static final String TAG = "RecipeFileManager";
 
 	public static final String BACKUPS_DIRPARAM = "RecipeNotes/backups";
-	public static final File BACKUPS_DIR = new File(Environment.getExternalStorageDirectory(), BACKUPS_DIRPARAM);
+	public static final File BACKUPS_DIR =
+			new File(Environment.getExternalStorageDirectory(), BACKUPS_DIRPARAM);
+
 	public static final String PHOTOS_DIRPARAM = "RecipeNotes/photos";
-	public static final File PHOTOS_DIR = new File(Environment.getExternalStorageDirectory(), PHOTOS_DIRPARAM);
+	public static final File PHOTOS_DIR =
+			new File(Environment.getExternalStorageDirectory(), PHOTOS_DIRPARAM);
 
 	public static final String BACKUPFILE_FORMAT = "";
 	public static final String BACKUPFILES_PATTERN = "^sqlite3-.*\\.db$";
@@ -29,7 +32,7 @@ public class RecipeFileManager {
 	public static final String RECIPE_PHOTOFILES_PATTERN = "^recipe_%s_.*";
 
 	public static boolean deleteRecipe(String recipeId) {
-		File storageDir = new File(Environment.getExternalStorageDirectory(), PHOTOS_DIRPARAM);
+		File storageDir = PHOTOS_DIR;
 		if (storageDir.isDirectory()) {
 			String pattern = String.format(RECIPE_PHOTOFILES_PATTERN, recipeId);
 			FileFilter fileFilter = new PatternFileFilter(pattern);
@@ -57,11 +60,10 @@ public class RecipeFileManager {
 	}
 
 	private static boolean backupDatabaseFile(String filename) throws IOException {
-		File sd = Environment.getExternalStorageDirectory();
 		File data = Environment.getDataDirectory();
 
-		if (sd.canWrite()) {
-			File backupDir = new File(sd, BACKUPS_DIRPARAM);
+		if (BACKUPS_DIR.canWrite()) {
+			File backupDir = BACKUPS_DIR;
 			if (! backupDir.isDirectory()) {
 				backupDir.mkdirs();
 			}
@@ -79,11 +81,10 @@ public class RecipeFileManager {
 	}
 
 	public static boolean restoreDatabaseFile(String filename) throws IOException {
-		File sd = Environment.getExternalStorageDirectory();
-		File data = Environment.getDataDirectory();
+		File dataDir = Environment.getDataDirectory();
 
-		if (sd.canWrite()) {
-			File currentFile = new File(data, getDatabasePath());
+		if (dataDir.canWrite()) {
+			File currentFile = new File(dataDir, getDatabasePath());
 			File backupFile = new File(BACKUPS_DIR, filename);
 
 			FileChannel src = new FileInputStream(backupFile).getChannel();
@@ -101,6 +102,10 @@ public class RecipeFileManager {
 	}
 
 	public static File newPhotoFile(String recipeId) throws IOException {
+		File photosDir = PHOTOS_DIR;
+		if (! photosDir.isDirectory()) {
+			photosDir.mkdirs();
+		}
 		return File.createTempFile(String.format("recipe_%s_", recipeId),
 				".jpg", PHOTOS_DIR);
 	}

@@ -13,6 +13,12 @@
     <string name="title_recipe">Recipe</string>
     <string name="title_noname_recipe">Recipe</string>
     <string name="title_recipe_details">Recipe</string>
+    <string name="title_unexpected_error">Unexpected Error</string>
+    <string name="error_allocating_photo_file">There was an error
+        when trying to allocate a file to store the photo.
+        We don\'t know how this is possible.
+        Unfortunately you cannot take photos :(
+        </string>
     <string name="hint_name">Name (optional)</string>
     <string name="hint_ingredient">Ingredients&#8230;</string>
     <string name="note_entering_ingredients">Hint: you can add many at once, separated by comma.

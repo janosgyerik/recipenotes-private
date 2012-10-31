@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -37,10 +39,10 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 		setContentView(R.layout.editrecipe);
 
 		// for debugging:
-//		recipeId = "42"; // rich
-//		recipeId = "999"; // non-existent
-//		 recipeId = "44"; // lean
-		
+		//		recipeId = "42"; // rich
+		//		recipeId = "999"; // non-existent
+		//		 recipeId = "44"; // lean
+
 		if (recipeId == null) {
 			recipeId = helper.newRecipe();
 		}
@@ -195,9 +197,23 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 			e.printStackTrace();
 			photoFile = null;
 		}
-		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
-		startActivityForResult(takePictureIntent, RETURN_FROM_ADD_PHOTO);
+		if (photoFile != null) {
+			Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+			takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+			startActivityForResult(takePictureIntent, RETURN_FROM_ADD_PHOTO);
+		}
+		else {
+			new AlertDialog.Builder(this)
+			.setTitle(R.string.title_unexpected_error)
+			.setMessage(R.string.error_allocating_photo_file)
+			.setCancelable(true)
+			.setPositiveButton(R.string.btn_ok, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					dialog.cancel();
+				}
+			})
+			.show();
+		}
 	}
 
 	public static boolean isIntentAvailable(Context context, String action) {

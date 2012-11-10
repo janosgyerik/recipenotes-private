@@ -240,7 +240,6 @@ public class RecipeListActivity extends ListActivity {
 		@Override
 		public void onClick(View v) {
 			Intent intent = new Intent(RecipeListActivity.this, PhotoListActivity.class);
-			intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 			startActivity(intent);
 		}
 	}

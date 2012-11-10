@@ -19,7 +19,8 @@
         android:theme="@style/Theme.Light.NoTitleBar" >
         <activity
             android:name=".RecipeListActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,7 +29,8 @@
         </activity>
         <activity
             android:name=".PhotoListActivity"
-            android:label="Recipes" >
+            android:label="Recipes"
+            android:noHistory="true" >
         </activity>
         <activity
             android:name=".EditRecipeActivity"

@@ -61,7 +61,6 @@ public class PhotoListActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			Intent intent = new Intent(PhotoListActivity.this, RecipeListActivity.class);
-			intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 			startActivity(intent);
 		}
 	}

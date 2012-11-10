@@ -1,7 +1,13 @@
 package com.recipenotes;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.List;
 
 import android.app.Activity;
@@ -31,6 +37,8 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 	private static final int RETURN_FROM_EDIT_TAGS = 2;
 	private static final int RETURN_FROM_ADD_PHOTO = 3;
 
+	private static final String PHOTO_INFO_FILE = "photoInfo.bin";
+
 	private EditText nameView;
 
 	@Override
@@ -43,6 +51,14 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 		//		recipeId = "9999"; // non-existent
 		//		 recipeId = "44"; // lean
 
+		if (recipeId == null) {
+			PhotoInfo info = loadPhotoInfo();
+			if (info != null) {
+				recipeId = info.recipeId;
+				photoFile = info.photoFile;
+			}
+		}
+		
 		if (recipeId == null) {
 			recipeId = helper.newRecipe();
 		}
@@ -199,6 +215,7 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 			photoFile = null;
 		}
 		if (photoFile != null) {
+			savePhotoInfo();
 			Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 			takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
 			startActivityForResult(takePictureIntent, RETURN_FROM_ADD_PHOTO);
@@ -231,6 +248,7 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 
 	private void handleSmallCameraPhoto() {
 		if (photoFile != null && photoFile.isFile()) {
+			deletePhotoInfo();
 			Log.d(TAG, "adding photo: " + photoFile);
 			addPhotoToRecipe(photoFile);
 			addPhotoToLayout(photoFile, true);
@@ -238,5 +256,47 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 		else {
 			Log.e(TAG, "something's wrong with the photo file: " + photoFile);
 		}
+	}
+
+	private void savePhotoInfo() {
+		try {
+			FileOutputStream fos = openFileOutput(PHOTO_INFO_FILE, Context.MODE_PRIVATE);
+			PhotoInfo info = new PhotoInfo();
+			info.recipeId = recipeId;
+			info.photoFile = photoFile;
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ObjectOutputStream oos = new ObjectOutputStream(baos);
+			oos.writeObject(info);
+			fos.write(baos.toByteArray());
+			fos.close();
+		}
+		catch (Exception e) {
+			Log.e(TAG, "Could not create photo info file!");
+			e.printStackTrace();
+		}
+	}
+
+	private void deletePhotoInfo() {
+		deleteFile(PHOTO_INFO_FILE);
+	}
+
+	private PhotoInfo loadPhotoInfo() {
+		try {
+			FileInputStream fis = openFileInput(PHOTO_INFO_FILE);
+			Log.w(TAG, "Loading photo info file, the app must have crashed earlier...");
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			PhotoInfo info = (PhotoInfo)ois.readObject();
+			Log.i(TAG, "read recipeId = " + info.recipeId);
+			Log.i(TAG, "read photoFile = " + info.photoFile);
+			return info;
+		}
+		catch (FileNotFoundException e) {
+			// this is normal, normally there should be no photo info file
+		}
+		catch (Exception e) {
+			Log.e(TAG, "Could not read photo file!");
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

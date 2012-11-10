@@ -1,6 +1,11 @@
+release notes 1.3
+-----------------
+- photo list
+- workaround for crash when taking photo: save/load photo info using openFileOutput
+
+
 version 1.3
 -----------
-- photo taking bugfix: photo info using openFileOutput
 - optimize photo list
     - loading animation while opening it
     - use thumbnails
@@ -14,9 +19,6 @@ version 1.3
 
 version 2
 ---------
-- improved recipe list
-    - do not show title if does not exist
-    - use first photo
 - help pages
     - how to delete recipe
     - how to delete ingredient

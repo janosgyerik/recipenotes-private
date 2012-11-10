@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Recipe Notes</string>
+    <string name="app_name">Recipes</string>
     <string name="fatal_sdcard_required">Oh snap. SD card is not available
         or not writable, and this app cannot work properly like that.
         This may be improved in an upcoming version.</string>

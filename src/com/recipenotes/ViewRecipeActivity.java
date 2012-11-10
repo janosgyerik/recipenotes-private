@@ -17,7 +17,7 @@ public class ViewRecipeActivity extends AbstractRecipeActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.viewrecipe);
 
-		View editButton = (View) findViewById(R.id.btn_edit);
+		View editButton = findViewById(R.id.btn_edit);
 		editButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

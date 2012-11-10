@@ -58,9 +58,9 @@ public class RecipeListActivity extends ListActivity {
 		getListView().setOnItemClickListener(new RecipeListOnItemClickListener());
 		getListView().setOnItemLongClickListener(new RecipeListOnItemLongClickListener());
 
-		((View)findViewById(R.id.btn_add_recipe)).setOnClickListener(new AddRecipeOnClickListener());
+		findViewById(R.id.btn_add_recipe).setOnClickListener(new AddRecipeOnClickListener());
 
-		((View)findViewById(R.id.btn_photolist)).setOnClickListener(new PhotoListOnClickListener());
+		findViewById(R.id.btn_photolist).setOnClickListener(new PhotoListOnClickListener());
 		
 		RecipeFileManager.updateDailyBackup();
 	}

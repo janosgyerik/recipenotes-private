@@ -38,9 +38,9 @@ public class PhotoListActivity extends Activity {
 	        }
 	    });		
 
-		((View)findViewById(R.id.btn_add_recipe)).setOnClickListener(new AddRecipeOnClickListener());
+		findViewById(R.id.btn_add_recipe).setOnClickListener(new AddRecipeOnClickListener());
 		
-		((View)findViewById(R.id.btn_recipelist)).setOnClickListener(new RecipeListOnClickListener());
+		findViewById(R.id.btn_recipelist).setOnClickListener(new RecipeListOnClickListener());
 	}
 	
 	@Override

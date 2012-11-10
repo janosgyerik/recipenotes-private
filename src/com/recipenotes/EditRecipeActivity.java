@@ -75,7 +75,7 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 
 		final Activity this_ = this;
 
-		View editIngredientsButton = (View) findViewById(R.id.btn_edit_ingredients);
+		View editIngredientsButton = findViewById(R.id.btn_edit_ingredients);
 		editIngredientsButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -85,7 +85,7 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 			}
 		});
 
-		View editTagsButton = (View) findViewById(R.id.btn_edit_tags);
+		View editTagsButton = findViewById(R.id.btn_edit_tags);
 		editTagsButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -95,7 +95,7 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 			}
 		});
 
-		View addPhotoButton = (View) findViewById(R.id.btn_add_photo);
+		View addPhotoButton = findViewById(R.id.btn_add_photo);
 		addPhotoButton.setOnClickListener(new AddPhotoOnClickListener());
 
 		Button save = (Button) findViewById(R.id.btn_save);

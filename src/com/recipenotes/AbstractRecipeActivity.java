@@ -88,7 +88,7 @@ public abstract class AbstractRecipeActivity extends Activity {
 				String memo = recipeCursor.getString(1);
 				TextView memoView = (TextView) findViewById(R.id.memo);
 				memoView.setText(memo);
-				View memoLabel = (View) findViewById(R.id.memo_label);
+				View memoLabel = findViewById(R.id.memo_label);
 				if (memo != null && memo.length() > 0) {
 					emptyRecipe = false;
 					memoLabel.setVisibility(View.VISIBLE);

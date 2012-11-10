@@ -110,18 +110,15 @@ public class RecipeFileManager {
 	public static boolean restoreDatabaseFile(String filename) throws IOException {
 		File dataDir = Environment.getDataDirectory();
 
-		if (dataDir.canWrite()) {
-			File currentFile = new File(dataDir, getDatabasePath());
-			File backupFile = new File(BACKUPS_DIR, filename);
+		File currentFile = new File(dataDir, getDatabasePath());
+		File backupFile = new File(BACKUPS_DIR, filename);
 
-			FileChannel src = new FileInputStream(backupFile).getChannel();
-			FileChannel dst = new FileOutputStream(currentFile).getChannel();
-			dst.transferFrom(src, 0, src.size());
-			src.close();
-			dst.close();
-			return true;
-		}
-		return false;
+		FileChannel src = new FileInputStream(backupFile).getChannel();
+		FileChannel dst = new FileOutputStream(currentFile).getChannel();
+		dst.transferFrom(src, 0, src.size());
+		src.close();
+		dst.close();
+		return true;
 	}
 
 	public static File getPhotoFile(String filename) {

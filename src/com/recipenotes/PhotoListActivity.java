@@ -60,8 +60,7 @@ public class PhotoListActivity extends Activity {
 	class RecipeListOnClickListener implements OnClickListener {
 		@Override
 		public void onClick(View v) {
-			Intent intent = new Intent(PhotoListActivity.this, RecipeListActivity.class);
-			startActivity(intent);
+			PhotoListActivity.this.finish();
 		}
 	}
 }

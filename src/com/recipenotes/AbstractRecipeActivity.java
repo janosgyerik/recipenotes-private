@@ -81,10 +81,14 @@ public abstract class AbstractRecipeActivity extends Activity {
 				}
 				
 				String memo = recipeCursor.getString(1);
-				View memoLabel = (View) findViewById(R.id.memo_label);
 				TextView memoView = (TextView) findViewById(R.id.memo);
 				memoView.setText(memo);
-				if (memo != null && memo.length() > 0 || editable) {
+				View memoLabel = (View) findViewById(R.id.memo_label);
+				if (memo != null && memo.length() > 0) {
+					memoLabel.setVisibility(View.VISIBLE);
+					memoView.setVisibility(View.VISIBLE);
+				}
+				else if (editable) {
 					memoLabel.setVisibility(View.VISIBLE);
 					memoView.setVisibility(View.VISIBLE);
 				}
@@ -92,7 +96,7 @@ public abstract class AbstractRecipeActivity extends Activity {
 					memoLabel.setVisibility(View.GONE);
 					memoView.setVisibility(View.GONE);
 				}
-
+				
 				Cursor ingredientsCursor = helper.getRecipeIngredientsCursor(recipeId);
 				StringBuffer ingredientsBuffer = new StringBuffer();
 				while (ingredientsCursor.moveToNext()) {
@@ -102,12 +106,21 @@ public abstract class AbstractRecipeActivity extends Activity {
 				}
 				ingredientsCursor.close();
 
+				View ingredientsLabel = findViewById(R.id.ingredients_label);
 				TextView ingredientsView = (TextView) findViewById(R.id.ingredients);
 				if (ingredientsBuffer.length() > 2) {
 					ingredientsView.setText(ingredientsBuffer.substring(0, ingredientsBuffer.length() - 2));
+					ingredientsView.setVisibility(View.VISIBLE);
+					ingredientsLabel.setVisibility(View.VISIBLE);
+				}
+				else if (editable) {
+					ingredientsView.setText(R.string.label_none);
+					ingredientsView.setVisibility(View.VISIBLE);
+					ingredientsLabel.setVisibility(View.VISIBLE);
 				}
 				else {
-					ingredientsView.setText(R.string.label_none);
+					ingredientsView.setVisibility(View.GONE);
+					ingredientsLabel.setVisibility(View.GONE);
 				}
 
 				Cursor tagsCursor = helper.getRecipeTagsCursor(recipeId);
@@ -119,12 +132,21 @@ public abstract class AbstractRecipeActivity extends Activity {
 				}
 				tagsCursor.close();
 
+				View tagsLabel = findViewById(R.id.tags_label);
 				TextView tagsView = (TextView) findViewById(R.id.tags);
 				if (tagsBuffer.length() > 2) {
 					tagsView.setText(tagsBuffer.substring(0, tagsBuffer.length() - 2));
+					tagsView.setVisibility(View.VISIBLE);
+					tagsLabel.setVisibility(View.VISIBLE);
+				}
+				else if (editable) {
+					tagsView.setText(R.string.label_none);
+					tagsView.setVisibility(View.VISIBLE);
+					tagsLabel.setVisibility(View.VISIBLE);
 				}
 				else {
-					tagsView.setText(R.string.label_none);
+					tagsView.setVisibility(View.GONE);
+					tagsLabel.setVisibility(View.GONE);
 				}
 
 				Cursor photosCursor = helper.getRecipePhotosCursor(recipeId);

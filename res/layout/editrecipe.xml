@@ -50,7 +50,7 @@
                     android:layout_toLeftOf="@+id/btn_edit_ingredients" >
 
                     <TextView
-                        android:id="@+id/label_ingredients"
+                        android:id="@+id/ingredients_label"
                         style="@style/recipeViewLabel"
                         android:text="@string/label_ingredients" />
 
@@ -60,7 +60,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:layout_below="@id/label_ingredients" />
+                        android:layout_below="@id/ingredients_label" />
                 </RelativeLayout>
 
                 <ImageButton
@@ -85,7 +85,7 @@
                     android:layout_toLeftOf="@+id/btn_edit_tags" >
 
                     <TextView
-                        android:id="@+id/label_tags"
+                        android:id="@+id/tags_label"
                         style="@style/recipeViewLabel"
                         android:text="@string/label_tags" />
 
@@ -95,7 +95,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_alignParentLeft="true"
-                        android:layout_below="@id/label_tags" />
+                        android:layout_below="@id/tags_label" />
                 </RelativeLayout>
 
                 <ImageButton

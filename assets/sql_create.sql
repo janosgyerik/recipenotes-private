@@ -5,6 +5,7 @@ CREATE TABLE "main_recipe" (
     "display_name" text NULL,
     "display_image" varchar(80) NULL,
     "display_order" integer NULL,
+    "memo" text NULL,
     "created_dt" datetime NULL,
     "updated_dt" datetime NULL
 )

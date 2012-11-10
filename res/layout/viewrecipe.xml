@@ -52,6 +52,19 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent" />
 
+            <TextView
+                android:id="@+id/memo_label"
+                style="@style/recipeViewLabel"
+                android:text="@string/label_memo"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/memo"
+                style="@style/recipeViewValue"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:visibility="gone" />
+
             <LinearLayout
                 android:id="@+id/photos"
                 android:layout_width="fill_parent"

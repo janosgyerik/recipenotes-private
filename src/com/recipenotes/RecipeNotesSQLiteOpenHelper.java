@@ -24,7 +24,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 	private static final String TAG = "RecipeNotesSQLiteOpenHelper";
 
 	private static final String DATABASE_NAME = "sqlite3.db";
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 3;
 
 	private static final String RECIPES_TABLE_NAME = "main_recipe";
 	private static final String INGREDIENTS_TABLE_NAME = "main_ingredient";
@@ -44,6 +44,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 		sqlCreateStatements = getSqlStatements(context, "sql_create.sql");
 		sqlUpgradeStatements = new SparseArray<List<String>>();
 		sqlUpgradeStatements.put(2, getSqlStatements(context, "sql_upgrade2.sql"));
+		sqlUpgradeStatements.put(3, getSqlStatements(context, "sql_upgrade3.sql"));
 	}
 	
 	private List<String> getSqlStatements(Context context, String assetName) {
@@ -180,7 +181,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 	}
 	
 	private void upgradeToVersion(SQLiteDatabase db, int version) {
-		Log.d(TAG, "upgrade to version " + version);
+		Log.d(TAG, "sql upgrade to version " + version);
 		for (String sql : sqlUpgradeStatements.get(version)) {
 			db.execSQL(sql);
 		}
@@ -206,9 +207,10 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 		}
 	}
 
-	public boolean saveRecipe(String recipeId, String name, String displayName) {
+	public boolean saveRecipe(String recipeId, String name, String displayName, String memo) {
 		ContentValues values = new ContentValues();
 		values.put("name", name);
+		values.put("memo", memo);
 		long updatedDt = new Date().getTime();
 		values.put("updated_dt", updatedDt);
 
@@ -441,7 +443,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 	public Cursor getRecipeDetailsCursor(String recipeId) {
 		Log.d(TAG, "get recipe " + recipeId);
 		Cursor cursor = getReadableDatabase().query(
-				RECIPES_TABLE_NAME, new String[]{ "name", }, 
+				RECIPES_TABLE_NAME, new String[]{ "name", "memo", }, 
 				BaseColumns._ID + " = ?", new String[]{ recipeId },
 				null, null, null);
 		return cursor;

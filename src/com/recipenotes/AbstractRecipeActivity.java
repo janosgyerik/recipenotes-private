@@ -68,16 +68,29 @@ public abstract class AbstractRecipeActivity extends Activity {
 			Cursor recipeCursor = helper.getRecipeDetailsCursor(recipeId);
 			if (recipeCursor.moveToNext()) {
 				TextView nameView = (TextView) findViewById(R.id.name);
-				EditText nameEditView = (EditText) findViewById(R.id.name_edit);
 				String name = recipeCursor.getString(0);
 				if (name != null && name.length() > 0) {
 					nameView.setText(name);
+					EditText nameEditView = (EditText) findViewById(R.id.name_edit);
 					if (nameEditView != null) {
 						nameEditView.setText(name);
 					}
 				}
 				else {
 					nameView.setText(R.string.title_noname_recipe);
+				}
+				
+				String memo = recipeCursor.getString(1);
+				View memoLabel = (View) findViewById(R.id.memo_label);
+				TextView memoView = (TextView) findViewById(R.id.memo);
+				memoView.setText(memo);
+				if (memo != null && memo.length() > 0 || editable) {
+					memoLabel.setVisibility(View.VISIBLE);
+					memoView.setVisibility(View.VISIBLE);
+				}
+				else {
+					memoLabel.setVisibility(View.GONE);
+					memoView.setVisibility(View.GONE);
 				}
 
 				Cursor ingredientsCursor = helper.getRecipeIngredientsCursor(recipeId);

@@ -21,6 +21,7 @@
         </string>
     <string name="hint_name">Name (optional)</string>
     <string name="hint_ingredient">Ingredients&#8230;</string>
+    <string name="hint_memo"></string>
     <string name="note_entering_ingredients">Hint: you can add many at once, separated by comma.
         Don\'t worry about formatting, your input will be automatically normalized.</string>
     <string name="msg_no_ingredients">No ingredients. Use the input box above to add some!</string>
@@ -51,6 +52,7 @@
     <string name="btn_done">Done</string>
     <string name="label_ingredients">Ingredients: </string>
     <string name="label_tags">Tags: </string>
+    <string name="label_memo">Memo: </string>
     <string name="label_none">(none)</string>
     <string name="menu_backup">Backup</string>
     <string name="menu_restore">Restore</string>

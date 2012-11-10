@@ -107,10 +107,27 @@
                     android:text="@string/btn_edit" />
             </RelativeLayout>
 
+            <TextView
+                android:id="@+id/memo_label"
+                style="@style/recipeViewLabel"
+                android:layout_below="@id/tags_container2"
+                android:text="@string/label_memo" />
+
+            <EditText
+                android:id="@+id/memo"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/memo_label"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:gravity="top"
+                android:hint="@string/hint_memo"
+                android:lines="3" />
+
             <Button
                 android:id="@+id/btn_add_photo"
                 style="@style/wideButton"
-                android:layout_below="@id/tags_container2"
+                android:layout_below="@id/memo"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="10dp"
                 android:drawableRight="@drawable/btn_add_photo"

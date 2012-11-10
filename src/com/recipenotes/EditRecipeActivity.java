@@ -40,6 +40,7 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 	private static final String PHOTO_INFO_FILE = "photoInfo.bin";
 
 	private EditText nameView;
+	private EditText memoView;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,7 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 		}
 
 		nameView = (EditText) findViewById(R.id.name_edit);
+		memoView = (EditText) findViewById(R.id.memo);
 
 		final Activity this_ = this;
 
@@ -100,6 +102,7 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 		@Override
 		public void onClick(View view) {
 			String name = capitalize(nameView.getText().toString());
+			String memo = capitalize(memoView.getText().toString());
 
 			// display_name
 			String displayName = "";
@@ -115,7 +118,7 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 			}
 			ingredientsCursor.close();
 
-			if (helper.saveRecipe(recipeId, name, displayName)) {
+			if (helper.saveRecipe(recipeId, name, displayName, memo)) {
 				Toast.makeText(getApplicationContext(), R.string.msg_updated_recipe, Toast.LENGTH_SHORT).show();
 				finish();
 			}

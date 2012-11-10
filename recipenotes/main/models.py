@@ -9,6 +9,7 @@ class Recipe(models.Model):
     display_name = models.TextField()
     display_image = models.CharField(max_length=80)
     display_order = models.IntegerField()
+    memo = models.TextField()
     created_dt = models.DateTimeField(default=datetime.now)
     updated_dt = models.DateTimeField(default=datetime.now)
 

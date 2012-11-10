@@ -32,7 +32,7 @@ public class PhotoListActivity extends Activity {
 	    gridview.setOnItemClickListener(new OnItemClickListener() {
 	        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 	        	RecipePhoto item = (RecipePhoto)adapter.getItem(position);
-				Intent intent = new Intent(PhotoListActivity.this, EditRecipeActivity.class);
+				Intent intent = new Intent(PhotoListActivity.this, ViewRecipeActivity.class);
 				intent.putExtra(BaseColumns._ID, item.recipeId);
 				startActivity(intent);
 	        }

@@ -242,16 +242,17 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 		return list.size() > 0;
 	}
 
-	private void addPhotoToRecipe(File photoFile) {
-		helper.addRecipePhoto(recipeId, photoFile.getName());
+	private void addPhotoToRecipe(String filename) {
+		helper.addRecipePhoto(recipeId, filename);
 	}
 
 	private void handleSmallCameraPhoto() {
 		if (photoFile != null && photoFile.isFile()) {
 			deletePhotoInfo();
 			Log.d(TAG, "adding photo: " + photoFile);
-			addPhotoToRecipe(photoFile);
-			addPhotoToLayout(photoFile, true);
+			String filename = photoFile.getName();
+			addPhotoToRecipe(filename);
+			addPhotoToLayout(filename, true);
 		}
 		else {
 			Log.e(TAG, "something's wrong with the photo file: " + photoFile);

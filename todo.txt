@@ -7,18 +7,17 @@ release notes 1.3
 version 1.3
 -----------
 - optimize photo list
-    - loading animation while opening it
-    - use thumbnails
+    - use only landscape pictures
 - custom note
+
+
+version 2
+---------
 - improved recipe list
     - do not show title if does not exist
     - use first photo: 1/3 width
     - ingredients list max 3 lines, truncate if longer
     - tags
-
-
-version 2
----------
 - help pages
     - how to delete recipe
     - how to delete ingredient

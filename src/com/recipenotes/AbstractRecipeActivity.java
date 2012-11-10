@@ -1,7 +1,5 @@
 package com.recipenotes;
 
-import java.io.File;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -42,16 +40,16 @@ public abstract class AbstractRecipeActivity extends Activity {
 		layout.removeAllViews();
 	}
 
-	protected void addPhotoToLayout(File photoFile, boolean editable) {
-		if (photoFile.isFile()) {
-			int appWidth = getWindowManager().getDefaultDisplay().getWidth();
-			Bitmap bitmap = BitmapTools.createScaledBitmap(photoFile, appWidth);
+	protected void addPhotoToLayout(String photoFilename, boolean editable) {
+		int appWidth = getWindowManager().getDefaultDisplay().getWidth();
+		Bitmap bitmap = RecipeFileManager.getMediumPhotoBitmap(photoFilename, appWidth);
+		if (bitmap != null) {
 			ImageView photoView = new ImageView(this);
 			photoView.setImageBitmap(bitmap);
 			photoView.setPadding(10, 10, 10, 10);
-			photoView.setTag(photoFile.getName());
+			photoView.setTag(photoFilename);
 			if (editable) {
-				photoView.setOnLongClickListener(new PhotoOnLongClickListener(photoFile));
+				photoView.setOnLongClickListener(new PhotoOnLongClickListener(photoFilename));
 			}
 
 			// dirty hack for motorola
@@ -90,7 +88,7 @@ public abstract class AbstractRecipeActivity extends Activity {
 					ingredientsBuffer.append(", ");
 				}
 				ingredientsCursor.close();
-				
+
 				TextView ingredientsView = (TextView) findViewById(R.id.ingredients);
 				if (ingredientsBuffer.length() > 2) {
 					ingredientsView.setText(ingredientsBuffer.substring(0, ingredientsBuffer.length() - 2));
@@ -107,7 +105,7 @@ public abstract class AbstractRecipeActivity extends Activity {
 					tagsBuffer.append(", ");
 				}
 				tagsCursor.close();
-				
+
 				TextView tagsView = (TextView) findViewById(R.id.tags);
 				if (tagsBuffer.length() > 2) {
 					tagsView.setText(tagsBuffer.substring(0, tagsBuffer.length() - 2));
@@ -120,7 +118,7 @@ public abstract class AbstractRecipeActivity extends Activity {
 				clearPhotosFromLayout();
 				while (photosCursor.moveToNext()) {
 					String filename = photosCursor.getString(0);
-					addPhotoToLayout(RecipeFileManager.getPhotoFile(filename), editable);
+					addPhotoToLayout(filename, editable);
 				}
 				photosCursor.close();
 			}
@@ -131,28 +129,27 @@ public abstract class AbstractRecipeActivity extends Activity {
 		}
 	}
 
-	private void removePhoto(File photoFile) {
-		if (photoFile.delete()) {
-			if (removePhotoFromRecipe(photoFile)) {
-				removePhotoFromLayout(photoFile);
-			}
+	private void removePhoto(String photoFilename) {
+		if (removePhotoFromRecipe(photoFilename)) {
+			RecipeFileManager.deletePhotos(photoFilename);
+			removePhotoFromLayout(photoFilename);
 		}
 	}
 
-	private void removePhotoFromLayout(File photoFile) {
+	private void removePhotoFromLayout(String photoFilename) {
 		LinearLayout layout = (LinearLayout) findViewById(R.id.photos);
-		layout.removeView(layout.findViewWithTag(photoFile.getName()));
+		layout.removeView(layout.findViewWithTag(photoFilename));
 	}
 
-	private boolean removePhotoFromRecipe(File photoFile) {
-		return helper.removeRecipePhoto(recipeId, photoFile.getName());
+	private boolean removePhotoFromRecipe(String photoFilename) {
+		return helper.removeRecipePhoto(recipeId, photoFilename);
 	}
 
 	class PhotoOnLongClickListener implements OnLongClickListener {
-		private final File photoFile;
+		private final String photoFilename;
 
-		public PhotoOnLongClickListener(File photoFile) {
-			this.photoFile = photoFile;
+		public PhotoOnLongClickListener(String photoFilename) {
+			this.photoFilename = photoFilename;
 		}
 
 		@Override
@@ -163,7 +160,7 @@ public abstract class AbstractRecipeActivity extends Activity {
 			.setTitle(R.string.title_delete_photo)
 			.setPositiveButton(R.string.btn_yes, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
-					removePhoto(photoFile);
+					removePhoto(photoFilename);
 				}
 			})
 			.setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {

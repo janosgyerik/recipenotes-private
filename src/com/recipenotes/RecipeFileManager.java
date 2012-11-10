@@ -3,12 +3,15 @@ package com.recipenotes;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.util.Log;
 
@@ -24,6 +27,16 @@ public class RecipeFileManager {
 	public static final File PHOTOS_DIR =
 			new File(Environment.getExternalStorageDirectory(), PHOTOS_DIRPARAM);
 
+	private static final String MEDIUM_PHOTOS_DIRPARAM = "RecipeNotes/medium";
+	private static final File MEDIUM_PHOTOS_DIR =
+			new File(Environment.getExternalStorageDirectory(), MEDIUM_PHOTOS_DIRPARAM);
+	private static final int MEDIUM_PHOTO_FACTOR = 1;
+
+	private static final String SMALL_PHOTOS_DIRPARAM = "RecipeNotes/small";
+	private static final File SMALL_PHOTOS_DIR =
+			new File(Environment.getExternalStorageDirectory(), SMALL_PHOTOS_DIRPARAM);
+	private static final int SMALL_PHOTO_FACTOR = 2;
+
 	public static final String BACKUPFILE_FORMAT = "";
 	public static final String BACKUPFILES_PATTERN = "^sqlite3-.*\\.db$";
 	public static final String DAILY_BACKUPFILE = "sqlite3-autobackup.db";
@@ -31,8 +44,7 @@ public class RecipeFileManager {
 	public static final String RECIPE_PHOTOFILE_FORMAT = "recipe_%s_%d.jpg";
 	public static final String RECIPE_PHOTOFILES_PATTERN = "^recipe_%s_.*";
 
-	public static boolean deleteRecipe(String recipeId) {
-		File storageDir = PHOTOS_DIR;
+	private static boolean deleteRecipePhotosFromDir(String recipeId, File storageDir) {
 		if (storageDir.isDirectory()) {
 			String pattern = String.format(RECIPE_PHOTOFILES_PATTERN, recipeId);
 			FileFilter fileFilter = new PatternFileFilter(pattern);
@@ -42,6 +54,21 @@ public class RecipeFileManager {
 			}
 		}
 		return true;
+	}
+
+	public static boolean deleteRecipePhotos(String recipeId) {
+		boolean allOK = true;
+		allOK &= deleteRecipePhotosFromDir(recipeId, PHOTOS_DIR);
+		allOK &= deleteRecipePhotosFromDir(recipeId, MEDIUM_PHOTOS_DIR);
+		allOK &= deleteRecipePhotosFromDir(recipeId, SMALL_PHOTOS_DIR);
+		Log.d(TAG, "delete photos all ok? -> " + allOK);
+		return allOK;
+	}
+
+	public static void deletePhotos(String photoFilename) {
+		getPhotoFile(photoFilename).delete();
+		getMediumPhotoFile(photoFilename).delete();
+		getSmallPhotoFile(photoFilename).delete();
 	}
 
 	private static String getDatabasePath() {
@@ -101,10 +128,23 @@ public class RecipeFileManager {
 		return new File(PHOTOS_DIR, filename);
 	}
 
+	public static File getMediumPhotoFile(String filename) {
+		if (! MEDIUM_PHOTOS_DIR.isDirectory()) {
+			MEDIUM_PHOTOS_DIR.mkdirs();
+		}
+		return new File(MEDIUM_PHOTOS_DIR, filename);
+	}
+
+	public static File getSmallPhotoFile(String filename) {
+		if (! SMALL_PHOTOS_DIR.isDirectory()) {
+			SMALL_PHOTOS_DIR.mkdirs();
+		}
+		return new File(SMALL_PHOTOS_DIR, filename);
+	}
+
 	public static File newPhotoFile(String recipeId) throws IOException {
-		File photosDir = PHOTOS_DIR;
-		if (! photosDir.isDirectory()) {
-			photosDir.mkdirs();
+		if (! PHOTOS_DIR.isDirectory()) {
+			PHOTOS_DIR.mkdirs();
 		}
 		return File.createTempFile(String.format("recipe_%s_", recipeId),
 				".jpg", PHOTOS_DIR);
@@ -134,4 +174,52 @@ public class RecipeFileManager {
 		return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
 	}
 
+	private static Bitmap createScaledPhotoBitmap(File srcFile, File dstFile, int dstWidth, int inSampleSize) {
+		if (srcFile.isFile()) {
+			BitmapFactory.Options options = new BitmapFactory.Options();
+			options.inSampleSize = inSampleSize;
+			Bitmap bitmap = BitmapFactory.decodeFile(srcFile.getAbsolutePath(), options);
+			int dstHeight = dstWidth * bitmap.getHeight() / bitmap.getWidth();
+			Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, dstWidth, dstHeight, true);
+
+			if (!scaledBitmap.equals(bitmap)) {
+				bitmap.recycle();
+				bitmap = null;
+			}
+
+			FileOutputStream outStream;
+			try {
+				outStream = new FileOutputStream(dstFile);
+				scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
+				Log.i(TAG, String.format("resized photo: %dx%d %s", dstWidth, dstHeight, dstFile));
+				return scaledBitmap;
+			} catch (FileNotFoundException e) {
+				Log.e(TAG, "could not save resized photo: " + dstFile);
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
+	public static Bitmap getMediumPhotoBitmap(String photoFilename, int appWidth) {
+		File dstFile = getMediumPhotoFile(photoFilename);
+		if (dstFile.isFile()) {
+			return BitmapFactory.decodeFile(dstFile.getAbsolutePath());
+		}
+		File srcFile = getPhotoFile(photoFilename);
+		int dstWidth = appWidth / MEDIUM_PHOTO_FACTOR;
+		int inSampleSize = MEDIUM_PHOTO_FACTOR;
+		return createScaledPhotoBitmap(srcFile, dstFile, dstWidth, inSampleSize);
+	}
+
+	public static Bitmap getSmallPhotoBitmap(String photoFilename, int appWidth) {
+		File dstFile = getSmallPhotoFile(photoFilename);
+		if (dstFile.isFile()) {
+			return BitmapFactory.decodeFile(dstFile.getAbsolutePath());
+		}
+		File srcFile = getPhotoFile(photoFilename);
+		int dstWidth = appWidth / SMALL_PHOTO_FACTOR;
+		int inSampleSize = SMALL_PHOTO_FACTOR;
+		return createScaledPhotoBitmap(srcFile, dstFile, dstWidth, inSampleSize);
+	}
 }

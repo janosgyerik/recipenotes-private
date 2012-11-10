@@ -1,14 +1,11 @@
 package com.recipenotes;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -17,23 +14,19 @@ import android.widget.ImageView;
 
 public class PhotoListAdapter extends BaseAdapter {
 
-	private static final String TAG = "BaseAdapter";
-
 	// hardcoded in photolist.xml too, cannot be dynamic
 	private static final int NUM_COLUMNS = 3;
-	private static final int ORIGINAL_SIZE_THRESHOLD = 200;
 
 	private final Context mContext;
 	private final int mAppWidth;
-	private final boolean mUseOriginalSize;
 
 	class RecipePhoto {
 		final String recipeId;
-		final File photoFile;
+		final String filename;
 
-		public RecipePhoto(String recipeId, File photoFile) {
+		public RecipePhoto(String recipeId, String filename) {
 			this.recipeId = recipeId;
-			this.photoFile = photoFile;
+			this.filename = filename;
 		}
 	}
 	List<RecipePhoto> items = new ArrayList<RecipePhoto>();
@@ -48,15 +41,12 @@ public class PhotoListAdapter extends BaseAdapter {
 		Cursor photoListCursor = helper.getPhotoListCursor();
 		while (photoListCursor.moveToNext()) {
 			String recipeId = photoListCursor.getString(0);
-			String photoFilename = photoListCursor.getString(1);
-			RecipePhoto item = new RecipePhoto(recipeId, RecipeFileManager.getPhotoFile(photoFilename));
+			String filename = photoListCursor.getString(1);
+			RecipePhoto item = new RecipePhoto(recipeId, filename);
 			items.add(item);
 		}
 		photoListCursor.close();
 		helper.close();
-
-		mUseOriginalSize = appWidth / 3 >= ORIGINAL_SIZE_THRESHOLD;
-		Log.d(TAG, "mUseOriginalSize = " + mUseOriginalSize);
 	}
 
 	@Override
@@ -77,14 +67,8 @@ public class PhotoListAdapter extends BaseAdapter {
 
 	// create a new ImageView for each item referenced by the Adapter
 	public View getView(int position, View convertView, ViewGroup parent) {
-		File photoFile = items.get(position).photoFile;
-		Bitmap bitmap;
-		if (mUseOriginalSize) {
-			bitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-		}
-		else {
-			bitmap = BitmapTools.createScaledBitmap(photoFile, mAppWidth / NUM_COLUMNS);
-		}
+		String filename = items.get(position).filename;
+		Bitmap bitmap = RecipeFileManager.getSmallPhotoBitmap(filename, mAppWidth);
 
 		ImageView imageView;
 		if (convertView == null) {  // if it's not recycled, initialize some attributes
@@ -92,6 +76,7 @@ public class PhotoListAdapter extends BaseAdapter {
 			int targetWidth = mAppWidth / NUM_COLUMNS - 2;
 			int targetHeight = targetWidth * bitmap.getHeight() / bitmap.getWidth();
 			imageView.setLayoutParams(new GridView.LayoutParams(targetWidth, targetHeight));
+			//imageView.setScaleType(ScaleType.CENTER);
 			imageView.setPadding(0, 0, 4, 0);
 		} else {
 			imageView = (ImageView) convertView;

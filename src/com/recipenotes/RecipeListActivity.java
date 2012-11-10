@@ -110,7 +110,7 @@ public class RecipeListActivity extends ListActivity {
 	class RecipeListOnItemLongClickListener implements OnItemLongClickListener {
 		private void deleteRecipe(String recipeId) {
 			if (helper.deleteRecipe(recipeId)) {
-				RecipeFileManager.deleteRecipe(recipeId);
+				RecipeFileManager.deleteRecipePhotos(recipeId);
 				cursor.requery();
 				Toast.makeText(getBaseContext(), R.string.msg_recipe_deleted, Toast.LENGTH_LONG).show();
 			}

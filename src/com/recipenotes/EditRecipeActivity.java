@@ -40,7 +40,7 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 
 		// for debugging:
 		//		recipeId = "42"; // rich
-		//		recipeId = "999"; // non-existent
+		//		recipeId = "9999"; // non-existent
 		//		 recipeId = "44"; // lean
 
 		if (recipeId == null) {
@@ -155,7 +155,8 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 				handleReturnFromEditTags(data);
 				break;
 			case RETURN_FROM_ADD_PHOTO:
-				handleSmallCameraPhoto(data);
+				Log.i(TAG, "OK take photo");
+				handleSmallCameraPhoto();
 				break;
 			default:
 				Log.i(TAG, "OK ???");
@@ -228,10 +229,14 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 		helper.addRecipePhoto(recipeId, photoFile.getName());
 	}
 
-	private void handleSmallCameraPhoto(Intent intent) {
+	private void handleSmallCameraPhoto() {
 		if (photoFile != null && photoFile.isFile()) {
+			Log.d(TAG, "adding photo: " + photoFile);
 			addPhotoToRecipe(photoFile);
 			addPhotoToLayout(photoFile, true);
+		}
+		else {
+			Log.e(TAG, "something's wrong with the photo file: " + photoFile);
 		}
 	}
 }

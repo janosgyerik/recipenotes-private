@@ -21,6 +21,7 @@
             android:id="@id/btn_edit"
             style="@style/mainHeaderButton"
             android:layout_alignParentRight="true"
+            android:contentDescription="@string/btn_contentDescription"
             android:src="@drawable/headerbtn_edit" />
     </RelativeLayout>
 

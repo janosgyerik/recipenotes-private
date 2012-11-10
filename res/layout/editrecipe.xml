@@ -67,6 +67,7 @@
                     android:id="@id/btn_edit_ingredients"
                     style="@style/recipeViewButton"
                     android:layout_alignParentRight="true"
+                    android:contentDescription="@string/btn_contentDescription"
                     android:src="@drawable/btn_edit"
                     android:text="@string/btn_edit" />
             </RelativeLayout>
@@ -101,6 +102,7 @@
                     android:id="@id/btn_edit_tags"
                     style="@style/recipeViewButton"
                     android:layout_alignParentRight="true"
+                    android:contentDescription="@string/btn_contentDescription"
                     android:src="@drawable/btn_edit"
                     android:text="@string/btn_edit" />
             </RelativeLayout>

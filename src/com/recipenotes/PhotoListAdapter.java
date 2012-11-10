@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 
 public class PhotoListAdapter extends BaseAdapter {
 
@@ -75,8 +76,11 @@ public class PhotoListAdapter extends BaseAdapter {
 			imageView = new ImageView(mContext);
 			int targetWidth = mAppWidth / NUM_COLUMNS - 2;
 			int targetHeight = targetWidth * bitmap.getHeight() / bitmap.getWidth();
+			if (targetHeight > targetWidth) {
+				targetHeight = targetWidth * 2 / 3;
+				imageView.setScaleType(ScaleType.CENTER_CROP);
+			}
 			imageView.setLayoutParams(new GridView.LayoutParams(targetWidth, targetHeight));
-			//imageView.setScaleType(ScaleType.CENTER);
 			imageView.setPadding(0, 0, 4, 0);
 		} else {
 			imageView = (ImageView) convertView;

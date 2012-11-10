@@ -6,8 +6,6 @@ release notes 1.3
 
 version 1.3
 -----------
-- optimize photo list
-    - use only landscape pictures
 - custom note
 
 

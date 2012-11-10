@@ -232,7 +232,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 
 		int ret = getWritableDatabase().update(RECIPES_TABLE_NAME, values, 
 				BaseColumns._ID + " = ?", new String[]{ recipeId });
-		Log.d(TAG, String.format("update recipe %s -> %s <- %s", recipeId, name, ret));
+		Log.d(TAG, String.format("update recipe %s -> '%s' <- %s", recipeId, name, ret));
 		return ret == 1;
 	}
 
@@ -419,6 +419,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 						+ " from main_recipe"
 						+ " order by updated_dt desc, name",
 						null);
+		Log.d(TAG, "get all recipes -> " + cursor.getCount());
 		return cursor;
 	}
 
@@ -511,6 +512,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 			exists = true;
 		}
 		cursor.close();
+		Log.d(TAG, "isExistingRecipeId " + recipeId + " -> " + exists);
 		return exists;
 	}
 

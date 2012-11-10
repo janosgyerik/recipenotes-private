@@ -9,7 +9,6 @@ version 1.3
 + rename to just Recipes
 + say created recipe instead of updated when created for the first time
 - add more default data entries
-- indicate sql query results with ->
 - increment version number for android release
 
 

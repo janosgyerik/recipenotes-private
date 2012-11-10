@@ -46,7 +46,7 @@ public abstract class AbstractRecipeActivity extends Activity {
 		if (bitmap != null) {
 			ImageView photoView = new ImageView(this);
 			photoView.setImageBitmap(bitmap);
-			photoView.setPadding(10, 10, 10, 10);
+			photoView.setPadding(2, 2, 2, 2);
 			photoView.setTag(photoFilename);
 			if (editable) {
 				photoView.setOnLongClickListener(new PhotoOnLongClickListener(photoFilename));

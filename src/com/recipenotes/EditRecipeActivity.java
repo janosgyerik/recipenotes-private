@@ -44,6 +44,8 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 
 	private EditText nameView;
 	private EditText memoView;
+	
+	private boolean newRecipe = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -68,6 +70,7 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 
 		if (recipeId == null) {
 			recipeId = helper.newRecipe();
+			newRecipe = true;
 		}
 
 		nameView = (EditText) findViewById(R.id.name_edit);
@@ -155,7 +158,8 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 			ingredientsCursor.close();
 
 			if (helper.saveRecipe(recipeId, name, displayName, memo)) {
-				Toast.makeText(getApplicationContext(), R.string.msg_updated_recipe, Toast.LENGTH_SHORT).show();
+				int msgId = newRecipe ? R.string.msg_created_recipe : R.string.msg_updated_recipe;
+				Toast.makeText(getApplicationContext(), msgId, Toast.LENGTH_SHORT).show();
 				finish();
 			}
 			else {

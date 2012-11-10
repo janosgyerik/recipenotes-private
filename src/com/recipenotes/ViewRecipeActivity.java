@@ -34,6 +34,14 @@ public class ViewRecipeActivity extends AbstractRecipeActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
 		case RETURN_FROM_EDIT:
+			if (data != null) {
+				Bundle extras = data.getExtras();
+				if (extras != null) {
+					if (extras.get(EditRecipeActivity.OUT_DELETED) != null) {
+						finish();
+					}
+				}
+			}
 			reloadAndRefreshRecipeDetails(false);
 			break;
 		}

@@ -4,8 +4,13 @@ version 1.3
 + workaround for crash when taking photo: save/load photo info using openFileOutput
 + custom note
 + hide ingredients and tags if empty
++ delete new recipe if nothing was entered
 - add more default data entries
-- delete new recipe if nothing was entered
+- remove (View) casts
+- indicate sql query results with ->
+- rename to just Recipes
+- say created recipe instead of updated when created for the first time
+- increment version number for android release
 
 
 version 2

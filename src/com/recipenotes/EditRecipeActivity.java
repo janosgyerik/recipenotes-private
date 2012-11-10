@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -38,6 +39,8 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 	private static final int RETURN_FROM_ADD_PHOTO = 3;
 
 	private static final String PHOTO_INFO_FILE = "photoInfo.bin";
+
+	public static final String OUT_DELETED = "DELETED";
 
 	private EditText nameView;
 	private EditText memoView;
@@ -62,7 +65,7 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 				deletePhotoInfo();
 			}
 		}
-		
+
 		if (recipeId == null) {
 			recipeId = helper.newRecipe();
 		}
@@ -100,12 +103,42 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 
 		reloadAndRefreshRecipeDetails(true);
 	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)  {
+		if (keyCode == KeyEvent.KEYCODE_BACK
+				&& event.getRepeatCount() == 0) {
+			cleanupIfEmptyRecipe();
+		}
 
+		return super.onKeyDown(keyCode, event);
+	}
+
+	private boolean cleanupIfEmptyRecipe() {
+		if (emptyRecipe) {
+			helper.deleteRecipe(recipeId);
+			Intent intent = new Intent();
+			intent.putExtra(OUT_DELETED, true);
+			setResult(Activity.RESULT_OK, intent);
+			Toast.makeText(getApplicationContext(), R.string.msg_cancelled_recipe, Toast.LENGTH_SHORT).show();
+			finish();
+			return true;
+		}
+		return false;
+	}
+	
 	class SaveRecipeOnClickListener implements OnClickListener {
 		@Override
 		public void onClick(View view) {
 			String name = capitalize(nameView.getText().toString());
 			String memo = capitalize(memoView.getText().toString());
+			
+			if ((name == null || name.length() == 0)
+					&& (memo == null || memo.length() == 0)) {
+				if (cleanupIfEmptyRecipe()) {
+					return;
+				}
+			}
 
 			// display_name
 			String displayName = "";

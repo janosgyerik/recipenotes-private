@@ -500,4 +500,18 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 		return cursor;
 	}
 
+	public boolean isExistingRecipeId(String recipeId) {
+		Log.d(TAG, "isExistingRecipeId " + recipeId);
+		boolean exists = false;
+		Cursor cursor = getReadableDatabase().query(
+				RECIPES_TABLE_NAME, new String[]{ "name", }, 
+				BaseColumns._ID + " = ?", new String[]{ recipeId },
+				null, null, null);
+		if (cursor.moveToNext()) {
+			exists = true;
+		}
+		cursor.close();
+		return exists;
+	}
+
 }

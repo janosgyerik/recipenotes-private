@@ -55,8 +55,11 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 		if (recipeId == null) {
 			PhotoInfo info = loadPhotoInfo();
 			if (info != null) {
-				recipeId = info.recipeId;
-				photoFile = info.photoFile;
+				if (helper.isExistingRecipeId(info.recipeId)) {
+					recipeId = info.recipeId;
+					photoFile = info.photoFile;
+				}
+				deletePhotoInfo();
 			}
 		}
 		
@@ -175,6 +178,7 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 				break;
 			case RETURN_FROM_ADD_PHOTO:
 				Log.i(TAG, "OK take photo");
+				deletePhotoInfo();
 				handleSmallCameraPhoto();
 				break;
 			default:
@@ -191,6 +195,7 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 				break;
 			case RETURN_FROM_ADD_PHOTO:
 				Log.i(TAG, "CANCEL add photo");
+				deletePhotoInfo();
 				if (photoFile != null && photoFile.isFile()) {
 					photoFile.delete();
 				}
@@ -251,7 +256,6 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 
 	private void handleSmallCameraPhoto() {
 		if (photoFile != null && photoFile.isFile()) {
-			deletePhotoInfo();
 			Log.d(TAG, "adding photo: " + photoFile);
 			String filename = photoFile.getName();
 			addPhotoToRecipe(filename);

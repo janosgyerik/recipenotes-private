@@ -12,15 +12,15 @@
 
         <TextView
             style="@style/mainHeader"
-            android:layout_toLeftOf="@+id/btn_photolist"
+            android:layout_toLeftOf="@+id/btn_recipelist"
             android:text="@string/title_recipelist" />
 
         <ImageButton
-            android:id="@id/btn_photolist"
+            android:id="@id/btn_recipelist"
             style="@style/mainHeaderButton"
             android:layout_toLeftOf="@+id/btn_add_recipe"
             android:contentDescription="@string/btn_contentDescription"
-            android:src="@drawable/headerbtn_photos" />
+            android:src="@drawable/headerbtn_list" />
 
         <ImageButton
             android:id="@id/btn_add_recipe"
@@ -30,9 +30,15 @@
             android:src="@drawable/headerbtn_plus" />
     </RelativeLayout>
 
-    <ListView
-        android:id="@android:id/list"
-        style="@style/mainContent"
-        android:drawSelectorOnTop="false" />
+    <GridView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/gridview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:horizontalSpacing="0dp"
+        android:numColumns="3"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="0dp" />
 
 </LinearLayout>

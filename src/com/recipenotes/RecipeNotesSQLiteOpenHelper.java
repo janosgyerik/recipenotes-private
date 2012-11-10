@@ -483,4 +483,19 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 		return cursor;
 	}
 
+	public Cursor getPhotoListCursor() {
+		Log.d(TAG, "get recipe photos");
+		Cursor cursor = getReadableDatabase().rawQuery(
+				String.format(
+						"SELECT p.recipe_id, p.filename FROM %s p " +
+						"JOIN %s r ON p.recipe_id = r._id " +
+						"ORDER BY r.updated_dt DESC, p._id",
+						RECIPE_PHOTOS_TABLE_NAME,
+						RECIPES_TABLE_NAME
+						),
+						new String[]{}
+				);
+		return cursor;
+	}
+
 }

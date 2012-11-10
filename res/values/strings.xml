@@ -67,5 +67,6 @@
     <string name="error_restore_failed">Restore failed</string>
     <string name="error_restore_exception">Restore failed unexpectedly</string>
     <string name="bullet_recipe">[recipe]</string>
+    <string name="btn_contentDescription">[btn]</string>
 
 </resources>

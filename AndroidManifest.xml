@@ -27,6 +27,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".PhotoListActivity"
+            android:label="Recipes" >
+        </activity>
+        <activity
             android:name=".EditRecipeActivity"
             android:label="Edit recipe" >
         </activity>

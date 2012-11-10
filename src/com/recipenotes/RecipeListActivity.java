@@ -60,6 +60,8 @@ public class RecipeListActivity extends ListActivity {
 
 		((View)findViewById(R.id.btn_add_recipe)).setOnClickListener(new AddRecipeOnClickListener());
 
+		((View)findViewById(R.id.btn_photolist)).setOnClickListener(new PhotoListOnClickListener());
+		
 		RecipeFileManager.updateDailyBackup();
 	}
 	
@@ -232,5 +234,14 @@ public class RecipeListActivity extends ListActivity {
 		Log.d(TAG, "++onDestroy");
 		super.onDestroy();
 		helper.close();
+	}
+	
+	class PhotoListOnClickListener implements OnClickListener {
+		@Override
+		public void onClick(View v) {
+			Intent intent = new Intent(RecipeListActivity.this, PhotoListActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+			startActivity(intent);
+		}
 	}
 }

@@ -1,8 +1,15 @@
-release
--------
-- google play page
-- release notes
-- list of features
+version 1.3
+-----------
+- photo taking bugfix: photo info using openFileOutput
+- optimize photo list
+    - loading animation while opening it
+    - use thumbnails
+- custom note
+- improved recipe list
+    - do not show title if does not exist
+    - use first photo: 1/3 width
+    - ingredients list max 3 lines, truncate if longer
+    - tags
 
 
 version 2

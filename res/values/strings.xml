@@ -22,12 +22,12 @@
     <string name="hint_name">Name (optional)</string>
     <string name="hint_ingredient">Ingredients&#8230;</string>
     <string name="hint_memo"></string>
-    <string name="note_entering_ingredients">Hint: you can add many at once, separated by comma.
-        Don\'t worry about formatting, your input will be automatically normalized.</string>
+    <string name="note_entering_ingredients">Hint: you can add many at once,
+        separated by comma.</string>
     <string name="msg_no_ingredients">No ingredients. Use the input box above to add some!</string>
     <string name="hint_tag">Tags&#8230;</string>
-    <string name="note_entering_tags">Hint: you can add many at once, separated by comma.
-        Don\'t worry about formatting, your input will be automatically normalized.</string>
+    <string name="note_entering_tags">Hint: you can add many at once,
+        separated by comma.</string>
     <string name="msg_no_tags">No tags. Use the input box above to add some!</string>
     <string name="msg_created_recipe">Created recipe</string>
     <string name="msg_updated_recipe">Updated recipe</string>

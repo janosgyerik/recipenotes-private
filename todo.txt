@@ -1,15 +1,19 @@
 version 1.3
 -----------
-+ photo list
-+ workaround for crash when taking photo: save/load photo info using openFileOutput
-+ custom note
-+ hide ingredients and tags if empty
-+ delete new recipe if nothing was entered
-+ remove (View) casts
-+ rename to just Recipes
-+ say created recipe instead of updated when created for the first time
-+ add more default data entries
-+ bugfix: restore database was broken
++ major improvements
+    + custom note
+    + photo list
++ bugfixes
+    + bugfix: restore database was broken
+    + on some phones, sometimes photo taking could get in an unusable state
++ minor usability improvements
+    + hide ingredients and tags if empty
+    + delete new recipe if nothing was entered
+    + more default data entries
++ cosmetic details
+    + say created recipe instead of updated when created for the first time
+    + remove (View) casts
+    + rename to just Recipes
 
 
 version 2

@@ -646,8 +646,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 						"LEFT JOIN %s t ON r._id = t.recipe_id " +
 						"LEFT JOIN %s p ON r._id = p.recipe_id " +
 						"WHERE r._id = %s AND " +
-						"(i._id IS NOT NULL OR t._id IS NOT NULL OR p._id IS NOT NULL OR " +
-						"IFNULL(r.name, '') != '' OR IFNULL(r.summary, '') != '' OR IFNULL(r.memo, '') != '') " +
+						"(i._id IS NOT NULL OR t._id IS NOT NULL OR p._id IS NOT NULL) " +
 						"LIMIT 1",
 						RECIPES_TABLE_NAME,
 						RECIPE_INGREDIENTS_TABLE_NAME,

@@ -44,7 +44,7 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 
 	private EditText nameView;
 	private EditText memoView;
-	
+
 	private boolean newRecipe = false;
 
 	@Override
@@ -106,12 +106,14 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 
 		reloadAndRefreshRecipeDetails(true);
 	}
-	
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)  {
 		if (keyCode == KeyEvent.KEYCODE_BACK
 				&& event.getRepeatCount() == 0) {
-			cleanupIfEmptyRecipe();
+			if (newRecipe) {
+				cleanupIfEmptyRecipe();
+			}
 		}
 
 		return super.onKeyDown(keyCode, event);
@@ -129,20 +131,18 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 		}
 		return false;
 	}
-	
+
 	class SaveRecipeOnClickListener implements OnClickListener {
 		@Override
 		public void onClick(View view) {
 			String name = capitalize(nameView.getText().toString());
 			String memo = capitalize(memoView.getText().toString());
 			
-			if ((name == null || name.length() == 0)
-					&& (memo == null || memo.length() == 0)) {
-				if (cleanupIfEmptyRecipe()) {
-					return;
-				}
+			if (name.length() == 0 && memo.length() == 0
+					&& cleanupIfEmptyRecipe()) {
+				return;
 			}
-
+			
 			// display_name
 			String displayName = "";
 			Cursor ingredientsCursor = helper.getRecipeIngredientsCursor(recipeId);

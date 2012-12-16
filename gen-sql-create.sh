@@ -2,15 +2,9 @@
 
 cd $(dirname "$0")
 
-sql_create=../assets/sql_create.sql
+sql=full/assets/sql_create.sql
 
-./manage.py sql main | sed \
-    -e 's/PRIMARY KEY/& AUTOINCREMENT/' \
-    -e 's/NOT NULL/NULL/' \
-    -e '/^BEGIN/d' \
-    -e '/^COMMIT/d' \
-    -e 's/"id"/"_id"/' \
-    | tee $sql_create
+./recipenotes/gen-sql-create.sh > $sql
 
 cat <<EOF
 # How to connect to a sqlite database on Android

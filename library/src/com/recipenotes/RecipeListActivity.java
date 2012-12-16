@@ -149,8 +149,8 @@ public class RecipeListActivity extends ListActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.menu_backup:
+		int itemId = item.getItemId();
+		if (itemId == R.id.menu_backup) {
 			try {
 				boolean success = RecipeFileManager.backupDatabaseFile();
 				if (success) {
@@ -164,8 +164,8 @@ public class RecipeListActivity extends ListActivity {
 				Log.e(TAG, "Exception in backupDatabaseFile", e);
 			}
 			return true;
-
-		case R.id.menu_restore:
+		}
+		if (itemId == R.id.menu_restore) {
 			Intent intent = new Intent(this, FileSelectorActivity.class);
 			intent.putExtra(FileSelectorActivity.IN_TITLE, getString(R.string.title_select_backupfile));
 			intent.putExtra(FileSelectorActivity.IN_DIRPARAM, RecipeFileManager.BACKUPS_DIRPARAM);
@@ -175,8 +175,8 @@ public class RecipeListActivity extends ListActivity {
 			intent.putExtra(FileSelectorActivity.IN_CONFIRMATION_MESSAGE, getString(R.string.confirm_restore));
 			startActivityForResult(intent, FILE_SELECTED);
 			return true;
-
-		case R.id.menu_quit:
+		}
+		if (itemId == R.id.menu_quit) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(R.string.msg_quit)
 			.setCancelable(true)

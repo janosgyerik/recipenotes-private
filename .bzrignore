@@ -1,8 +1,9 @@
-gen
-bin
-sqlite3.db
 .DS_Store
-./local.properties
-./proguard-project.txt
-tmp
 backups
+bin
+gen
+local.properties
+proguard-project.txt
+sqlite3.db
+tmp
+libs

@@ -1,6 +1,5 @@
 port improvements from wine notes
 ---------------------------------
-- rename style to styles
 - make use of inputType
 - WineFileManager.getDatabasePath
 - change the main layout inside scrolling area to linear layout

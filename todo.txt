@@ -1,3 +1,9 @@
+version 1.3.1
+-------------
++ bugfixes
+    + do not delete recipe if it has some details in it
+
+
 version 1.3
 -----------
 + major improvements
@@ -14,6 +20,20 @@ version 1.3
     + say created recipe instead of updated when created for the first time
     + remove (View) casts
     + rename to just Recipes
+
+
+port improvements from wine notes
+---------------------------------
+- rename style to styles
+- make use of inputType
+- library-fy
+- WineFileManager.getDatabasePath
+- change the main layout inside scrolling area to linear layout
+- margin styles in edit wine
+- header color
+- FileSelectorActivity
+- should reload only changed fields when returning from edit tags
+- shakespeare
 
 
 version 2

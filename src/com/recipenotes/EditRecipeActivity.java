@@ -118,7 +118,7 @@ public class EditRecipeActivity extends AbstractRecipeActivity {
 	}
 
 	private boolean cleanupIfEmptyRecipe() {
-		if (emptyRecipe) {
+		if (helper.isEmptyRecipe(recipeId)) {
 			helper.deleteRecipe(recipeId);
 			Intent intent = new Intent();
 			intent.putExtra(OUT_DELETED, true);

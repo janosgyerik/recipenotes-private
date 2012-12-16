@@ -46,7 +46,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 		sqlUpgradeStatements.put(2, getSqlStatements(context, "sql_upgrade2.sql"));
 		sqlUpgradeStatements.put(3, getSqlStatements(context, "sql_upgrade3.sql"));
 	}
-	
+
 	private List<String> getSqlStatements(Context context, String assetName) {
 		List<String> statements;
 		try {
@@ -300,7 +300,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 			upgradeToVersion(db, i + 1);
 		}
 	}
-	
+
 	private void upgradeToVersion(SQLiteDatabase db, int version) {
 		Log.d(TAG, "sql upgrade to version " + version);
 		for (String sql : sqlUpgradeStatements.get(version)) {
@@ -438,7 +438,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 				recipeId, tagId, ret));
 		return ret > 0;
 	}
-	
+
 	public String getOrCreateIngredient(String name) {
 		String ingredientId = getIngredientIdByName(name);
 		if (ingredientId == null) {
@@ -510,7 +510,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 				recipeId, ingredientId, ret));
 		return ret > 0;
 	}
-	
+
 	public boolean addRecipePhoto(String recipeId, String filename) {
 		ContentValues values = new ContentValues();
 		values.put("recipe_id", recipeId);
@@ -532,7 +532,7 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 				recipeId, filename, ret));
 		return ret > 0;
 	}
-	
+
 	public Cursor getRecipeListCursor() {
 		Log.d(TAG, "get all recipes");
 		Cursor cursor = getReadableDatabase().rawQuery(
@@ -612,10 +612,10 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 		Cursor cursor = getReadableDatabase().rawQuery(
 				String.format(
 						"SELECT p.recipe_id, p.filename FROM %s p " +
-						"JOIN %s r ON p.recipe_id = r._id " +
-						"ORDER BY r.updated_dt DESC, p._id",
-						RECIPE_PHOTOS_TABLE_NAME,
-						RECIPES_TABLE_NAME
+								"JOIN %s r ON p.recipe_id = r._id " +
+								"ORDER BY r.updated_dt DESC, p._id",
+								RECIPE_PHOTOS_TABLE_NAME,
+								RECIPES_TABLE_NAME
 						),
 						new String[]{}
 				);
@@ -640,23 +640,23 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 	public boolean isEmptyRecipe(String recipeId) {
 		Log.d(TAG, "isEmptyRecipe " + recipeId);
 		boolean empty = true;
-		Cursor cursor = getReadableDatabase().rawQuery(
-				String.format(
-						"SELECT 1 FROM %s r " + 
+		String sql = String.format(
+				"SELECT 1 FROM %s r " + 
 						"LEFT JOIN %s i ON r._id = i.recipe_id " +
 						"LEFT JOIN %s t ON r._id = t.recipe_id " +
 						"LEFT JOIN %s p ON r._id = p.recipe_id " +
 						"WHERE r._id = %s AND " +
-						"(i._id IS NOT NULL OR t._id IS NOT NULL OR p._id IS NOT NULL) " +
+						"(i._id IS NOT NULL OR t._id IS NOT NULL OR p._id IS NOT NULL OR " +
+						"IFNULL(r.name, '') != '' OR IFNULL(r.summary, '') != '' OR IFNULL(r.memo, '') != '') " +
 						"LIMIT 1",
 						RECIPES_TABLE_NAME,
 						RECIPE_INGREDIENTS_TABLE_NAME,
 						RECIPE_TAGS_TABLE_NAME,
 						RECIPE_PHOTOS_TABLE_NAME,
 						recipeId
-						),
-						new String[]{}
 				);
+		Log.d(TAG, sql);
+		Cursor cursor = getReadableDatabase().rawQuery(sql, new String[]{});
 		if (cursor.moveToNext()) {
 			empty = false;
 		}

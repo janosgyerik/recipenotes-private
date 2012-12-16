@@ -23,8 +23,6 @@ public abstract class AbstractRecipeActivity extends Activity {
 	protected RecipeNotesSQLiteOpenHelper helper;
 	protected String recipeId;
 	
-	protected boolean emptyRecipe = true;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -66,15 +64,12 @@ public abstract class AbstractRecipeActivity extends Activity {
 	}
 
 	protected void reloadAndRefreshRecipeDetails(boolean editable) {
-		emptyRecipe = true;
-		
 		if (recipeId != null) {
 			Cursor recipeCursor = helper.getRecipeDetailsCursor(recipeId);
 			if (recipeCursor.moveToNext()) {
 				TextView nameView = (TextView) findViewById(R.id.name);
 				String name = recipeCursor.getString(0);
 				if (name != null && name.length() > 0) {
-					emptyRecipe = false;
 					nameView.setText(name);
 					EditText nameEditView = (EditText) findViewById(R.id.name_edit);
 					if (nameEditView != null) {
@@ -90,7 +85,6 @@ public abstract class AbstractRecipeActivity extends Activity {
 				memoView.setText(memo);
 				View memoLabel = findViewById(R.id.memo_label);
 				if (memo != null && memo.length() > 0) {
-					emptyRecipe = false;
 					memoLabel.setVisibility(View.VISIBLE);
 					memoView.setVisibility(View.VISIBLE);
 				}
@@ -106,7 +100,6 @@ public abstract class AbstractRecipeActivity extends Activity {
 				Cursor ingredientsCursor = helper.getRecipeIngredientsCursor(recipeId);
 				StringBuffer ingredientsBuffer = new StringBuffer();
 				while (ingredientsCursor.moveToNext()) {
-					emptyRecipe = false;
 					String ingredient = ingredientsCursor.getString(0);
 					ingredientsBuffer.append(ingredient);
 					ingredientsBuffer.append(", ");
@@ -133,7 +126,6 @@ public abstract class AbstractRecipeActivity extends Activity {
 				Cursor tagsCursor = helper.getRecipeTagsCursor(recipeId);
 				StringBuffer tagsBuffer = new StringBuffer();
 				while (tagsCursor.moveToNext()) {
-					emptyRecipe = false;
 					String tag = tagsCursor.getString(0);
 					tagsBuffer.append(tag);
 					tagsBuffer.append(", ");
@@ -160,7 +152,6 @@ public abstract class AbstractRecipeActivity extends Activity {
 				Cursor photosCursor = helper.getRecipePhotosCursor(recipeId);
 				clearPhotosFromLayout();
 				while (photosCursor.moveToNext()) {
-					emptyRecipe = false;
 					String filename = photosCursor.getString(0);
 					addPhotoToLayout(filename, editable);
 				}

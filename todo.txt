@@ -1,13 +1,12 @@
 port improvements from wine notes
 ---------------------------------
+- should reload only changed fields when returning from edit tags
 - make use of inputType
-- WineFileManager.getDatabasePath
 - change the main layout inside scrolling area to linear layout
 - margin styles in edit wine
 - header color
-- FileSelectorActivity
-- should reload only changed fields when returning from edit tags
 - shakespeare
+- TAG = ...
 
 
 version 2

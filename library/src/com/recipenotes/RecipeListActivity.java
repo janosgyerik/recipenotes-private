@@ -62,7 +62,7 @@ public class RecipeListActivity extends ListActivity {
 
 		findViewById(R.id.btn_photolist).setOnClickListener(new PhotoListOnClickListener());
 		
-		RecipeFileManager.updateDailyBackup();
+		RecipeFileManager.updateDailyBackup(getPackageName());
 	}
 	
 	private void initCursor() {
@@ -152,7 +152,7 @@ public class RecipeListActivity extends ListActivity {
 		int itemId = item.getItemId();
 		if (itemId == R.id.menu_backup) {
 			try {
-				boolean success = RecipeFileManager.backupDatabaseFile();
+				boolean success = RecipeFileManager.backupDatabaseFile(getPackageName());
 				if (success) {
 					Toast.makeText(getBaseContext(), R.string.msg_backup_created, Toast.LENGTH_LONG).show();
 				}
@@ -203,7 +203,7 @@ public class RecipeListActivity extends ListActivity {
 			if (filename != null) {
 				helper.close();
 				try {
-					if (RecipeFileManager.restoreDatabaseFile(filename)) {
+					if (RecipeFileManager.restoreDatabaseFile(filename, getPackageName())) {
 						Toast.makeText(getBaseContext(), R.string.msg_restore_success, Toast.LENGTH_LONG).show();
 					}
 					else {

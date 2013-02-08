@@ -1,7 +1,6 @@
 version 6 - lite version
 ------------------------
 - test well
-    - correct upgrade from old version
     - correct new FULL
     - add a few recipes with photos
         - delete photos

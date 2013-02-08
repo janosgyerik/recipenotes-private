@@ -1,13 +1,3 @@
-version 6 - lite version
-------------------------
-- test well
-    - correct new FULL
-    - add a few recipes with photos
-        - delete photos
-- increment version number in both apps
-- release both apps on marketplace
-
-
 version 7 - port improvements from wine notes
 ---------------------------------------------
 - should reload only changed fields when returning from edit tags

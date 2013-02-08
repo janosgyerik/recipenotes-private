@@ -1,10 +1,10 @@
 from django.contrib import admin
 
-from main.models import Recipe
-from main.models import Ingredient
-from main.models import RecipeIngredient
-from main.models import Tag
-from main.models import RecipeTag
+from recipes.models import Recipe
+from recipes.models import Ingredient
+from recipes.models import RecipeIngredient
+from recipes.models import Tag
+from recipes.models import RecipeTag
 
 class RecipeIngredientAdmin(admin.ModelAdmin):
     list_display = ('recipe', 'ingredient')

@@ -2,7 +2,7 @@
 
 cd $(dirname "$0")
 
-./manage.py sql main | sed \
+./manage.py sql recipes | sed \
     -e 's/PRIMARY KEY/& AUTOINCREMENT/' \
     -e 's/NOT NULL/NULL/' \
     -e '/^BEGIN/d' \

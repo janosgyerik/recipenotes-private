@@ -1,5 +1,16 @@
-port improvements from wine notes
----------------------------------
+version 6 - lite version
+------------------------
+- test well
+    - correct upgrade from old version
+    - correct new FULL
+    - add a few recipes with photos
+        - delete photos
+- increment version number in both apps
+- release both apps on marketplace
+
+
+version 7 - port improvements from wine notes
+---------------------------------------------
 - should reload only changed fields when returning from edit tags
 - make use of inputType
 - change the main layout inside scrolling area to linear layout
@@ -10,7 +21,7 @@ port improvements from wine notes
 - Done button in header
 
 
-version 2
+version 8
 ---------
 - improved recipe list
     - do not show title if does not exist
@@ -27,7 +38,7 @@ version 2
     - reduce code duplication between ViewRecipe and EditRecipe
 
 
-version 3
+version 9
 ---------
 - clean up file paths in RecipeFileManager
     - a.getDatabasePath("sqlite3.db") -> /data/data/com.recipenotes/databases/sqlite3.db

@@ -4,6 +4,6 @@ bin
 gen
 local.properties
 proguard-project.txt
-sqlite3.db
 tmp
 libs
+sqlite3.db

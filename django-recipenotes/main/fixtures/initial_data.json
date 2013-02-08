@@ -1,6 +1,2376 @@
 [
     {
         "pk": 1, 
+        "model": "main.recipe", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_name": "Avocado, Cottage cheese, Eggs, Lettuce, Minced meat, Onion, Rice, Tomato", 
+            "name": "Locomoco", 
+            "memo": "", 
+            "summary": "", 
+            "display_image": "", 
+            "display_order": 50, 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "main.recipe", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_name": "Cauliflower, Chickpeas, Garlic, Paprika powder, Pesto, Rice, Tomato sauce, Zucchini", 
+            "name": "Cauliflower with chickpeas in tomato sauce", 
+            "memo": "", 
+            "summary": "", 
+            "display_image": "", 
+            "display_order": 50, 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 58, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Acacia honey", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 16, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Almond", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 118, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Anchovies", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 119, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Apple vinegar", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 14, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Asparagus", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Avocado", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 120, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Bacon", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 121, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Baking powder", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 122, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Balsamic vinegar", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 38, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Basil paste", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 123, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Beef", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 124, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Beer", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 28, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Beet", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 72, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Black olives", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 61, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Black pepper", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 96, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Bread", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 44, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Brown sugar", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 113, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Brussels sprouts", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 98, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Butter", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 125, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Cabbage", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 70, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Cabillaud", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 90, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Capers", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 34, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Carrot", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 126, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Cashew nuts", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 50, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Cauliflower", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 71, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Celery", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 108, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Cepe mushrooms", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 65, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07", 
+            "display_order": 50, 
+            "name": "Champignon mushrooms", 
+            "created_dt": "2013-02-08T06:12:07"
+        }
+    }, 
+    {
+        "pk": 97, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Chanterelle mushrooms", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 21, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07", 
+            "display_order": 50, 
+            "name": "Cherry tomatoes", 
+            "created_dt": "2013-02-08T06:12:07"
+        }
+    }, 
+    {
+        "pk": 23, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Chicken", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 24, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Chicken breast", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 114, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Chickpeas", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 128, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Chili pepper", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 129, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Chipolatas", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 130, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Cloves", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 43, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Coconut", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 69, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Coconut butter", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 42, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Coconut milk", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 101, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Coriander", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 60, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Cottage cheese", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 35, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Couscous", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 66, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Cream", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 95, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Cream cheese", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 131, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Croutons", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 49, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Cucumber", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 132, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Cumin", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 133, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Curry paste", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 63, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Curry powder", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 107, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Dill", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 190, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Duck fat", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07", 
+            "display_order": 50, 
+            "name": "Eggs", 
+            "created_dt": "2013-02-08T06:12:07"
+        }
+    }, 
+    {
+        "pk": 88, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Feta cheese", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 134, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07", 
+            "display_order": 50, 
+            "name": "Fettucine", 
+            "created_dt": "2013-02-08T06:12:07"
+        }
+    }, 
+    {
+        "pk": 36, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Fish", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 51, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Flour", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 39, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Fresh basil", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 94, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Fresh black pepper", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 135, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Fresh coriander", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 136, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Fresh cream", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 137, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Fresh dill", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 192, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:23:50", 
+            "display_order": 50, 
+            "name": "Fresh laurel", 
+            "created_dt": "2013-02-08T06:23:50"
+        }
+    }, 
+    {
+        "pk": 138, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Fresh mint", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 139, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Fresh parsley", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 194, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:26:43", 
+            "display_order": 50, 
+            "name": "Fresh rosemary", 
+            "created_dt": "2013-02-08T06:26:43"
+        }
+    }, 
+    {
+        "pk": 140, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Fried tofu", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 104, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Fusilli", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 37, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Garlic", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 141, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Ginger", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 142, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Gnocchi", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 91, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Goat cheese", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 32, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Goya", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 143, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Grapefruit", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Grapeseed oil", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 80, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Green beans", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 144, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Green bell pepper", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 145, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Green olives", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 146, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Green peas", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 147, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Ground mustard", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 53, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Gruyere cheese", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 148, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Ham", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Hazelnuts", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 48, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Honey", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 89, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Horseradish", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 149, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Icecream", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 150, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Jam", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 151, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Lamb", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 68, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07", 
+            "display_order": 50, 
+            "name": "Langousts", 
+            "created_dt": "2013-02-08T06:12:07"
+        }
+    }, 
+    {
+        "pk": 152, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Lasagna sheets", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 41, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Laurel", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 153, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Leek", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Lemon", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 15, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Lettuce", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Lime", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 154, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Lime leaves", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 64, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07", 
+            "display_order": 50, 
+            "name": "Linguine", 
+            "created_dt": "2013-02-08T06:12:07"
+        }
+    }, 
+    {
+        "pk": 155, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Mandarins", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 156, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Mascarpone", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 75, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Mashed potato", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 102, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Meat loaf", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 157, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Melon", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 47, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Milk", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 59, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Minced meat", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 74, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Mint", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 158, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Mozzarella cheese", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 159, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Mushrooms", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 81, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Mustard", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 160, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Navy beans", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 161, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07", 
+            "display_order": 50, 
+            "name": "Oat meal", 
+            "created_dt": "2013-02-08T06:12:07"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Olive oil", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 27, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Onion", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 162, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Orange juice", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 163, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Oregano", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 164, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07", 
+            "display_order": 50, 
+            "name": "Pappardelle", 
+            "created_dt": "2013-02-08T06:12:07"
+        }
+    }, 
+    {
+        "pk": 106, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Paprika", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 193, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:25:47", 
+            "display_order": 50, 
+            "name": "Paprika powder", 
+            "created_dt": "2013-02-08T06:25:47"
+        }
+    }, 
+    {
+        "pk": 52, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Parmesan cheese", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 165, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Pastry", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 56, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Peanuts", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 166, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Pecan nuts", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 18, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Pepper", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 77, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Pesto", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 110, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Pickled cucumber", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 57, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Pine nuts", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 20, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07", 
+            "display_order": 50, 
+            "name": "Plum tomatoes", 
+            "created_dt": "2013-02-08T06:12:07"
+        }
+    }, 
+    {
+        "pk": 22, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Pork", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 11, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07", 
+            "display_order": 50, 
+            "name": "Potatoes", 
+            "created_dt": "2013-02-08T06:12:07"
+        }
+    }, 
+    {
+        "pk": 167, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Prawns", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 168, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Prosciutto", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 105, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Provencal spices", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 55, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Reblochon cheese", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 169, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Red bell pepper", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 76, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Red chili pepper", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 170, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Red onion", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 29, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Red radish", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 171, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Red wine", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Rice", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 172, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Ricotta cheese", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 54, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Rochefort cheese", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 173, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Roma tomatoes", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 174, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Rosemary", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 67, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Ruccola", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 175, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Rumpsteak", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 100, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Saffron", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 176, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Sage leaves", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 177, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Salad spice", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 178, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Salmon", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 19, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Salt", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 179, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Sausages", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 180, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Scallions", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 46, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Sea salt", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 181, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Sesame oil", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 115, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Sesame seeds", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 182, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Shrimps", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 183, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Smoked salmon", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 25, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Soup stock", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 184, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Soy milk", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 62, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Soy sauce", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 185, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Spaghetti", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 26, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Spinach", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 186, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Spring onions", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Steak", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 103, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Sun-dried tomatoes", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 109, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Tagliatelle", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 93, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Thyme", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 33, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Tofu", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 78, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Tomato paste", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 92, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Tomato sauce", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 12, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07", 
+            "display_order": 50, 
+            "name": "Tomatoes", 
+            "created_dt": "2013-02-08T06:12:07"
+        }
+    }, 
+    {
+        "pk": 191, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Umeboshi", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 111, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Veal", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 187, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Vinegar", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Walnuts", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 31, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Wasabi", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 188, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Watermelon", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 30, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "White radish", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 45, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "White sugar", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 189, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "White wine", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 112, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Whole-grain fusilli", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 79, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Yoghurt", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 13, 
+        "model": "main.ingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Zucchini", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "main.recipeingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "recipe": 1, 
+            "amount": 0.0, 
+            "created_dt": "2013-02-08T06:12:07.855", 
+            "unit": null, 
+            "ingredient": 1
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "main.recipeingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "recipe": 1, 
+            "amount": 0.0, 
+            "created_dt": "2013-02-08T06:12:07.855", 
+            "unit": null, 
+            "ingredient": 60
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "main.recipeingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "recipe": 1, 
+            "amount": 0.0, 
+            "created_dt": "2013-02-08T06:12:07.855", 
+            "unit": null, 
+            "ingredient": 6
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "main.recipeingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "recipe": 1, 
+            "amount": 0.0, 
+            "created_dt": "2013-02-08T06:12:07.855", 
+            "unit": null, 
+            "ingredient": 15
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "main.recipeingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "recipe": 1, 
+            "amount": 0.0, 
+            "created_dt": "2013-02-08T06:12:07.855", 
+            "unit": null, 
+            "ingredient": 59
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "main.recipeingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "recipe": 1, 
+            "amount": 0.0, 
+            "created_dt": "2013-02-08T06:12:07.855", 
+            "unit": null, 
+            "ingredient": 27
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "main.recipeingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "recipe": 1, 
+            "amount": 0.0, 
+            "created_dt": "2013-02-08T06:12:07.855", 
+            "unit": null, 
+            "ingredient": 10
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "main.recipeingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "recipe": 1, 
+            "amount": 0.0, 
+            "created_dt": "2013-02-08T06:12:07.855", 
+            "unit": null, 
+            "ingredient": 12
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "main.recipeingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "recipe": 2, 
+            "amount": 0.0, 
+            "created_dt": "2013-02-08T06:12:07.855", 
+            "unit": null, 
+            "ingredient": 50
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "main.recipeingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "recipe": 2, 
+            "amount": 0.0, 
+            "created_dt": "2013-02-08T06:12:07.855", 
+            "unit": null, 
+            "ingredient": 114
+        }
+    }, 
+    {
+        "pk": 16, 
+        "model": "main.recipeingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "recipe": 2, 
+            "amount": 0.0, 
+            "created_dt": "2013-02-08T06:12:07.855", 
+            "unit": null, 
+            "ingredient": 37
+        }
+    }, 
+    {
+        "pk": 13, 
+        "model": "main.recipeingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "recipe": 2, 
+            "amount": 0.0, 
+            "created_dt": "2013-02-08T06:12:07.855", 
+            "unit": null, 
+            "ingredient": 193
+        }
+    }, 
+    {
+        "pk": 12, 
+        "model": "main.recipeingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "recipe": 2, 
+            "amount": 0.0, 
+            "created_dt": "2013-02-08T06:12:07.855", 
+            "unit": null, 
+            "ingredient": 77
+        }
+    }, 
+    {
+        "pk": 15, 
+        "model": "main.recipeingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "recipe": 2, 
+            "amount": 0.0, 
+            "created_dt": "2013-02-08T06:12:07.855", 
+            "unit": null, 
+            "ingredient": 10
+        }
+    }, 
+    {
+        "pk": 11, 
+        "model": "main.recipeingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "recipe": 2, 
+            "amount": 0.0, 
+            "created_dt": "2013-02-08T06:12:07.855", 
+            "unit": null, 
+            "ingredient": 92
+        }
+    }, 
+    {
+        "pk": 14, 
+        "model": "main.recipeingredient", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "recipe": 2, 
+            "amount": 0.0, 
+            "created_dt": "2013-02-08T06:12:07.855", 
+            "unit": null, 
+            "ingredient": 13
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Appetizer", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 27, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Breakfast", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Cake", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 14, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Cheese", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Dessert", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 26, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Dinner", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Dip", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 22, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Ethnic", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 12, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Fish", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 17, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "French", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 23, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Fusion", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Heavy", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 20, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Hungarian", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 18, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Italian", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 24, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Japanese", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Light", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 25, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Lunch", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Main", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 11, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Meat", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 15, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Pasta", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 16, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Rice", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 19, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Russian", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Salad", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 29, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Sausage", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Shake", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Side dish", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 21, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Thai", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 13, 
+        "model": "main.tag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "name": "Vegetarian", 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "main.recipetag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "tag": 1, 
+            "recipe": 1, 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "main.recipetag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "tag": 11, 
+            "recipe": 1, 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "main.recipetag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "tag": 1, 
+            "recipe": 2, 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "main.recipetag", 
+        "fields": {
+            "updated_dt": "2013-02-08T06:12:07.855", 
+            "display_order": 50, 
+            "tag": 13, 
+            "recipe": 2, 
+            "created_dt": "2013-02-08T06:12:07.855"
+        }
+    }, 
+    {
+        "pk": 1, 
         "model": "auth.user", 
         "fields": {
             "username": "admin", 
@@ -9,12 +2379,12 @@
             "is_active": true, 
             "is_superuser": true, 
             "is_staff": true, 
-            "last_login": "2013-01-27 00:25:29", 
+            "last_login": "2013-01-27T00:25:29", 
             "groups": [], 
             "user_permissions": [], 
             "password": "sha1$40c19$7f8b2bb9be6df68fe27a26fe7e4ba0e2f99e8a2e", 
             "email": "janos.gyerik@gmail.com", 
-            "date_joined": "2013-01-27 00:25:17"
+            "date_joined": "2013-01-27T00:25:17"
         }
     }
 ]

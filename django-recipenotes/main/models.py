@@ -46,13 +46,14 @@ class RecipeIngredient(models.Model):
     recipe = models.ForeignKey(Recipe)
     ingredient = models.ForeignKey(Ingredient)
     amount = models.FloatField(blank=True)
-    unit = models.ForeignKey(Unit)
+    unit = models.ForeignKey(Unit, null=True)
     display_order = models.IntegerField(default=50)
     created_dt = models.DateTimeField(default=datetime.now)
     updated_dt = models.DateTimeField(default=datetime.now)
 
     class Meta:
         unique_together = (('recipe', 'ingredient',))
+        ordering = ('recipe', 'ingredient')
 
 
 class Tag(models.Model):
@@ -79,6 +80,7 @@ class RecipeTag(models.Model):
 
     class Meta:
         unique_together = (('recipe', 'tag',))
+        ordering = ('recipe', 'tag')
 
 
 class RecipeStep(models.Model):

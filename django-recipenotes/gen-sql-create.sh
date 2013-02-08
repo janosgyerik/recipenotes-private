@@ -6,7 +6,6 @@ cd $(dirname "$0")
     -e 's/PRIMARY KEY/& AUTOINCREMENT/' \
     -e 's/NOT NULL/NULL/' \
     -e '/^BEGIN/d' \
-    -e '/^COMMIT/d' \
-    -e 's/"id"/"_id"/'
+    -e '/^COMMIT/d'
 
 # eof

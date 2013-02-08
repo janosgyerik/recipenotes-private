@@ -6,7 +6,8 @@ port improvements from wine notes
 - margin styles in edit wine
 - header color
 - shakespeare
-- TAG = ...
+- TAG = ... on listing page
+- Done button in header
 
 
 version 2

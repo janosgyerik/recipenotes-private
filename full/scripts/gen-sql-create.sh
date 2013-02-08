@@ -2,9 +2,17 @@
 
 cd $(dirname "$0")
 
-sql=full/assets/sql_create.sql
+django_dir=../../django-recipenotes
+db=$django_dir/sqlite3.db
+sql=../assets/sql_create.sql
 
-./recipenotes/gen-sql-create.sh > $sql
+$django_dir/gen-sql-create.sh > $sql
+
+sqlite3 $db '.dump main_ingredient' | grep INSERT >> $sql
+sqlite3 $db '.dump main_tag' | grep INSERT >> $sql
+sqlite3 $db '.dump main_recipe' | grep INSERT >> $sql
+sqlite3 $db '.dump main_recipeingredient' | grep INSERT >> $sql
+sqlite3 $db '.dump main_recipetag' | grep INSERT >> $sql
 
 cat <<EOF
 # How to connect to a sqlite database on Android

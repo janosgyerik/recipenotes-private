@@ -42,25 +42,23 @@ public class RecipeNotesSQLiteOpenHelper extends SQLiteOpenHelper {
 
 		//context.deleteDatabase(DATABASE_NAME);
 
-		sqlCreateStatements = getSqlStatements(context, "sql_create.sql", false);
+		sqlCreateStatements = getSqlStatements(context, "sql_create.sql");
 		sqlUpgradeStatements = new SparseArray<List<String>>();
 		sqlUpgradeStatements.put(2,
-				getSqlStatements(context, "sql_upgrade2.sql", true));
+				getSqlStatements(context, "sql_upgrade2.sql"));
 		sqlUpgradeStatements.put(3,
-				getSqlStatements(context, "sql_upgrade3.sql", true));
+				getSqlStatements(context, "sql_upgrade3.sql"));
 		sqlUpgradeStatements.put(4,
-				getSqlStatements(context, "sql_upgrade4.sql", true));
+				getSqlStatements(context, "sql_upgrade4.sql"));
 	}
 
-	private List<String> getSqlStatements(Context context, String assetName, boolean optional) {
+	private List<String> getSqlStatements(Context context, String assetName) {
 		List<String> statements;
 		try {
 			statements = readSqlStatements(context, assetName);
 		} catch (IOException e) {
 			statements = Collections.emptyList();
-			if (! optional) {
-				e.printStackTrace();
-			}
+			e.printStackTrace();
 		}
 		return statements;
 	}

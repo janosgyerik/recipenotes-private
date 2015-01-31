@@ -9,6 +9,9 @@ ldpi_target:=$(patsubst %,$(ldpi_dir)/%,$(names))
 mdpi_target:=$(patsubst %,$(mdpi_dir)/%,$(names))
 launchpad_target:=launchpad/icon.png launchpad/logo.png launchpad/brand.png
 market_target:=market/android.png
+feature_target:=market/feature.png
+canvas:=market/canvas.png
+work:=market/work.png
 
 default: all
 
@@ -25,10 +28,12 @@ lp launchpad: $(launchpad_target)
 
 market: $(market_target)
 
-all: hdpi ldpi mdpi launchpad market
+feature: $(feature_target)
+
+all: hdpi ldpi mdpi launchpad market feature
 
 clean: 
-	rm $(hdpi_target) $(ldpi_target) $(mdpi_target) $(launchpad_target) $(market_target)
+	rm $(hdpi_target) $(ldpi_target) $(mdpi_target) $(launchpad_target) $(market_target) $(feature_target)
 
 $(hdpi_dir)/tab_%.png: $(src_dir)/tab_%.png
 	convert -geometry 48x $< $@
@@ -123,4 +128,10 @@ gource/gource.ppm:
 	gource --file-idle-time 0 --seconds-per-day .5 -640x480 -o $@
 
 
-# eof
+market/feature.png: $(src_dir)/launcher_main.png
+	@mkdir -p $(@D)
+	convert -size 1024x500 xc:transparent $(canvas)
+	convert -geometry 1024x500 $< $(work)
+	convert -composite $(canvas) $(work) -gravity west $@
+	identify $@
+
